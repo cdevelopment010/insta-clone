@@ -1,0 +1,95 @@
+* {
+    margin: 0; 
+    padding: 0; 
+    -webkit-box-sizing: border-box; 
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    font-family: var(--font-family);
+}
+
+.w-100{width:100%}
+.w-75{width:75%}
+.w-50{width:50%}
+.w-25{width:25%}
+.w-0{width:0%}
+
+/* Flex */
+.d-flex {display: flex;}
+.flex-column {flex-direction: column;}
+.justify-content-center{justify-content: center;}
+.justify-content-between{justify-content: space-between;}
+.justify-content-evenly{justify-content: space-evenly;}
+.justify-content-around{justify-content: space-around;}
+.align-items-center{align-items: center;}
+.flex-grow{flex-grow: 1;}
+
+
+
+/* Margin */
+.m-0 {margin: 0rem}
+.m-1 {margin: 0.25rem}
+.m-2 {margin: 0.5rem}
+.m-3 {margin: 0.75rem}
+.m-4 {margin: 1rem}
+.m-5 {margin: 1.5rem}
+.me-0 {margin-right: 0rem}
+.me-1 {margin-right: 0.25rem}
+.me-2 {margin-right: 0.5rem}
+.me-3 {margin-right: 0.75rem}
+.me-4 {margin-right: 1rem}
+.me-5 {margin-right: 1.5rem}
+.ms-0 {margin-left: 0rem}
+.ms-1 {margin-left: 0.25rem}
+.ms-2 {margin-left: 0.5rem}
+.ms-3 {margin-left: 0.75rem}
+.ms-4 {margin-left: 1rem}
+.ms-5 {margin-left: 1.5rem}
+.mt-0 {margin-top: 0rem}
+.mt-1 {margin-top: 0.25rem}
+.mt-2 {margin-top: 0.5rem}
+.mt-3 {margin-top: 0.75rem}
+.mt-4 {margin-top: 1rem}
+.mt-5 {margin-top: 1.5rem}
+.mb-0 {margin-bottom: 0rem}
+.mb-1 {margin-bottom: 0.25rem}
+.mb-2 {margin-bottom: 0.5rem}
+.mb-3 {margin-bottom: 0.75rem}
+.mb-4 {margin-bottom: 1rem}
+.mb-5 {margin-bottom: 1.5rem}
+
+
+
+/* padding */
+.p-0 {padding: 0rem}
+.p-1 {padding: 0.25rem}
+.p-2 {padding: 0.5rem}
+.p-3 {padding: 0.75rem}
+.p-4 {padding: 1rem}
+.p-5 {padding: 1.5rem}
+.pe-0 {padding-right: 0rem}
+.pe-1 {padding-right: 0.25rem}
+.pe-2 {padding-right: 0.5rem}
+.pe-3 {padding-right: 0.75rem}
+.pe-4 {padding-right: 1rem}
+.pe-5 {padding-right: 1.5rem}
+.ps-0 {padding-left: 0rem}
+.ps-1 {padding-left: 0.25rem}
+.ps-2 {padding-left: 0.5rem}
+.ps-3 {padding-left: 0.75rem}
+.ps-4 {padding-left: 1rem}
+.ps-5 {padding-left: 1.5rem}
+.pt-0 {padding-top: 0rem}
+.pt-1 {padding-top: 0.25rem}
+.pt-2 {padding-top: 0.5rem}
+.pt-3 {padding-top: 0.75rem}
+.pt-4 {padding-top: 1rem}
+.pt-5 {padding-top: 1.5rem}
+.pb-0 {padding-bottom: 0rem}
+.pb-1 {padding-bottom: 0.25rem}
+.pb-2 {padding-bottom: 0.5rem}
+.pb-3 {padding-bottom: 0.75rem}
+.pb-4 {padding-bottom: 1rem}
+.pb-5 {padding-bottom: 1.5rem}

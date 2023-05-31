@@ -1,0 +1,169 @@
+.login-container {
+    display: flex; 
+    flex-direction: column;
+    height: 100vh; 
+    width: 60vw;
+    margin-inline: auto;
+}
+
+li {
+    font-size: 12px;
+    list-style: none;
+    color: rgb(var(--secondary-text));
+    cursor: pointer; 
+}
+
+li:hover {
+    text-decoration: underline;
+}
+
+main {
+    flex-grow: 1; 
+}
+
+.border-1 {
+    border: 1px solid rgb(var(--input-bg));
+}
+
+input{
+    background: rgb(var(--input-bg-2));
+    outline: none; 
+    border: 1px solid rgb(var(--input-bg)); 
+    border-radius: 2px;
+    padding: 10px; 
+    margin: 0 0px 6px 0px;
+}
+
+button {
+    background: rgba(var(--primary-btn), 0.7);
+    border-radius: 8px;
+    color: white; 
+    font-weight: bold; 
+    font-size: 14px; 
+    outline: none; 
+    border: none; 
+    padding: 8px; 
+}
+.form-1{z-index: 1}
+.or {
+    display: inline-block;
+    width: 90%;
+    text-align: center;
+    position: relative; 
+    color: rgb(var(--secondary-text)); 
+}
+
+.or::after {
+    content: '';
+    top: 50%; 
+    left: 50%; 
+    width: 3rem; 
+    height: 1rem; 
+    background-color: white; 
+    transform: translate(-50%, -50%);
+    position: absolute; 
+    z-index: -1;
+}
+
+.or::before {
+    content: '';
+    top: 50%; 
+    left: 0; 
+    width: 100%; 
+    height: 1px; 
+    background-color: rgb(var(--input-bg));
+    position: absolute; 
+    z-index: -1; 
+}
+
+.sign-up-form {
+    font-size: 14px;
+}
+
+.sign-up {
+    color: rgba(var(--primary-btn), 1); 
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.download-app {
+    text-align: center;
+    font-size: 12px;
+}
+
+.phone-main {
+    position: relative;
+}
+
+.phone-image {
+    position: absolute;
+    top: 4%; 
+    left: 34%; 
+    /* animation: fadeToBlack 3s forwards infinite; */
+}
+
+.facebook-login {
+    color: #385185; 
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.facebook-icon {
+    font-size: 22px;
+}
+
+.forgotten-password {
+    color: #00376B;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+/* @keyframes fadeToBlack {
+    0% {opacity: 0;}
+    10% {opacity: 1;}
+    80% {opacity: 1;}
+    100% {opacity: 0;}
+} */
+
+footer {
+    font-size: 12px;
+}
+
+@media screen and (max-width: 400px) {
+    .login-container {
+        width: 100vw;
+    }
+    main {
+        margin-top: 0 !important;
+        padding-bottom: 2rem;
+    }
+    h1 {
+        margin: 1rem !important;
+    }
+
+    .border-1 {border:none}
+    .phone-main {
+        display: none;
+    }
+
+    footer {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    footer ul {
+        justify-content: center;
+    }
+
+    footer ul:first-of-type {
+        flex-wrap: wrap;
+    }
+
+    footer ul:last-of-type li {
+        white-space: pre;
+    }
+
+    footer ul li {
+        margin: 0 8px 12px 8px
+    }
+}
