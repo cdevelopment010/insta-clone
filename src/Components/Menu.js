@@ -9,17 +9,21 @@ export default function Menu() {
 
     //desktop version
     return (
-        <div>
-            <span>Logo desktop...</span>
-            <div className="d-flex align-items-center justify-content-evenly w-50">
-                <FontAwesomeIcon icon= {faHouse} />
-                <FontAwesomeIcon icon= {faMagnifyingGlass} />
-                <FontAwesomeIcon icon= {faCompass} />
-                <img className="reels" src={process.env.PUBLIC_URL + '/images/instagram-reels-icon.svg'} alt="reels" />
-                <FontAwesomeIcon icon= {faPaperPlane} />
-                <FontAwesomeIcon icon= {faHeart} />
-                <FontAwesomeIcon icon= {faPlusSquare} />
-                <FontAwesomeIcon icon= {faBars} />
+        <div className="menu-container d-flex flex-column justify-content-between align-items-start p-5">
+            <div>
+                <div className="mb-5 pb-5">Logo desktop...</div>
+                <div className="d-flex align-items-start justify-content-evenly flex-column menu-items-container">
+                    <FontAwesomeIcon icon= {faHouse} className="menu-item"/>
+                    <FontAwesomeIcon icon= {faMagnifyingGlass}  className="menu-item"/>
+                    <FontAwesomeIcon icon= {faCompass}  className="menu-item"/>
+                    <img className="reels menu-item" src={process.env.PUBLIC_URL + '/images/instagram-reels-icon.svg'} alt="reels" />
+                    <FontAwesomeIcon icon= {faPaperPlane}  className="menu-item"/>
+                    <FontAwesomeIcon icon= {faHeart}  className="menu-item"/>
+                    <FontAwesomeIcon icon= {faPlusSquare}  className="menu-item"/>
+                </div>
+            </div>
+            <div>
+                <FontAwesomeIcon icon= {faBars}  className="menu-item"/>
             </div>
 
         </div>

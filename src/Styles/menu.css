@@ -1,4 +1,21 @@
 .reels {
     height: 16px; 
     width: 16px; 
+    /* background-image: url("/images/instagram-reels-icon.svg"); */
+}
+
+.menu-container {
+    max-height: 100vh;
+    background: lightblue; 
+}
+
+.menu-items-container {
+    gap: 2rem;
+}
+
+.menu-item {
+    font-size: 30px; 
+    height: 30px; 
+    width: 30px; 
+    color: rgb(var(--secondary-text));
 }
