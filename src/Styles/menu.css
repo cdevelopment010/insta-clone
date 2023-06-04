@@ -6,8 +6,9 @@
 
 .menu-container {
     max-height: 100vh;
-    background: lightblue; 
-}
+    background: white; 
+    border-right: rgb(var(--input-bg)) 1px solid;
+}   
 
 .menu-items-container {
     gap: 2rem;
