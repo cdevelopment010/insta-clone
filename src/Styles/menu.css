@@ -14,9 +14,12 @@
     gap: 2rem;
 }
 
+.menu-list li {
+    padding: 12px 0;
+}
+
 .menu-item {
-    font-size: 30px; 
-    height: 30px; 
-    width: 30px; 
-    color: rgb(var(--secondary-text));
+    font-size: 22px; 
+    height: 22px; 
+    width: 22px; 
 }
