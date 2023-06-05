@@ -7,8 +7,15 @@
 }
 
 .mobile-nav-header, .mobile-nav-footer {
-    height: 10vh;
-    background: lightblue;
+    height: 5vh;
+    background: white;
+}
+
+.mobile-nav-footer{
+    border-top: rgb(var(--input-bg)) 1px solid;
+}
+.mobile-nav-header{
+    border-bottom: rgb(var(--input-bg)) 1px solid;
 }
 
 .content {
@@ -16,11 +23,12 @@
     overflow-y: scroll;
     word-wrap: break-word;
     height: 200vh;
+    background: rgb(var(219, 219, 219));
 }
 
 .desktop-container {
     display: grid; 
     height: 100vh; 
     width: 100vw; 
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 335px 1fr;
 }

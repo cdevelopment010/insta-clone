@@ -8,18 +8,34 @@
     max-height: 100vh;
     background: white; 
     border-right: rgb(var(--input-bg)) 1px solid;
+    padding: 20px 12px 20px  12px;
 }   
 
-.menu-items-container {
+.logo {
+    padding: 25px 12px 25px 12px;
+    margin-bottom: 20px; 
+}
+.menu-items-container, .menu-footer {
     gap: 2rem;
+    padding: 0px 12px 0px  12px;
 }
 
 .menu-list li {
-    padding: 12px 0;
+    padding: 16px 0;
 }
-
-.menu-item {
+.menu-item {font-size: 16px;}
+.menu-item a {text-decoration: none;color: black}
+.menu-item a:hover {text-decoration: none;color: black}
+.menu-item img {
     font-size: 22px; 
     height: 22px; 
     width: 22px; 
+}
+
+.compass {
+    transform: rotate(45deg);
+}
+
+.menu-item .bold {
+    font-weight: bold;
 }

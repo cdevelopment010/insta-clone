@@ -30,7 +30,15 @@ export default function Home() {
                 <p>Phasellus consequat arcu nec iaculis luctus. Etiam vel nisi nec arcu vehicula bibendum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed aliquam dapibus accumsan. Proin ac ullamcorper turpis. Integer bibendum maximus mi eleifend imperdiet. Cras ut dui mattis, maximus sapien non, sagittis sapien. Integer commodo arcu in nisl ultricies porttitor. In hac habitasse platea dictumst. Cras ut tortor elit.</p>
                     
                 </div>
-                <div className="mobile-nav-footer"></div>
+                <div className="mobile-nav-footer">
+                    <ul className="d-flex align-items-center justify-content-evenly h-100">
+                        <li className="menu-item"><img src="/Icons/svg/home-solid.svg" alt=""/></li>
+                        <li className="menu-item"><img src="/Icons/svg/search-regular.svg" alt=""/></li>
+                        <li className="menu-item"><img src="/Icons/svg/instagram-reels-regular.svg" alt=""/></li>
+                        <li className="menu-item"><img src="/Icons/svg/instagram-share-regular.svg" alt=""/></li>
+                        <li className="menu-item"><Avatar /></li>
+                    </ul>
+                </div>
             </div>
         )
 
