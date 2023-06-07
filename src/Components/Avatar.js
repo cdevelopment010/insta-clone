@@ -8,7 +8,10 @@ export default function Avatar({size =null, bg = null, src = null, className = "
     }) 
     return (
         <div>
-            <div className={`profile-pic ${size ? size : ''} ${bg ? bg : ''} ${className}`}>
+            <div className={`profile-pic ${size ? size : ''} ${className}`}>
+                {bg !== null && 
+                    <div class="bg"></div>
+                }
                 <img src={src ? src : ''} />
             </div>    
         </div>

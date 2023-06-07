@@ -1,12 +1,13 @@
 .profile-pic {
     border-radius: 50%; 
-    background: gray; 
     height: 30px; 
     width: 30px;
     position: relative;
 }
 
 .profile-pic img {
+    background: gray; 
+    border: 1px solid white;
     height: 100%; 
     width: 100%; 
     border-radius: 50%;
@@ -16,7 +17,10 @@
     left: 50%; 
     transform: translate(-50%,-50%);
 }
-
+.xs {
+    height: 10px;
+    width: 10px;
+}
 .sm {
     height: 25px; 
     width: 25px; 
@@ -37,27 +41,13 @@
     width: 80px; 
 }
 
-.bg.profile-pic::after {
-    content:'';
+.bg  {
     border-radius: 50%;
-    position: absolute;
+    position: relative;
     height: 110%; 
     width: 110%;
     background: linear-gradient(41.92deg, #FFDC80 17.91%, #F56040 53.08%, #C13584 85.44%);
     top:50%;
     left:50%;
     transform: translate(-50%,-50%);
-    z-index: -2;
-}
-.bg.profile-pic::before {
-    content:'';
-    border-radius: 50%;
-    position: absolute;
-    height: 105%; 
-    width: 105%;
-    background: white;
-    top:50%;
-    left:50%;
-    transform: translate(-50%,-50%);
-    z-index: -1;
 }

@@ -108,3 +108,13 @@ html {
     width: 100vw; 
     overflow: hidden;
 }
+
+.cursor-pointer {cursor: pointer;}
+.opacity-50 {opacity: 0.5;}
+.border-0 {border:none}
+
+/* TEXT */
+.fw-bold {font-weight: bold}
+.fs-sm{font-size:0.75rem}
+.text-secondary {color: rgb(var(--secondary-text))}
+.text-callout {color: rgb(var(--primary-btn))}
