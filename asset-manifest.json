@@ -1,15 +1,29 @@
 {
   "files": {
-    "main.css": "/insta-clone/static/css/main.15207c50.css",
-    "main.js": "/insta-clone/static/js/main.8ade6e6d.js",
+    "main.css": "/insta-clone/static/css/main.afbfa7ee.css",
+    "main.js": "/insta-clone/static/js/main.59c682d1.js",
     "static/js/787.fc1ce4eb.chunk.js": "/insta-clone/static/js/787.fc1ce4eb.chunk.js",
+    "static/media/instagram-share-solid.svg": "/insta-clone/static/media/instagram-share-solid.324b3545bc0f0f7f9fd511cd8abe8068.svg",
+    "static/media/compass-north-solid.svg": "/insta-clone/static/media/compass-north-solid.092543a88bb5944c39f6fadd13a400f5.svg",
+    "static/media/instagram-reels-regular.svg": "/insta-clone/static/media/instagram-reels-regular.1b6649cb5df62bc83821aa9f1e995375.svg",
+    "static/media/instagram-reels-solid.svg": "/insta-clone/static/media/instagram-reels-solid.0828766ef48e990f01ba55e34e1affef.svg",
+    "static/media/compass-north-regular.svg": "/insta-clone/static/media/compass-north-regular.6a19b7f7837f8268afc26ba5d6c72ef8.svg",
+    "static/media/home-solid.svg": "/insta-clone/static/media/home-solid.e40deb8ddf33b96ca8806a172b73afe4.svg",
+    "static/media/add-button-regular.svg": "/insta-clone/static/media/add-button-regular.2e31786004ee39ad398cbe0ce9c9a0ff.svg",
+    "static/media/instagram-share-regular.svg": "/insta-clone/static/media/instagram-share-regular.56e79501de2da2a81bcf1e4506e9c0fd.svg",
+    "static/media/home-regular.svg": "/insta-clone/static/media/home-regular.70f9e006bd6684919176990183fa1d40.svg",
+    "static/media/search-regular.svg": "/insta-clone/static/media/search-regular.f8c7e99ebcdf1ad02017b3d5b4262a16.svg",
+    "static/media/search-solid.svg": "/insta-clone/static/media/search-solid.e363778a9b4a5390ce8c8b596cf59015.svg",
+    "static/media/heart-regular.svg": "/insta-clone/static/media/heart-regular.7a4613927544cf0be5437cdcff676c74.svg",
+    "static/media/add-button-solid.svg": "/insta-clone/static/media/add-button-solid.9a7983a0f016286cecf8496f5f3a7760.svg",
+    "static/media/heart-solid.svg": "/insta-clone/static/media/heart-solid.161cfece49eb91440728314f298f958c.svg",
     "index.html": "/insta-clone/index.html",
-    "main.15207c50.css.map": "/insta-clone/static/css/main.15207c50.css.map",
-    "main.8ade6e6d.js.map": "/insta-clone/static/js/main.8ade6e6d.js.map",
+    "main.afbfa7ee.css.map": "/insta-clone/static/css/main.afbfa7ee.css.map",
+    "main.59c682d1.js.map": "/insta-clone/static/js/main.59c682d1.js.map",
     "787.fc1ce4eb.chunk.js.map": "/insta-clone/static/js/787.fc1ce4eb.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.15207c50.css",
-    "static/js/main.8ade6e6d.js"
+    "static/css/main.afbfa7ee.css",
+    "static/js/main.59c682d1.js"
   ]
 }
