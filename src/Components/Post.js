@@ -19,8 +19,8 @@ export default function Post({ postID }) {
     let [showPostDetail, setShowPostDetail] = useState(postDetail.length > 100 ? false : true)
 
     useEffect(() => {
-        console.log("post detail length: ", postDetail.length)
-        console.log("showPostDetail:", showPostDetail)
+        // console.log("post detail length: ", postDetail.length)
+        // console.log("showPostDetail:", showPostDetail)
     }, [])
 
 
@@ -99,7 +99,7 @@ export default function Post({ postID }) {
                 {/* Comment section */}
                 <div className="comments-container fs-sm pt-2">
                     <span className='text-secondary cursor-pointer'>View all {commentCounter} comments</span>
-                    <div class="comments pb-2">
+                    <div className="comments pb-2">
                         {/* Loop through comments */}
                     </div>
                     <div className='hr'></div>

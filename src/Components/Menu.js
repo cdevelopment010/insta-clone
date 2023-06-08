@@ -6,30 +6,51 @@ import Avatar from './Avatar';
 
 import '../Styles/menu.css';
 
+/* SVG ICONS */
+import {ReactComponent as HomeSolid} from '../Icons/svg/home-solid.svg';
+import {ReactComponent as HomeSvg} from '../Icons/svg/home-regular.svg';
+import {ReactComponent as HeartSolid} from '../Icons/svg/heart-solid.svg';
+import {ReactComponent as HeartSvg} from '../Icons/svg/heart-regular.svg';
+import {ReactComponent as SearchSolid} from '../Icons/svg/search-solid.svg';
+import {ReactComponent as SearchSvg} from '../Icons/svg/search-regular.svg';
+import {ReactComponent as CompassSolid} from '../Icons/svg/compass-north-solid.svg';
+import {ReactComponent as CompassSvg} from '../Icons/svg/compass-north-regular.svg';
+import {ReactComponent as ReelsSolid} from '../Icons/svg/instagram-reels-solid.svg';
+import {ReactComponent as ReelsSvg} from '../Icons/svg/instagram-reels-regular.svg';
+import {ReactComponent as ShareSolid} from '../Icons/svg/instagram-share-solid.svg';
+import {ReactComponent as ShareSvg} from '../Icons/svg/instagram-share-regular.svg';
+import {ReactComponent as AddSolid} from '../Icons/svg/add-button-solid.svg';
+import {ReactComponent as AddSvg} from '../Icons/svg/add-button-regular.svg';
+import { useState } from "react";
+
 export default function Menu() {
+
+    const [currentMenuItem, setCurrentMenuItem] = useState("home");
+
+    function findAncestorElement(element, targetTagName) {
+        var parentElement = element.parentNode;
+      
+        if (!parentElement) {
+          return null; // Reached the top of the DOM hierarchy, target not found
+        }
+      
+        if (parentElement.tagName.toLowerCase() === targetTagName.toLowerCase()) {
+          return parentElement; // Found the target element
+        }
+      
+        return findAncestorElement(parentElement, targetTagName); // Recursively move up the DOM
+      }
 
     function changeToSolid(e) {
         e.stopPropagation();
         e.preventDefault();
-        console.log("test", e.target);
-
-        [...document.getElementsByClassName('menu-item')].map(item => {
-            let itemLink = item.querySelector('a');
-            itemLink?.classList.remove('bold');
-            if (item.querySelector('img')?.src) {
-                item.querySelector('img').src = item.querySelector('img').src.replace('solid','regular');
-            }
-        }); 
-
-        if (e.target.tagName.toLowerCase() === 'a') {
-            e.target.classList.add('bold');
-            if (e.target.children[0]?.src) {
-                e.target.children[0].src= e.target.children[0].src.replace('regular','solid');
-            }
+        let el;
+        if (e.target.tagName.toLowerCase() !== "a") {
+            el = findAncestorElement(e.target,"a");
         } else {
-            e.target.parentElement.classList.add('bold');
-            e.target.src= e.target.src.replace('regular','solid');
+            el = e.target;
         }
+        setCurrentMenuItem(el.id);
     }
 
     //desktop version
@@ -39,29 +60,111 @@ export default function Menu() {
                 <div className="logo">Logo desktop...</div>
                 <div className="d-flex align-items-start justify-content-evenly flex-column menu-items-container">
                     <ul className="d-flex align-items-start justify-content-evenly flex-column menu-list">
-                        <li className="d-flex align-items-center menu-item"><a href="#" className="d-flex align-items-center bold" onClick={changeToSolid}><img src="/Icons/svg/home-solid.svg" alt="" className=" me-2" /> Home</a></li>
-                        <li className="d-flex align-items-center menu-item"><a href="#" className="d-flex align-items-center" onClick={changeToSolid}><img src="/Icons/svg/search-regular.svg" alt="" className="me-2" />Search</a></li>
-                        <li className="d-flex align-items-center menu-item"><a href="#" className="d-flex align-items-center" onClick={changeToSolid}><img src="/Icons/svg/compass-north-regular.svg" alt="" className="me-2 compass" />Explore</a></li>
-                        <li className="d-flex align-items-center menu-item"><a href="#" className="d-flex align-items-center" onClick={changeToSolid}><img src="/Icons/svg/instagram-reels-regular.svg" alt="" className="me-2" />Reels</a></li>
-                        <li className="d-flex align-items-center menu-item"><a href="#" className="d-flex align-items-center" onClick={changeToSolid}><img src="/Icons/svg/instagram-share-regular.svg" alt="" className="me-2" />Messages</a></li>
-                        <li className="d-flex align-items-center menu-item"><a href="#" className="d-flex align-items-center" onClick={changeToSolid}><img src="/Icons/svg/heart-regular.svg" alt="" className="me-2" />Notifications</a></li>
-                        <li className="d-flex align-items-center menu-item"><a href="#" className="d-flex align-items-center" onClick={changeToSolid}><img src="/Icons/svg/add-button-regular.svg" alt="" className="me-2" />Create</a></li>
-                        <li className="d-flex align-items-center menu-item"><a href="#" className="d-flex align-items-center" onClick={changeToSolid}><Avatar className="me-2" />Profile</a></li>
-
+                        <li className="d-flex align-items-center menu-item">
+                            <a href="#" className={`d-flex align-items-center ${currentMenuItem=="home" ? 'bold' : ''}`} onClick={changeToSolid} id="home">
+                                <svg height="25" width="25" className="svg-icon me-2" >
+                                    {currentMenuItem=="home"
+                                        &&
+                                        <HomeSolid height="25" width="25"/>
+                                    }
+                                    {currentMenuItem != "home"
+                                        &&
+                                        <HomeSvg height="25" width="25"/>
+                                    }
+                                </svg>
+                                Home
+                            </a></li>
+                        <li className="d-flex align-items-center menu-item">
+                            <a href="#" className={`d-flex align-items-center ${currentMenuItem=="search" ? 'bold' : ''}`} onClick={changeToSolid} id="search">
+                                <svg height="25" width="25" className="svg-icon me-2" >
+                                    {currentMenuItem=="search" 
+                                        && <SearchSolid height="25" width="25"/>
+                                    }
+                                    {currentMenuItem!="search" 
+                                        && <SearchSvg height="25" width="25"/>
+                                    }
+                                </svg>
+                                Search
+                            </a>
+                        </li>
+                        <li className="d-flex align-items-center menu-item">
+                            <a href="#" className={`d-flex align-items-center ${currentMenuItem=="explore" ? 'bold' : ''}`} onClick={changeToSolid} id="explore">
+                                <svg height="25" width="25" className="svg-icon compass me-2" >
+                                    {currentMenuItem=="explore" 
+                                        && <CompassSolid height="25" width="25"/>
+                                    }
+                                    {currentMenuItem!="explore" 
+                                        && <CompassSvg height="25" width="25"/>
+                                    }
+                                </svg>
+                                Explore
+                            </a>
+                        </li>
+                        <li className="d-flex align-items-center menu-item">
+                            <a href="#" className={`d-flex align-items-center ${currentMenuItem=="reels" ? 'bold' : ''}`} onClick={changeToSolid} id="reels">
+                                <svg height="25" width="25" className="svg-icon me-2" >
+                                    {currentMenuItem=="reels" 
+                                        && <ReelsSolid height="25" width="25"/>
+                                    }
+                                    {currentMenuItem!="reels" 
+                                        && <ReelsSvg height="25" width="25"/>
+                                    }
+                                </svg>
+                                
+                                Reels
+                            </a>
+                        </li>
+                        <li className="d-flex align-items-center menu-item">
+                            <a href="#" className={`d-flex align-items-center ${currentMenuItem=="share" ? 'bold' : ''}`} onClick={changeToSolid} id="share">
+                                <svg height="25" width="25" className="svg-icon me-2" >
+                                    {currentMenuItem=="share" 
+                                        && <ShareSolid height="25" width="25"/>
+                                    }
+                                    {currentMenuItem!="share" 
+                                        && <ShareSvg height="25" width="25"/>
+                                    }
+                                </svg>
+                                Messages
+                            </a>
+                        </li>
+                        <li className="d-flex align-items-center menu-item">
+                            <a href="#" className={`d-flex align-items-center ${currentMenuItem=="notifications" ? 'bold' : ''}`} onClick={changeToSolid} id="notifications">
+                                <svg height="25" width="25" className="svg-icon me-2" >
+                                    {currentMenuItem=="notifications" 
+                                        && <HeartSolid height="25" width="25"/>
+                                    }
+                                    {currentMenuItem!="notifications" 
+                                        && <HeartSvg height="25" width="25"/>
+                                    }
+                                </svg>
+                                Notifications
+                            </a>
+                        </li>
+                        <li className="d-flex align-items-center menu-item">
+                            <a href="#" className={`d-flex align-items-center ${currentMenuItem=="add" ? 'bold' : ''}`} onClick={changeToSolid} id="add">
+                                <svg height="25" width="25" className="svg-icon me-2" >
+                                    {currentMenuItem=="add" 
+                                        && <AddSolid height="25" width="25"/>
+                                    }
+                                    {currentMenuItem!="add" 
+                                        && <AddSvg height="25" width="25"/>
+                                    }
+                                </svg>
+                                Create
+                            </a>
+                        </li>
+                        <li className="d-flex align-items-center menu-item">
+                            <a href="#" className={`d-flex align-items-center ${currentMenuItem=="avatar" ? 'bold' : ''}`} onClick={changeToSolid} id="avatar">
+                                <Avatar className="me-2" />
+                                Profile
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
             <div className="menu-footer">
                 <FontAwesomeIcon icon= {faBars}  className="menu-item"/>
             </div>
-
-        </div>
-    )
-
-    //mobile verion
-    return (
-        <div>
-            <span>Logo...</span>
 
         </div>
     )
