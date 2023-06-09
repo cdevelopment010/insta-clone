@@ -3,6 +3,9 @@
     border-radius: 8px; 
     max-width: 400px; 
     border: 1px solid rgb(var(--input-bg));
+    margin-inline:auto;
+    margin-top: 12px;
+    margin-bottom: 12px; 
 }
 
 .post-content {
@@ -39,4 +42,18 @@
     width: calc(100% + 1rem); 
     transform: translateX(calc(-0.5em - 2px) );
     background: rgb(var(--input-bg));
+}
+
+.post-container .svg-icon:hover path {
+    fill: rgb(var(--input-bg));
+    color: rgb(var(--input-bg));
+    stroke: rgb(var(--input-bg));
+}
+
+@media screen and (max-width: 600px) {
+    .post-container {
+        border-radius: 0;
+        width:100%;
+        max-width: 100%; 
+    }
 }

@@ -45,12 +45,15 @@
     width: 25px;
 }
 
-.svg-icon path {
-    height: 25px;
-    width: 25px;
-    fill: black;
-}
 
-.svg-icon:hover path {
-    fill: blue;
+
+/* .menu-container a:hover {
+    color: rgb(var(--input-bg))
+} */
+
+.menu-container  .svg-icon:hover path, 
+.menu-container a:hover .svg-icon path, 
+.menu-container  a:hover .svg-icon rect,
+.menu-container  .svg-icon:hover rect {
+    fill: rgb(var(--input-bg));
 }

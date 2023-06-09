@@ -7,6 +7,25 @@ import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import '../Styles/post.css';
 import { useEffect, useState  } from 'react';
 
+/* SVG ICONS */
+import {ReactComponent as HomeSolid} from '../Icons/svg/home-solid.svg';
+import {ReactComponent as HomeSvg} from '../Icons/svg/home-regular.svg';
+import {ReactComponent as HeartSolid} from '../Icons/svg/heart-solid.svg';
+import {ReactComponent as HeartSvg} from '../Icons/svg/heart-regular.svg';
+import {ReactComponent as SearchSolid} from '../Icons/svg/search-solid.svg';
+import {ReactComponent as SearchSvg} from '../Icons/svg/search-regular.svg';
+import {ReactComponent as CompassSolid} from '../Icons/svg/compass-north-solid.svg';
+import {ReactComponent as CompassSvg} from '../Icons/svg/compass-north-regular.svg';
+import {ReactComponent as ReelsSolid} from '../Icons/svg/instagram-reels-solid.svg';
+import {ReactComponent as ReelsSvg} from '../Icons/svg/instagram-reels-regular.svg';
+import {ReactComponent as ShareSolid} from '../Icons/svg/instagram-share-solid.svg';
+import {ReactComponent as ShareSvg} from '../Icons/svg/instagram-share-regular.svg';
+import {ReactComponent as AddSolid} from '../Icons/svg/add-button-solid.svg';
+import {ReactComponent as AddSvg} from '../Icons/svg/add-button-regular.svg';
+import {ReactComponent as CommentSolid} from '../Icons/svg/instagram-comment-solid.svg';
+import {ReactComponent as CommentSvg} from '../Icons/svg/instagram-comment-regular.svg';
+import {ReactComponent as BookmarkSolid} from '../Icons/svg/bookmark-ribbon-solid.svg';
+import {ReactComponent as BookmarkSvg} from '../Icons/svg/bookmark-ribbon-regular.svg';
 
 
 export default function Post({ postID }) {
@@ -46,7 +65,7 @@ export default function Post({ postID }) {
                     <span className='fw-bold'>{userName}</span>
                 </div>
                 <div className='me-2'>
-                    <FontAwesomeIcon icon={faEllipsis} />
+                    <FontAwesomeIcon icon={faEllipsis} className='cursor-pointer'/>
                 </div>
             </div>
             <div className="post-content"></div>
@@ -54,13 +73,20 @@ export default function Post({ postID }) {
                 {/* Icons */}
                 <div className='icon-section d-flex align-items-center justify-content-between '>
                     <div className="icons d-flex align-items-center ">
-                        <img src="/Icons/svg/heart-regular.svg" alt="" className='me-2'/>
-                        <img src="/Icons/svg/instagram-comment-regular.svg" alt="" className='me-2'/>
-                        <img src="/Icons/svg/instagram-share-regular.svg" alt="" className='me-2'/>
+                        <svg height="25" width="25" className='me-2 cursor-pointer svg-icon'>
+                            <HeartSvg height="25" width="25" />
+                        </svg>
+                        <svg height="25" width="25" className='me-2 cursor-pointer svg-icon'>
+                            <CommentSvg height="25" width="25" />
+                        </svg>
+                        <svg height="25" width="25" className='me-2 cursor-pointer svg-icon'>
+                            <ShareSvg height="25" width="25" />
+                        </svg>
                     </div>
                     <div className="bookmark d-flex align-items-center">
-                        <img src="/Icons/svg/bookmark-ribbon-regular.svg" alt="" className='me-2'/>
-
+                        <svg height="25" width="25" className="me-2 cursor-pointer svg-icon">
+                            <BookmarkSvg height="25" width="25" />
+                        </svg>
                     </div>
                 </div>
                 {/* Likes */}
