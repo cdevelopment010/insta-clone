@@ -1,29 +1,33 @@
 {
   "files": {
-    "main.css": "/insta-clone/static/css/main.afbfa7ee.css",
-    "main.js": "/insta-clone/static/js/main.59c682d1.js",
+    "main.css": "/insta-clone/static/css/main.61b7d2e6.css",
+    "main.js": "/insta-clone/static/js/main.7b5e1e24.js",
     "static/js/787.fc1ce4eb.chunk.js": "/insta-clone/static/js/787.fc1ce4eb.chunk.js",
     "static/media/instagram-share-solid.svg": "/insta-clone/static/media/instagram-share-solid.324b3545bc0f0f7f9fd511cd8abe8068.svg",
     "static/media/compass-north-solid.svg": "/insta-clone/static/media/compass-north-solid.092543a88bb5944c39f6fadd13a400f5.svg",
-    "static/media/instagram-reels-regular.svg": "/insta-clone/static/media/instagram-reels-regular.1b6649cb5df62bc83821aa9f1e995375.svg",
+    "static/media/instagram-reels-regular.svg": "/insta-clone/static/media/instagram-reels-regular.e1ad81b7a491a8af2be7e4bd0d0a693c.svg",
     "static/media/instagram-reels-solid.svg": "/insta-clone/static/media/instagram-reels-solid.0828766ef48e990f01ba55e34e1affef.svg",
-    "static/media/compass-north-regular.svg": "/insta-clone/static/media/compass-north-regular.6a19b7f7837f8268afc26ba5d6c72ef8.svg",
     "static/media/home-solid.svg": "/insta-clone/static/media/home-solid.e40deb8ddf33b96ca8806a172b73afe4.svg",
-    "static/media/add-button-regular.svg": "/insta-clone/static/media/add-button-regular.2e31786004ee39ad398cbe0ce9c9a0ff.svg",
-    "static/media/instagram-share-regular.svg": "/insta-clone/static/media/instagram-share-regular.56e79501de2da2a81bcf1e4506e9c0fd.svg",
-    "static/media/home-regular.svg": "/insta-clone/static/media/home-regular.70f9e006bd6684919176990183fa1d40.svg",
-    "static/media/search-regular.svg": "/insta-clone/static/media/search-regular.f8c7e99ebcdf1ad02017b3d5b4262a16.svg",
+    "static/media/compass-north-regular.svg": "/insta-clone/static/media/compass-north-regular.b361034f399d63a4d337e18e94c76434.svg",
+    "static/media/add-button-regular.svg": "/insta-clone/static/media/add-button-regular.87bb311d80dba26da03a284db7ba1f58.svg",
+    "static/media/instagram-share-regular.svg": "/insta-clone/static/media/instagram-share-regular.7b62babdde2914744aabe2fb03952a88.svg",
+    "static/media/home-regular.svg": "/insta-clone/static/media/home-regular.e0393fd85a8a4dfebdf0a060192ba3c9.svg",
+    "static/media/search-regular.svg": "/insta-clone/static/media/search-regular.45c29da1f5b43744bb6b730878560802.svg",
+    "static/media/bookmark-ribbon-regular.svg": "/insta-clone/static/media/bookmark-ribbon-regular.0a5bd5bbff7a00435b6195401b1c73c9.svg",
     "static/media/search-solid.svg": "/insta-clone/static/media/search-solid.e363778a9b4a5390ce8c8b596cf59015.svg",
-    "static/media/heart-regular.svg": "/insta-clone/static/media/heart-regular.7a4613927544cf0be5437cdcff676c74.svg",
+    "static/media/instagram-comment-regular.svg": "/insta-clone/static/media/instagram-comment-regular.9d1bef15472eef22b6ad8cbd24a6045b.svg",
+    "static/media/heart-regular.svg": "/insta-clone/static/media/heart-regular.b87ae6a49c3743882ab84486967bd481.svg",
     "static/media/add-button-solid.svg": "/insta-clone/static/media/add-button-solid.9a7983a0f016286cecf8496f5f3a7760.svg",
+    "static/media/instagram-comment-solid.svg": "/insta-clone/static/media/instagram-comment-solid.0139dbf3ba425daa5065c252ac6a8aa4.svg",
     "static/media/heart-solid.svg": "/insta-clone/static/media/heart-solid.161cfece49eb91440728314f298f958c.svg",
+    "static/media/bookmark-ribbon-solid.svg": "/insta-clone/static/media/bookmark-ribbon-solid.9b2b768234f2f74cd7de1581d487db2c.svg",
     "index.html": "/insta-clone/index.html",
-    "main.afbfa7ee.css.map": "/insta-clone/static/css/main.afbfa7ee.css.map",
-    "main.59c682d1.js.map": "/insta-clone/static/js/main.59c682d1.js.map",
+    "main.61b7d2e6.css.map": "/insta-clone/static/css/main.61b7d2e6.css.map",
+    "main.7b5e1e24.js.map": "/insta-clone/static/js/main.7b5e1e24.js.map",
     "787.fc1ce4eb.chunk.js.map": "/insta-clone/static/js/787.fc1ce4eb.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.afbfa7ee.css",
-    "static/js/main.59c682d1.js"
+    "static/css/main.61b7d2e6.css",
+    "static/js/main.7b5e1e24.js"
   ]
 }
