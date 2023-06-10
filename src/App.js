@@ -1,7 +1,7 @@
 import './Styles/variables.css';
 import './Styles/main.css';
 
-import { Routes, Route } from "react-router-dom"
+import {BrowserRouter, Routes, Route } from "react-router-dom"
 
 import Post from "./Components/Post";
 import Login from "./Components/Login";
@@ -10,11 +10,13 @@ import Avatar from "./Components/Avatar";
 
 function App() {
   return (
-    <div className="container">
-      <Routes >
-        <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-      </Routes>
+    <div className="container"  basename={`/${process.env.PUBLIC_URL}`}>
+      <BrowserRouter>
+        <Routes >
+          <Route path="/" element={<Login />} />
+          <Route path="/home" element={<Home />} />
+        </Routes>
+      </BrowserRouter>
       {/* <Login /> */}
       {/* <Home /> */}
       {/* <Avatar size="md" bg="bg" src="" className="" /> */}
