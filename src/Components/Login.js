@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareFacebook } from '@fortawesome/free-brands-svg-icons';
 import '../Styles/login.css';
@@ -33,7 +34,7 @@ export default function Login() {
                                 <form className='d-flex flex-column justify-content-evenly'>
                                     <input type="text" placeholder='Phone number, username or email address' className='w-100' />
                                     <input type="password" placeholder='Password' className='w-100'/>
-                                    <button type="button" className='w-100 mt-2'>Login</button>
+                                    <Link to="/home"><button type="button" className='w-100 mt-2 cursor-pointer'>Login</button></Link>
                                 </form>
                             </div>
                             <div className='or'>OR</div>
