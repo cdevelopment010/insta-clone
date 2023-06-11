@@ -22,7 +22,8 @@
     flex: 1;
     overflow-y: scroll;
     word-wrap: break-word;
-    background: rgb(var(--input-bg));
+    /* background: rgb(var(--input-bg)); */
+    background: rgb(250,250,250)
 }
 
 .desktop-container {

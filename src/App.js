@@ -8,10 +8,14 @@ import Login from "./Components/Login";
 import Home from "./Components/Home";
 import Avatar from "./Components/Avatar";
 
+import Firebase from './Firebase.js';
+
 function App() {
   return (
-    <div className="container"  basename={`/${process.env.PUBLIC_URL}`}>
-      <BrowserRouter>
+    <div className="container"  >
+      <BrowserRouter basename={`${process.env.PUBLIC_URL}`}>{/*For live*/} 
+      {/* <BrowserRouter> */}{/*For development*/} 
+
         <Routes >
           <Route path="/" element={<Login />} />
           <Route path="/home" element={<Home />} />
