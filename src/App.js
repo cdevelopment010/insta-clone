@@ -3,11 +3,9 @@ import './Styles/main.css';
 
 import {BrowserRouter, Routes, Route } from "react-router-dom"
 
-import Post from "./Components/Post";
 import Login from "./Components/Login";
 import Home from "./Components/Home";
-import Avatar from "./Components/Avatar";
-
+import EmailSignUp from './Components/EmailSignUp';
 import Firebase from './Firebase.js';
 
 function App() {
@@ -19,6 +17,7 @@ function App() {
         <Routes >
           <Route path="/" element={<Login />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/emailsignup" element={<EmailSignUp />} />
         </Routes>
       </BrowserRouter>
       {/* <Login /> */}

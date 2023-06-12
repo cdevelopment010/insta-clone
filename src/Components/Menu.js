@@ -2,6 +2,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faHouse as faHouseSolid, faMagnifyingGlass, faBars, faCompass as faCompassSolid  } from "@fortawesome/free-solid-svg-icons"
 
 import Avatar from './Avatar';
+import Firebase from "../Firebase";
+
 
 
 import '../Styles/menu.css';
@@ -21,11 +23,26 @@ import {ReactComponent as ShareSolid} from '../Icons/svg/instagram-share-solid.s
 import {ReactComponent as ShareSvg} from '../Icons/svg/instagram-share-regular.svg';
 import {ReactComponent as AddSolid} from '../Icons/svg/add-button-solid.svg';
 import {ReactComponent as AddSvg} from '../Icons/svg/add-button-regular.svg';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Menu() {
 
     const [currentMenuItem, setCurrentMenuItem] = useState("home");
+    const [imgUrl, setImgUrl] = useState("");
+
+    useEffect(() => {
+        const currentUserfnc = async () => {
+            let user = await currentUser();
+            setImgUrl(user.photoURL)
+        }
+        currentUserfnc(); 
+
+    })
+
+    async function currentUser() {
+        let user = await Firebase.getCurrentUser();
+        return user;
+    }
 
     function findAncestorElement(element, targetTagName) {
         var parentElement = element.parentNode;
@@ -155,7 +172,7 @@ export default function Menu() {
                         </li>
                         <li className="d-flex align-items-center menu-item">
                             <a href="#" className={`d-flex align-items-center ${currentMenuItem=="avatar" ? 'bold' : ''}`} onClick={changeToSolid} id="avatar">
-                                <Avatar className="me-2" />
+                                <Avatar className="me-2" src={imgUrl}/>
                                 Profile
                             </a>
                         </li>

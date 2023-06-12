@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Firebase from '../Firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSquareFacebook } from '@fortawesome/free-brands-svg-icons';
+import { faSquareFacebook,  faGoogle } from '@fortawesome/free-brands-svg-icons';
 import '../Styles/login.css';
 
 export default function Login() {
@@ -16,6 +17,11 @@ export default function Login() {
 
         return () => clearInterval(interval);
     })
+
+    async function LoginGoogle(e) {
+        e.preventDefault();
+        await Firebase.signInWithGoogle(); 
+    }
 
     return (
         <div className="login-container">
@@ -41,13 +47,19 @@ export default function Login() {
                             <div className='mt-3 facebook-login d-flex align-item-center'>
                                <FontAwesomeIcon icon={faSquareFacebook} className='facebook-icon me-1'/> Log in with Facebook
                             </div>
+                            <div className='mt-3 google-login d-flex align-item-center'>
+                               <button onClick={LoginGoogle} type='button'>
+                                <FontAwesomeIcon icon={faGoogle} className='google-icon me-1'/> Log in with Google
+                               </button>
+                                
+                            </div>
                             <div className='mt-3 forgotten-password'>
                                 Forgotten your password?
                             </div>
                         </div>
                         <div className="sign-up-form border-1 mt-3 p-5 w-100 d-flex align-item-center justify-content-center">
                             <span>Don't have an account? </span>
-                            <span className='sign-up ms-1'>Sign up</span>
+                            <Link to="emailsignup"><span className='sign-up ms-1'>Sign up</span></Link>
                         </div>
 
                         <div className='mt-3 d-flex flex-column align-item-center justify-content-center download-app'>

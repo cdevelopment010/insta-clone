@@ -118,6 +118,7 @@ html {
 .fs-sm{font-size:0.75rem}
 .text-secondary {color: rgb(var(--secondary-text))}
 .text-callout {color: rgb(var(--primary-btn))}
+.text-center {text-align: center;}
 
 
 .svg-icon path, .svg-icon rect {
