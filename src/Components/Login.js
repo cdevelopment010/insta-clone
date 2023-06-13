@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Firebase from '../Firebase';
+import { signInWithPopup } from 'firebase/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareFacebook,  faGoogle } from '@fortawesome/free-brands-svg-icons';
 import '../Styles/login.css';
@@ -12,7 +13,6 @@ export default function Login() {
     useEffect(() => {
         let interval = setInterval(() => {
             setImageNumber((imageNumber % 4) + 1)
-            console.log(imageNumber);
         }, 3000); 
 
         return () => clearInterval(interval);
@@ -20,7 +20,11 @@ export default function Login() {
 
     async function LoginGoogle(e) {
         e.preventDefault();
-        await Firebase.signInWithGoogle(); 
+        try {
+            await signInWithPopup(Firebase.auth, Firebase.provider);
+        } catch(error) {
+            console.error(error)
+        }
     }
 
     return (

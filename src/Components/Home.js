@@ -3,6 +3,8 @@ import { useState, useEffect } from "react"
 import Avatar from "./Avatar"
 import Menu from "./Menu";
 import Post from "./Post";
+import { db } from "../Firebase";
+import { getDocs, collection } from "firebase/firestore";
 
 import '../Styles/home.css';
 
@@ -24,12 +26,30 @@ import {ReactComponent as AddSvg} from '../Icons/svg/add-button-regular.svg';
 
 export default function Home() {
 
+    const [posts, setPosts] = useState([]);
+    const postsCollectionRef = collection(db, 'posts');
     const [isMobile, setIsMobile] = useState(false);
+
     useEffect(() => {
         setIsMobile(window.innerWidth > 768 ? false : true);
-        window.addEventListener("resize",checkMobile)
+        window.addEventListener("resize",checkMobile); 
         return () => window.removeEventListener("resize", checkMobile);
     })
+
+    useEffect(() => {
+        const getPosts = async () => {
+            try {
+                const posts = await getDocs(postsCollectionRef); 
+                console.log("posts", posts);
+                const filteredPosts = posts.docs.map((doc) => ({...doc.data(), id: doc.id}))
+                console.log("posts", filteredPosts);
+                setPosts(filteredPosts);
+            } catch(error) {
+                console.error(error);
+            }
+        }
+        getPosts();
+    }, [])
 
     function checkMobile() {
         setIsMobile(window.innerWidth > 768 ? false : true); 
@@ -61,6 +81,9 @@ export default function Home() {
         }
         setCurrentMenuItem(el.id);
     }
+
+
+    
 
     if (isMobile){
         return (

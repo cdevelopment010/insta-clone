@@ -31,16 +31,13 @@ export default function Menu() {
     const [imgUrl, setImgUrl] = useState("");
 
     useEffect(() => {
-        const currentUserfnc = async () => {
-            let user = await currentUser();
-            setImgUrl(user.photoURL)
-        }
-        currentUserfnc(); 
-
+        let profileUrl = currentUser();
+        setImgUrl(profileUrl?.photoURL); 
     })
 
-    async function currentUser() {
-        let user = await Firebase.getCurrentUser();
+    function currentUser() {
+        let user = Firebase?.auth?.currentUser;
+        console.log(user);
         return user;
     }
 

@@ -29,81 +29,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 // Initialize Cloud Firestore and get a reference to the service
-const db = getFirestore(app);
-const usersCol = collection(db, 'users'); 
-const postsCol = collection(db, 'posts'); 
-
-
-/******************************************/
-//Authentication 
-/******************************************/
 const auth = getAuth(app);
-let gUser = auth.currentUser; 
-// new user - email and password auth
-async function newUserSignInEmail(email, password) {
-  await createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    const user = userCredential.user;
-  })
-  .catch((error) => {
-    const errorCode = error.code; 
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
-  })
-}
-//Exisiting user - email and password
-async function signInExisitingEmail(email, password) {
-  await signInWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    const user = userCredential.user;
-  })
-  .catch((error) => {
-    const errorCode = error.code; 
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
-  })
-}
-
-//Google login
 const provider = new GoogleAuthProvider();
-async function signInWithGoogle() {
-  await signInWithPopup(auth, provider)
-  .then((result) => {
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    const user = result.user; 
-    window.location.href = process.env.PUBLIC_URL + "/home";
 
-  })
-  .catch((error) => {
-    const errorCode = error.code; 
-    const errorMessage = error.message; 
-    // const email = error.customData.email; 
-    console.error(errorCode, errorMessage);
-    const credential = GoogleAuthProvider.credentialFromError(error);
-  })
-}
-
-// sign in status changes
-onAuthStateChanged(auth, (user) => {
-  if(user) {
-    const uid = user.uid;
-    gUser = user; 
-  } else {
-    console.log("user isn't signed in...");
-  }
-})
+export const db = getFirestore(app);
+// const usersCol = collection(db, 'users'); 
+// const postsCol = collection(db, 'posts'); 
 
 
-async function getCurrentUser() {
-  if (gUser !== null) {
-    return gUser;
-  } else {
-    return setTimeout(() => auth.currentUser, 200);
-  }
-}
-
-
-
-
-export default { newUserSignInEmail, signInExisitingEmail, signInWithGoogle, getCurrentUser }
+export default { auth, provider, db }
