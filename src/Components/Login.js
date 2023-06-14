@@ -92,6 +92,7 @@ export default function Login() {
                     <li>Instagram Lite</li>
                     <li>Contact uploading and non-users</li>
                     <li>Meta Verified</li>
+                    <li>TEST</li>
                 </ul>
                 <ul className='d-flex align-items-center justify-content-center m-3'>
                     <li className='me-3'>English (UK)</li>
