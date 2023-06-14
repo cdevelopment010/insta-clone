@@ -1,0 +1,51 @@
+.create-post-container {
+    height: 100vh; 
+    width: 100vw; 
+    position: fixed; 
+    top:0;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    /* background: rgba(0,0,0,0.5); */
+}
+
+.create-post-container .backdrop {
+    background: rgba(0,0,0,0.5);
+    height: 100%; 
+    width: 100%; 
+    position: absolute;
+    z-index: -1; 
+
+}
+
+.create-post-form {
+    display: grid; 
+    height: 50%;
+    width: 50%; 
+    gap: 1em;
+    background: rgb(250, 250, 250);
+    padding: 1em; 
+    border-radius: 5px;
+    border: 1px solid rgb(var(--input-bg));
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 0.9fr 0.1fr;
+    grid-template-areas: 
+        "upload description"
+        "upload btn";
+}
+
+.create-post-form .file-input {
+    grid-area: upload;
+    background: white;
+}
+
+.create-post-form .description {
+    grid-area: description; 
+    border: 1px solid rgb(var(--input-bg));
+    resize: none;
+
+}
+
+.create-post-form .btn {
+    grid-area: btn;
+}

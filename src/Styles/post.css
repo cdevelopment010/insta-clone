@@ -35,6 +35,14 @@
     background: none; 
 }
 
+.post-detail {
+    white-space: pre-wrap;
+    text-decoration: none;
+}
+.post-detail a{
+    text-decoration: none;
+
+}
 
 .comments-container .hr {
     /* background: rgb(var(--input-bg)); */

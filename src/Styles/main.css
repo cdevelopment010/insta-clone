@@ -32,6 +32,7 @@ html {
 .align-items-center{align-items: center;}
 .align-items-start{align-items: start;}
 .align-items-stretch{align-items: stretch;}
+.align-self-stretch{align-self: stretch;}
 .flex-grow{flex-grow: 1;}
 
 

@@ -23,12 +23,15 @@ import {ReactComponent as ShareSolid} from '../Icons/svg/instagram-share-solid.s
 import {ReactComponent as ShareSvg} from '../Icons/svg/instagram-share-regular.svg';
 import {ReactComponent as AddSolid} from '../Icons/svg/add-button-solid.svg';
 import {ReactComponent as AddSvg} from '../Icons/svg/add-button-regular.svg';
+import CreatePost from "./CreatePost";
 
 export default function Home() {
 
     const [posts, setPosts] = useState([]);
     const postsCollectionRef = collection(db, 'posts');
     const [isMobile, setIsMobile] = useState(false);
+    const [currentMenuItem, setCurrentMenuItem] = useState("home");
+    const [showAddModal, setShowAddModal] = useState(false);
 
     useEffect(() => {
         setIsMobile(window.innerWidth > 768 ? false : true);
@@ -40,9 +43,7 @@ export default function Home() {
         const getPosts = async () => {
             try {
                 const posts = await getDocs(postsCollectionRef); 
-                console.log("posts", posts);
-                const filteredPosts = posts.docs.map((doc) => ({...doc.data(), id: doc.id}))
-                console.log("posts", filteredPosts);
+                const filteredPosts = posts.docs.map((doc) => ({...doc.data(), id: doc.id})).sort((a,b) => a.updated < b.updated ? 1 : -1)
                 setPosts(filteredPosts);
             } catch(error) {
                 console.error(error);
@@ -55,7 +56,7 @@ export default function Home() {
         setIsMobile(window.innerWidth > 768 ? false : true); 
     }
 
-    const [currentMenuItem, setCurrentMenuItem] = useState("home");
+    
     function findAncestorElement(element, targetTagName) {
         var parentElement = element.parentNode;
       
@@ -82,7 +83,9 @@ export default function Home() {
         setCurrentMenuItem(el.id);
     }
 
-
+    const showCreate = () => {
+        setShowAddModal(!showAddModal);
+    }
     
 
     if (isMobile){
@@ -159,16 +162,16 @@ export default function Home() {
     } else {
         return (
             <div className="desktop-container">
-                <Menu/>
+                <Menu showCreate={showCreate}/>
                 <div className="content">
-                    <Post />
-                    <Post />
-                    <Post />
-                    <Post />
-                    <Post />
-                    <Post />
-                    <Post />
+                    {posts.map(p => {
+                        return <Post post={p} key={p.id} />
+                        })
+                    }
                 </div>
+                {showAddModal &&
+                    <CreatePost showCreate={showCreate}/>
+                }
             </div>
         )
     }

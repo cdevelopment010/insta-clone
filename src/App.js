@@ -7,6 +7,7 @@ import Login from "./Components/Login";
 import Home from "./Components/Home";
 import EmailSignUp from './Components/EmailSignUp';
 import Firebase from './Firebase.js';
+import CreatePost from './Components/CreatePost';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path="/emailsignup" element={<EmailSignUp />} />
+          <Route path="/createpost" element={<CreatePost />} />
         </Routes>
       </BrowserRouter>
       {/* <Login /> */}

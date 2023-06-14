@@ -6,6 +6,7 @@ import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 
 import '../Styles/post.css';
 import { useEffect, useState  } from 'react';
+import { Link } from 'react-router-dom';
 
 /* SVG ICONS */
 import {ReactComponent as HomeSolid} from '../Icons/svg/home-solid.svg';
@@ -28,18 +29,23 @@ import {ReactComponent as BookmarkSolid} from '../Icons/svg/bookmark-ribbon-soli
 import {ReactComponent as BookmarkSvg} from '../Icons/svg/bookmark-ribbon-regular.svg';
 
 
-export default function Post({ postID }) {
+export default function Post({ post }) {
+
+    const [userName, setUserName] = useState(post.userid);
+    const [postDetail, setPostDetail] = useState(post.description.split('#'));
+    // const [description, setDescription] = useState(post.description);
+
 
     //these variables will be set using data from the backend.
-    let userName ="craig.m.davison";
+    // let userName ="craig.m.davison";
     let likeCounter = 9000;
     let commentCounter = 28;
-    let postDetail= "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla in augue sit amet arcu finibus ultrices. Vestibulum porta, est et euismod euismod, urna nulla rutrum nisi, non placerat leo enim nec neque. Sed sit amet tincidunt erat, eget placerat quam. Donec venenatis consectetur ultricies. Cras justo risus, suscipit eu tempus nec, accumsan eu urna. Curabitur sed risus dapibus, tristique quam id, ullamcorper felis. Proin erat metus, commodo a massa eget, feugiat porta neque. Cras bibendum augue in est aliquet convallis. Cras sed ante urna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras dapibus dolor turpis, vitae vehicula tortor placerat sed. Proin vitae sem tellus. Ut consequat lorem a orci suscipit faucibus. Proin condimentum velit id leo posuere facilisis. Aliquam at mauris turpis."
-    let [showPostDetail, setShowPostDetail] = useState(postDetail.length > 100 ? false : true)
+    // let postDetail= "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla in augue sit amet arcu finibus ultrices. Vestibulum porta, est et euismod euismod, urna nulla rutrum nisi, non placerat leo enim nec neque. Sed sit amet tincidunt erat, eget placerat quam. Donec venenatis consectetur ultricies. Cras justo risus, suscipit eu tempus nec, accumsan eu urna. Curabitur sed risus dapibus, tristique quam id, ullamcorper felis. Proin erat metus, commodo a massa eget, feugiat porta neque. Cras bibendum augue in est aliquet convallis. Cras sed ante urna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras dapibus dolor turpis, vitae vehicula tortor placerat sed. Proin vitae sem tellus. Ut consequat lorem a orci suscipit faucibus. Proin condimentum velit id leo posuere facilisis. Aliquam at mauris turpis."
+    let [showPostDetail, setShowPostDetail] = useState(postDetail[0].length > 100 ? false : true)
 
     useEffect(() => {
-        // console.log("post detail length: ", postDetail.length)
-        // console.log("showPostDetail:", showPostDetail)
+        // let description = postDetail.split('#');
+        console.log(postDetail[0].length, "\r\n", postDetail[0]);
     }, [])
 
 
@@ -105,10 +111,15 @@ export default function Post({ postID }) {
                 {/* Post detail */}
                 <div className="post-detail fs-sm">
                     <span className="fw-bold">{userName}</span>
-                    {postDetail.length > 100 && !showPostDetail
+                    {postDetail[0].length > 100 && !showPostDetail
                         &&
                         <div>
-                            <span>{postDetail.substring(0,100)}...</span>
+                            <span>{postDetail[0].substring(0,100)}...</span>
+                            <span>{postDetail.map((detail,ind)=>{
+                                if (ind == 0) {return}
+                                console.log(detail)
+                                return <Link to={`/tags/${detail}`} key={ind}>#{detail}</Link>
+                            })}</span>
                             <br></br>
                             <span className='cursor-pointer text-secondary' onClick={togglePostDetail}>more</span>
                         </div>
@@ -116,9 +127,14 @@ export default function Post({ postID }) {
                     {showPostDetail
                         &&
                         <div>
-                            <span>{postDetail}</span>
+                            <span>{postDetail[0]}</span>
+                            <span>{postDetail.map((detail,ind)=>{
+                                if (ind == 0) {return}
+                                console.log(detail)
+                                return <Link to={`/tags/${detail}`} key={ind} className='me-1'>#{detail}</Link>
+                            })}</span>
                             <br></br>
-                            <span className='cursor-pointer text-secondary' onClick={togglePostDetail}>hide</span>
+                            {/* <span className='cursor-pointer text-secondary' onClick={togglePostDetail}>hide</span> */}
                         </div>
                     }
                 </div>

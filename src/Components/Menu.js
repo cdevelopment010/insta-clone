@@ -25,7 +25,7 @@ import {ReactComponent as AddSolid} from '../Icons/svg/add-button-solid.svg';
 import {ReactComponent as AddSvg} from '../Icons/svg/add-button-regular.svg';
 import { useEffect, useState } from "react";
 
-export default function Menu() {
+export default function Menu({showCreate}) {
 
     const [currentMenuItem, setCurrentMenuItem] = useState("home");
     const [imgUrl, setImgUrl] = useState("");
@@ -37,7 +37,7 @@ export default function Menu() {
 
     function currentUser() {
         let user = Firebase?.auth?.currentUser;
-        console.log(user);
+        // console.log(user);
         return user;
     }
 
@@ -155,7 +155,7 @@ export default function Menu() {
                             </a>
                         </li>
                         <li className="d-flex align-items-center menu-item">
-                            <a href="#" className={`d-flex align-items-center ${currentMenuItem=="add" ? 'bold' : ''}`} onClick={changeToSolid} id="add">
+                            <a href="#" className={`d-flex align-items-center ${currentMenuItem=="add" ? 'bold' : ''}`} onClick={(e) => {changeToSolid(e); showCreate()}} id="add">
                                 <svg height="25" width="25" className="svg-icon me-2" >
                                     {currentMenuItem=="add" 
                                         && <AddSolid height="25" width="25"/>
