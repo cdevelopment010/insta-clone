@@ -8,6 +8,7 @@ import { getAuth,
         GoogleAuthProvider,
         signInWithPopup   } from "firebase/auth";
 import {getFirestore, collection} from 'firebase/firestore'
+import { getStorage } from 'firebase/storage'
 
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -33,8 +34,7 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 export const db = getFirestore(app);
-// const usersCol = collection(db, 'users'); 
-// const postsCol = collection(db, 'posts'); 
 
+const storage = getStorage(app);
 
-export default { auth, provider, db }
+export default { auth, provider, db, storage }

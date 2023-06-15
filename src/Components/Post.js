@@ -2,7 +2,8 @@ import Avatar from './Avatar';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
-
+import {getDownloadURL, ref, listAll} from 'firebase/storage'
+import Firebase from '../Firebase';
 
 import '../Styles/post.css';
 import { useEffect, useState  } from 'react';
@@ -33,6 +34,7 @@ export default function Post({ post }) {
 
     const [userName, setUserName] = useState(post.userid);
     const [postDetail, setPostDetail] = useState(post.description.split('#'));
+    const [images, setImages] = useState(post?.imgUrls || [])
     // const [description, setDescription] = useState(post.description);
 
 
@@ -43,9 +45,9 @@ export default function Post({ post }) {
     // let postDetail= "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla in augue sit amet arcu finibus ultrices. Vestibulum porta, est et euismod euismod, urna nulla rutrum nisi, non placerat leo enim nec neque. Sed sit amet tincidunt erat, eget placerat quam. Donec venenatis consectetur ultricies. Cras justo risus, suscipit eu tempus nec, accumsan eu urna. Curabitur sed risus dapibus, tristique quam id, ullamcorper felis. Proin erat metus, commodo a massa eget, feugiat porta neque. Cras bibendum augue in est aliquet convallis. Cras sed ante urna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras dapibus dolor turpis, vitae vehicula tortor placerat sed. Proin vitae sem tellus. Ut consequat lorem a orci suscipit faucibus. Proin condimentum velit id leo posuere facilisis. Aliquam at mauris turpis."
     let [showPostDetail, setShowPostDetail] = useState(postDetail[0].length > 100 ? false : true)
 
+
     useEffect(() => {
-        // let description = postDetail.split('#');
-        console.log(postDetail[0].length, "\r\n", postDetail[0]);
+        console.log(images);
     }, [])
 
 
@@ -74,7 +76,13 @@ export default function Post({ post }) {
                     <FontAwesomeIcon icon={faEllipsis} className='cursor-pointer'/>
                 </div>
             </div>
-            <div className="post-content"></div>
+            <div className="post-content">
+                {images.map((image, ind) => {
+                    return <img src={image} key={ind} />
+                })
+
+                }
+            </div>
             <div className="post-comments p-2">
                 {/* Icons */}
                 <div className='icon-section d-flex align-items-center justify-content-between '>
@@ -130,7 +138,6 @@ export default function Post({ post }) {
                             <span>{postDetail[0]}</span>
                             <span>{postDetail.map((detail,ind)=>{
                                 if (ind == 0) {return}
-                                console.log(detail)
                                 return <Link to={`/tags/${detail}`} key={ind} className='me-1'>#{detail}</Link>
                             })}</span>
                             <br></br>
