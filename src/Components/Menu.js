@@ -3,7 +3,7 @@ import { faHouse as faHouseSolid, faMagnifyingGlass, faBars, faCompass as faComp
 
 import Avatar from './Avatar';
 import Firebase from "../Firebase";
-
+import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
 
 
 import '../Styles/menu.css';
@@ -30,10 +30,21 @@ export default function Menu({showCreate}) {
 
     const [currentMenuItem, setCurrentMenuItem] = useState("home");
     const [imgUrl, setImgUrl] = useState("");
+    const [user, setUser] = useState(null);
+
+    const userCollectionRef = collection(Firebase.db,"users");
 
     useEffect(() => {
         let profileUrl = currentUser();
         setImgUrl(profileUrl?.photoURL); 
+        const getData = async () => {
+            const usersData = await getDocs(userCollectionRef); 
+            const userData = usersData.docs.map((doc) => ({...doc.data(), id: doc.id})).filter(x => x.userid == Firebase.auth.currentUser.uid);
+            if (userData.length > 0 ) {
+                setUser(userData[0]);
+            }
+        }
+        getData();
     })
 
     function currentUser() {
@@ -172,7 +183,7 @@ export default function Menu({showCreate}) {
 
                             <li className="d-flex align-items-center menu-item">
                                 <Link to="/profile" className={`d-flex align-items-center ${currentMenuItem=="avatar" ? 'bold' : ''}`} id="avatar">
-                                    <Avatar className="me-2" src={imgUrl}/>
+                                    <Avatar className="me-2" src={user?.profileImgUrl[0] || ""}/>
                                     Profile
                                 </Link>
                             </li>

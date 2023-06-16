@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Firebase from "../Firebase";
-import { collection, doc, getDocs } from "firebase/firestore";
+import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
+import {getDownloadURL, uploadBytes, ref} from "firebase/storage"
 
 export default function Profile() {
 
@@ -8,6 +9,7 @@ export default function Profile() {
     const userCollectionRef = collection(Firebase.db, 'users'); 
     const [username, setUsername] = useState(""); 
     const [fullName, setFullName] = useState(""); 
+    const [image,setImage] = useState([]);
 
     
     useEffect(() => {
@@ -27,8 +29,20 @@ export default function Profile() {
     }, [user])
 
     const updateDetails = async () => {
+        
         console.log("Update details");
         console.log("doc.id", user.id);
+        const downloadUrls = [];
+        const fileRef = ref(Firebase.storage, `users/${Firebase.auth.currentUser.uid}_${image[0].name}`); 
+        await uploadBytes(fileRef, image[0]); 
+        const downloadUrl = await getDownloadURL(fileRef); 
+        downloadUrls.push(downloadUrl); 
+
+        await updateDoc(doc(userCollectionRef,user.id), {
+            fullName: fullName, 
+            username: username,
+            profileImgUrl: downloadUrls
+        })
     }
 
     return(
@@ -39,7 +53,7 @@ export default function Profile() {
                 
                 <input type="text" placeholder="fullname.." value={fullName} onChange={(e) => setFullName(e.target.value)} />
                 <input type="text" placeholder="username.." value={username} onChange={(e) => setUsername(e.target.value)} />
-                <input type="file" />
+                <input type="file" onChange={(e) => {setImage(e.target.files)}}/>
                 <button type="button" onClick={updateDetails}>Update details</button>
             </div>
         </div>

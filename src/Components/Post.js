@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import {getDownloadURL, ref, listAll} from 'firebase/storage'
 import Firebase from '../Firebase';
+import { collection, getDocs, updateDoc, doc, Firestore } from "firebase/firestore";
 
 import '../Styles/post.css';
 import { useEffect, useState  } from 'react';
@@ -32,6 +33,7 @@ import {ReactComponent as BookmarkSvg} from '../Icons/svg/bookmark-ribbon-regula
 
 export default function Post({ post }) {
 
+    const [user, setUser] = useState(null);
     const [userName, setUserName] = useState(post.userid);
     const [postDetail, setPostDetail] = useState(post.description.split('#'));
     const [images, setImages] = useState(post?.imgUrls || [])
@@ -45,9 +47,17 @@ export default function Post({ post }) {
     // let postDetail= "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla in augue sit amet arcu finibus ultrices. Vestibulum porta, est et euismod euismod, urna nulla rutrum nisi, non placerat leo enim nec neque. Sed sit amet tincidunt erat, eget placerat quam. Donec venenatis consectetur ultricies. Cras justo risus, suscipit eu tempus nec, accumsan eu urna. Curabitur sed risus dapibus, tristique quam id, ullamcorper felis. Proin erat metus, commodo a massa eget, feugiat porta neque. Cras bibendum augue in est aliquet convallis. Cras sed ante urna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras dapibus dolor turpis, vitae vehicula tortor placerat sed. Proin vitae sem tellus. Ut consequat lorem a orci suscipit faucibus. Proin condimentum velit id leo posuere facilisis. Aliquam at mauris turpis."
     let [showPostDetail, setShowPostDetail] = useState(postDetail[0].length > 100 ? false : true)
 
+    const userCollectionRef = collection(Firebase.db, 'users');
 
     useEffect(() => {
-        // console.log(images);
+        const getData = async () => {
+            const usersData = await getDocs(userCollectionRef); 
+            const userData = usersData.docs.map((doc) => ({...doc.data(), id: doc.id})).filter(x => x.userid == Firebase.auth.currentUser.uid);
+            if (userData.length > 0 ) {
+                setUser(userData[0]);
+            }
+        }
+        getData();
     }, [])
 
 
@@ -69,8 +79,8 @@ export default function Post({ post }) {
         <div className="post-container">
             <div className="post-header d-flex align-items-center justify-content-between p-2">
                 <div className="d-flex align-items-center">
-                    <Avatar size="md" src="" className='me-1'/>
-                    <span className='fw-bold'>{userName}</span>
+                    <Avatar size="md" src={user?.profileImgUrl[0]} className='me-1'/>
+                    <span className='fw-bold'>{user?.username}</span>
                 </div>
                 <div className='me-2'>
                     <FontAwesomeIcon icon={faEllipsis} className='cursor-pointer'/>
@@ -118,7 +128,7 @@ export default function Post({ post }) {
                 </div>
                 {/* Post detail */}
                 <div className="post-detail fs-sm">
-                    <span className="fw-bold">{userName}</span>
+                    <span className="fw-bold">{user?.username}</span>
                     {postDetail[0].length > 100 && !showPostDetail
                         &&
                         <div>

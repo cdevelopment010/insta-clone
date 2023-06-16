@@ -95,13 +95,10 @@ export default function Home() {
             <div className="mobile-container">
                 <div className="mobile-nav-header"></div>
                 <div className="content">
-                    <Post />
-                    <Post />
-                    <Post />
-                    <Post />
-                    <Post />
-                    <Post />
-                    <Post />  
+                    {posts.map(p => {
+                        return <Post post={p} key={p.id} />
+                        })
+                    } 
                 </div>
                 <div className="mobile-nav-footer">
                     <ul className="d-flex align-items-center justify-content-evenly h-100">
