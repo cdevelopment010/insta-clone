@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Firebase from '../Firebase';
-import { signInWithPopup } from 'firebase/auth';
+import { signInWithPopup, signOut } from 'firebase/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareFacebook,  faGoogle } from '@fortawesome/free-brands-svg-icons';
 import '../Styles/login.css';
@@ -27,6 +27,10 @@ export default function Login() {
         }
     }
 
+    const logOut = async () => {
+        await signOut(Firebase.auth);
+    }
+
     return (
         <div className="login-container">
             <main className='d-flex align-items-center justify-content-center flex-grow mt-5'>
@@ -45,6 +49,7 @@ export default function Login() {
                                     <input type="text" placeholder='Phone number, username or email address' className='w-100' />
                                     <input type="password" placeholder='Password' className='w-100'/>
                                     <Link to="/home"><button type="button" className='w-100 mt-2 cursor-pointer'>Login</button></Link>
+                                    <Link to="/home"><button type='button' className='w-100 mt-2 cursor-pointer btn-secondary' onClick={logOut}>Continue without loggin in</button></Link>
                                 </form>
                             </div>
                             <div className='or'>OR</div>

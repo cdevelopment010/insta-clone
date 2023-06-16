@@ -4,6 +4,7 @@ import Avatar from "./Avatar"
 import Menu from "./Menu";
 import Post from "./Post";
 import { db } from "../Firebase";
+import Firebase from "../Firebase";
 import { getDocs, collection } from "firebase/firestore";
 
 import '../Styles/home.css';
@@ -50,6 +51,7 @@ export default function Home() {
             }
         }
         getPosts();
+        console.log("auth current user:", Firebase?.auth?.currentUser)
     }, [])
 
     function checkMobile() {

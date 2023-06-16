@@ -47,7 +47,7 @@ export default function Post({ post }) {
 
 
     useEffect(() => {
-        console.log(images);
+        // console.log(images);
     }, [])
 
 
@@ -78,7 +78,7 @@ export default function Post({ post }) {
             </div>
             <div className="post-content">
                 {images.map((image, ind) => {
-                    return <img src={image} key={ind} />
+                    return <img src={image} key={ind} alt="post"/>
                 })
 
                 }
