@@ -15,7 +15,7 @@ export default function Profile() {
     useEffect(() => {
         const getData = async () => {
             const usersData = await getDocs(userCollectionRef); 
-            const userData = usersData.docs.map((doc) => ({...doc.data(), id: doc.id})).filter(x => x.userid == Firebase.auth.currentUser.uid);
+            const userData = usersData.docs.map((doc) => ({...doc.data(), id: doc.id})).filter(x => x.userid == Firebase.auth?.currentUser?.uid);
             if (userData.length > 0 ) {
                 setUser(userData[0]);
             }
