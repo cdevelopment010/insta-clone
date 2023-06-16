@@ -4,9 +4,9 @@
 - [ ] Implement storage for photos/images
   - [ ] This will need a folder for user profile pictures
   - [x] and a folder for post images
-- On posts, show username not ID (will need to access the user collection)
-- Sign in should redirect user to home page.
-- Need to check sign in with email/password - probably need to update code. 
+- [ ] On posts, show username not ID (will need to access the user collection)
+- [x] Sign in should redirect user to home page.
+- [ ] Need to check sign in with email/password - probably need to update code. 
 
 
 
