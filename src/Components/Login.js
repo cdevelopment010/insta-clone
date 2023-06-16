@@ -1,14 +1,19 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Firebase from '../Firebase';
 import { signInWithPopup, signOut } from 'firebase/auth';
+import { addDoc, collection, serverTimestamp, updateDoc, doc, getDocs } from "firebase/firestore"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareFacebook,  faGoogle } from '@fortawesome/free-brands-svg-icons';
 import '../Styles/login.css';
 
 export default function Login() {
 
+    const [newUser, setNewUser] = useState(true);
     const [imageNumber, setImageNumber] = useState(1);
+    const navigate = useNavigate();
+    const userCollectionRef = collection(Firebase.db, 'users');
+    // console.log("userCollection:", userCollectionRef);
 
     useEffect(() => {
         let interval = setInterval(() => {
@@ -22,6 +27,12 @@ export default function Login() {
         e.preventDefault();
         try {
             await signInWithPopup(Firebase.auth, Firebase.provider);
+            //check if existing user
+                // if not, add to users collection
+            //redirect to homepage
+            if (Firebase.auth.currentUser) {
+                await newUserCheck();
+            }
         } catch(error) {
             console.error(error)
         }
@@ -29,6 +40,40 @@ export default function Login() {
 
     const logOut = async () => {
         await signOut(Firebase.auth);
+    }
+
+    const newUserCheck = async () => {
+        try {
+            let users = await getDocs(userCollectionRef); 
+            const filteredUsers = users.docs.map((doc) => ({...doc.data(), id: doc.id})).filter(x => x.userid === Firebase.auth.currentUser.uid);
+            console.log(filteredUsers);
+            if (filteredUsers.length > 0 ) {
+                setNewUser(false); 
+                await updateDoc(doc(userCollectionRef, filteredUsers[0].id), {
+                    lastLoggedIn: serverTimestamp()
+                })
+
+                navigate("/home");
+            } else {
+                await addDoc(userCollectionRef, {
+                    userid: Firebase.auth.currentUser.uid,
+                    profileImgUrl: null,
+                    fullName: Firebase.auth.currentUser.displayName,
+                    username: Firebase.auth.currentUser.displayName,
+                    created: serverTimestamp(),
+                    lastLoggedIn: serverTimestamp()
+
+                })
+
+                navigate("/profile");
+            }
+            
+        } catch(error) {
+            console.error(error)
+        }
+        //if new user, add to collection
+
+        //if exsiting user, update last logged in
     }
 
     return (

@@ -24,6 +24,7 @@ import {ReactComponent as ShareSvg} from '../Icons/svg/instagram-share-regular.s
 import {ReactComponent as AddSolid} from '../Icons/svg/add-button-solid.svg';
 import {ReactComponent as AddSvg} from '../Icons/svg/add-button-regular.svg';
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Menu({showCreate}) {
 
@@ -167,12 +168,15 @@ export default function Menu({showCreate}) {
                                 Create
                             </a>
                         </li>
-                        <li className="d-flex align-items-center menu-item">
-                            <a href="#" className={`d-flex align-items-center ${currentMenuItem=="avatar" ? 'bold' : ''}`} onClick={changeToSolid} id="avatar">
-                                <Avatar className="me-2" src={imgUrl}/>
-                                Profile
-                            </a>
-                        </li>
+                        {Firebase.auth.currentUser != null &&
+
+                            <li className="d-flex align-items-center menu-item">
+                                <Link to="/profile" className={`d-flex align-items-center ${currentMenuItem=="avatar" ? 'bold' : ''}`} id="avatar">
+                                    <Avatar className="me-2" src={imgUrl}/>
+                                    Profile
+                                </Link>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
