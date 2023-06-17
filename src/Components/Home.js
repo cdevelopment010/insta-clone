@@ -38,7 +38,7 @@ export default function Home() {
         setIsMobile(window.innerWidth > 768 ? false : true);
         window.addEventListener("resize",checkMobile); 
         return () => window.removeEventListener("resize", checkMobile);
-    })
+    },[])
 
     useEffect(() => {
         const getPosts = async () => {

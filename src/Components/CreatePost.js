@@ -17,23 +17,6 @@ export default function CreatePost({showCreate}) {
         console.log("Image", image);
     }, [image])
 
-    // const uploadImage = async () => {
-    //     if (image == null ) {return} //no images!
-
-    //     await [...image].forEach((i) => {
-    //         console.log(i.name + "_" + Firebase.auth.currentUser.uid);
-    //         const imageRef = ref(Firebase.storage, `images/${i.name}_${Firebase.auth.currentUser.uid}_${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}${new Date().getHours()}${new Date().getMinutes()}`)
-    //         uploadBytes(imageRef, i).then((img) => {
-    //             console.log(img.metadata.fullPath, img.ref);
-    //             setImageUrls([...imageUrls, img.metadata.fullPath])
-    //             console.log(imageUrls);
-    //         })
-    //     })
-    //     addPost();
-
-
-    // }
-
     const addPost = async() => {
         //must have an image
         if (image.length == 0) return;
@@ -68,11 +51,9 @@ export default function CreatePost({showCreate}) {
         <div className="create-post-container">
             <div className="backdrop" onClick={showCreate}></div>
             <div className="create-post-form">
-                {/* <input type="text" placeholder="description" value={description} onChange={(e) => setDescription(e.target.value)} /> */}
                 <input type="file" multiple className="m-0 file-input" onChange={(e) => {setImage(e.target.files)}}/>
                 <textarea value={description} onChange={(e) => setDescription(e.target.value)} className="align-self-stretch description"></textarea>
                 <button onClick={addPost} className="btn">Create post!</button>
-                {/* <button onClick={uploadImage} className="btn">Test images</button> */}
             </div>
         </div>
     )

@@ -34,6 +34,7 @@ export default function Menu({showCreate}) {
 
     const userCollectionRef = collection(Firebase.db,"users");
 
+    //this didn't have a dependency -- might have been the issue causing a lot of reads!!!
     useEffect(() => {
         let profileUrl = currentUser();
         setImgUrl(profileUrl?.photoURL); 
@@ -45,7 +46,7 @@ export default function Menu({showCreate}) {
             }
         }
         getData();
-    })
+    },[])
 
     function currentUser() {
         let user = Firebase?.auth?.currentUser;
@@ -183,7 +184,7 @@ export default function Menu({showCreate}) {
 
                             <li className="d-flex align-items-center menu-item">
                                 <Link to="/profile" className={`d-flex align-items-center ${currentMenuItem=="avatar" ? 'bold' : ''}`} id="avatar">
-                                    <Avatar className="me-2" src={user?.profileImgUrl[0] || ""}/>
+                                    <Avatar className="me-2" src={user?.profileImgUrl ? user?.profileImgUrl[0] : ""}/>
                                     Profile
                                 </Link>
                             </li>

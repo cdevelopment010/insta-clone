@@ -1,8 +1,9 @@
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Firebase from '../Firebase';
 import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
+import { addDoc, collection, serverTimestamp, updateDoc, doc, getDocs } from "firebase/firestore"
 import '../Styles/login.css';
 import { useState } from 'react';
 
@@ -10,14 +11,18 @@ export default function EmailSignUp() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState(""); 
+    const [fullName, setFullName] = useState(""); 
+    const [username, setUsername] = useState(""); 
 
-    console.log(Firebase.auth?.currentUser?.email);
+    const userCollectionRef = collection(Firebase.db, 'users'); 
+    const navigate = useNavigate(); 
 
     async function createUser(e) {
 
         e.preventDefault(); 
         try {
             await createUserWithEmailAndPassword(Firebase.auth, email, password);
+            await newUserCheck(); 
         } catch (error) {
             console.error(error);
         }
@@ -33,6 +38,35 @@ export default function EmailSignUp() {
         }
     }
 
+    const newUserCheck = async () => {
+        try {
+            let users = await getDocs(userCollectionRef); 
+            const filteredUsers = users.docs.map((doc) => ({...doc.data(), id: doc.id})).filter(x => x.userid === Firebase.auth.currentUser.uid);
+            if (filteredUsers.length > 0 ) {
+                await updateDoc(doc(userCollectionRef, filteredUsers[0].id), {
+                    lastLoggedIn: serverTimestamp()
+                })
+
+                navigate("/home");
+            } else {
+                await addDoc(userCollectionRef, {
+                    userid: Firebase.auth.currentUser.uid,
+                    profileImgUrl: null,
+                    fullName: fullName,
+                    username: username,
+                    created: serverTimestamp(),
+                    lastLoggedIn: serverTimestamp()
+
+                })
+
+                navigate("/profile");
+            }
+            
+        } catch(error) {
+            console.error(error)
+        }
+    }
+
 
     return (
         <div className="sign-up-container d-flex flex-column align-items-center justify-content-even">
@@ -42,10 +76,10 @@ export default function EmailSignUp() {
                     <h3>Sign up to see photos and <s>videos</s> from your friends.</h3>
                 </div>
                 <div className="form-container d-flex flex-column align-items-center justify-content-center">
-                    <input type="email" placeholder="Email address" id="email" autoComplete='off'onChange={(e) => setEmail(e.target.value)}/>
-                    <input type="text" placeholder="Full name" id="name" autoComplete='off'/>
-                    <input type="text" placeholder="Username" id="username" autoComplete='off'/>
-                    <input type="password" placeholder="Password" id="password" autoComplete='off' onChange={(e) => setPassword(e.target.value)}/>
+                    <input type="email" placeholder="Email address" autoComplete='off' value={email} onChange={(e) => setEmail(e.target.value)}/>
+                    <input type="text" placeholder="Full name" autoComplete='off'value={fullName} onChange={(e) => setFullName(e.target.value)}/>
+                    <input type="text" placeholder="Username" autoComplete='off' value={username} onChange={(e) => setUsername(e.target.value)}/>
+                    <input type="password" placeholder="Password" autoComplete='off' value={password} onChange={(e) => setPassword(e.target.value)}/>
                     <button onClick={createUser} type="button">Create User</button>
                 </div>
             </div>

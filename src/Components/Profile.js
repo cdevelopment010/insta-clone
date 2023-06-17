@@ -15,7 +15,7 @@ export default function Profile() {
     useEffect(() => {
         const getData = async () => {
             const usersData = await getDocs(userCollectionRef); 
-            const userData = usersData.docs.map((doc) => ({...doc.data(), id: doc.id})).filter(x => x.userid == Firebase.auth?.currentUser?.uid);
+            const userData = usersData.docs.map((doc) => ({...doc.data(), id: doc.id})).filter(x => x.userid === Firebase.auth?.currentUser?.uid);
             if (userData.length > 0 ) {
                 setUser(userData[0]);
             }
@@ -30,10 +30,8 @@ export default function Profile() {
 
     const updateDetails = async () => {
         
-        console.log("Update details");
-        console.log("doc.id", user.id);
         const downloadUrls = [];
-        const fileRef = ref(Firebase.storage, `users/${Firebase.auth.currentUser.uid}_${image[0].name}`); 
+        const fileRef = ref(Firebase.storage, `users/${Firebase.auth.currentUser.uid}_${image[0]?.name}`); 
         await uploadBytes(fileRef, image[0]); 
         const downloadUrl = await getDownloadURL(fileRef); 
         downloadUrls.push(downloadUrl); 

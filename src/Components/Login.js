@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Firebase from '../Firebase';
-import { signInWithPopup, signOut } from 'firebase/auth';
+import { signInWithPopup, signOut, signInWithEmailAndPassword } from 'firebase/auth';
 import { addDoc, collection, serverTimestamp, updateDoc, doc, getDocs } from "firebase/firestore"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareFacebook,  faGoogle } from '@fortawesome/free-brands-svg-icons';
@@ -11,9 +11,10 @@ export default function Login() {
 
     const [newUser, setNewUser] = useState(true);
     const [imageNumber, setImageNumber] = useState(1);
+    const [email, setEmail] = useState(""); 
+    const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const userCollectionRef = collection(Firebase.db, 'users');
-    // console.log("userCollection:", userCollectionRef);
 
     useEffect(() => {
         let interval = setInterval(() => {
@@ -21,15 +22,12 @@ export default function Login() {
         }, 3000); 
 
         return () => clearInterval(interval);
-    })
+    },[])
 
     async function LoginGoogle(e) {
         e.preventDefault();
         try {
             await signInWithPopup(Firebase.auth, Firebase.provider);
-            //check if existing user
-                // if not, add to users collection
-            //redirect to homepage
             if (Firebase.auth.currentUser) {
                 await newUserCheck();
             }
@@ -42,11 +40,20 @@ export default function Login() {
         await signOut(Firebase.auth);
     }
 
+    const signInWithEmail = async () => {
+        try {
+            await logOut(); 
+            await signInWithEmailAndPassword(Firebase.auth, email, password)
+            await newUserCheck(); 
+        } catch(error) {
+            console.error(error);
+        }
+    }
+
     const newUserCheck = async () => {
         try {
             let users = await getDocs(userCollectionRef); 
             const filteredUsers = users.docs.map((doc) => ({...doc.data(), id: doc.id})).filter(x => x.userid === Firebase.auth.currentUser.uid);
-            console.log(filteredUsers);
             if (filteredUsers.length > 0 ) {
                 setNewUser(false); 
                 await updateDoc(doc(userCollectionRef, filteredUsers[0].id), {
@@ -55,6 +62,7 @@ export default function Login() {
 
                 navigate("/home");
             } else {
+                //should only fire if signing in with Google for the first time.
                 await addDoc(userCollectionRef, {
                     userid: Firebase.auth.currentUser.uid,
                     profileImgUrl: null,
@@ -71,9 +79,6 @@ export default function Login() {
         } catch(error) {
             console.error(error)
         }
-        //if new user, add to collection
-
-        //if exsiting user, update last logged in
     }
 
     return (
@@ -91,9 +96,9 @@ export default function Login() {
                             <h1 className='m-5'>Instagram</h1>
                             <div className='mt-5 mb-5 ms-5 me-5 w-100'>
                                 <form className='d-flex flex-column justify-content-evenly'>
-                                    <input type="text" placeholder='Phone number, username or email address' className='w-100' />
-                                    <input type="password" placeholder='Password' className='w-100'/>
-                                    <Link to="/home"><button type="button" className='w-100 mt-2 cursor-pointer'>Login</button></Link>
+                                    <input type="text" placeholder='Phone number, username or email address' className='w-100' value={email} onChange={(e) => setEmail(e.target.value)} />
+                                    <input type="password" placeholder='Password' className='w-100' value={password} onChange={(e) => setPassword(e.target.value)}/>
+                                    <button type="button" className='w-100 mt-2 cursor-pointer' onClick={signInWithEmail}>Login</button>
                                     <Link to="/home"><button type='button' className='w-100 mt-2 cursor-pointer btn-secondary' onClick={logOut}>Continue without loggin in</button></Link>
                                 </form>
                             </div>
