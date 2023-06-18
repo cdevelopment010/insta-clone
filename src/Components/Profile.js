@@ -11,10 +11,6 @@ export default function Profile() {
     const [username, setUsername] = useState(""); 
     const [fullName, setFullName] = useState(""); 
     const [image,setImage] = useState([]);
-
-    useEffect(() => {
-        console.log("UseEffect in Profile: Firebase.auth")
-    }, [Firebase.auth])
     
     useEffect(() => {
 
@@ -38,7 +34,7 @@ export default function Profile() {
         }
       
         return () => unsubscribe(); 
-    },[])
+    },[userCollectionRef])
 
     useEffect(() => {
         setFullName(user?.fullName);

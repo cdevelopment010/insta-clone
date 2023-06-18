@@ -2,12 +2,8 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, 
-        onAuthStateChanged, 
-        createUserWithEmailAndPassword,
-        signInWithEmailAndPassword,
-        GoogleAuthProvider,
-        signInWithPopup   } from "firebase/auth";
-import {getFirestore, collection} from 'firebase/firestore'
+        GoogleAuthProvider} from "firebase/auth";
+import {getFirestore} from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
 
 
@@ -38,4 +34,4 @@ export const db = getFirestore(app);
 
 const storage = getStorage(app);
 
-export default { auth, provider, db, storage }
+export default { auth, analytics, provider, db, storage }

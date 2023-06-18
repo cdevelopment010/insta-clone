@@ -57,8 +57,8 @@ export default function Login() {
 
             if (querySnapshop.size >0 ) {
                 setNewUser(false); 
-                querySnapshop.forEach(async (doc) => {
-                    const data = {...doc.data(), id: doc.id};
+                querySnapshop.forEach(async (docItem) => {
+                    const data = {...docItem.data(), id: docItem.id};
                     await updateDoc(doc(userCollectionRef, data.id), {
                         lastLoggedIn: serverTimestamp()
                     })

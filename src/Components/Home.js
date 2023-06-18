@@ -26,13 +26,12 @@ import {ReactComponent as AddSolid} from '../Icons/svg/add-button-solid.svg';
 import {ReactComponent as AddSvg} from '../Icons/svg/add-button-regular.svg';
 import CreatePost from "./CreatePost";
 
-export default function Home() {
+export default function Home({showAddModal, showCreate}) {
 
     const [posts, setPosts] = useState([]);
     const postsCollectionRef = collection(db, 'posts');
     const [isMobile, setIsMobile] = useState(false);
     const [currentMenuItem, setCurrentMenuItem] = useState("home");
-    const [showAddModal, setShowAddModal] = useState(false);
 
     useEffect(() => {
         setIsMobile(window.innerWidth > 768 ? false : true);
@@ -77,17 +76,15 @@ export default function Home() {
         e.stopPropagation();
         e.preventDefault();
         let el;
-        if (e.target.tagName.toLowerCase() !== "a") {
-            el = findAncestorElement(e.target,"a");
+        if (e.target.tagName.toLowerCase() !== "span") {
+            el = findAncestorElement(e.target,"span");
         } else {
             el = e.target;
         }
         setCurrentMenuItem(el.id);
     }
 
-    const showCreate = () => {
-        setShowAddModal(!showAddModal);
-    }
+    
     
 
     if (isMobile){
@@ -161,7 +158,7 @@ export default function Home() {
     } else {
         return (
             <div className="desktop-container">
-                <Menu showCreate={showCreate}/>
+                {/* <Menu showCreate={showCreate}/> */}
                 <div className="content">
                     {posts.map(p => {
                         return <Post post={p} key={p.id} />
