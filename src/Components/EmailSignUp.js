@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import Firebase from '../Firebase';
 import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
-import { addDoc, collection, serverTimestamp, updateDoc, doc, getDocs } from "firebase/firestore"
+import { addDoc, collection, serverTimestamp, updateDoc, doc, getDocs, query, where } from "firebase/firestore"
 import '../Styles/login.css';
 import { useState } from 'react';
 
@@ -40,11 +40,16 @@ export default function EmailSignUp() {
 
     const newUserCheck = async () => {
         try {
-            let users = await getDocs(userCollectionRef); 
-            const filteredUsers = users.docs.map((doc) => ({...doc.data(), id: doc.id})).filter(x => x.userid === Firebase.auth.currentUser.uid);
-            if (filteredUsers.length > 0 ) {
-                await updateDoc(doc(userCollectionRef, filteredUsers[0].id), {
-                    lastLoggedIn: serverTimestamp()
+            let authUid = Firebase?.auth?.currentUser?.uid || null;
+            const userData = query(userCollectionRef, where("userid", "==", authUid));
+            const querySnapshop = await getDocs(userData);
+
+            if (querySnapshop.size > 0 ) {
+                querySnapshop.forEach(async (doc) => {
+                    const data = {...doc.data(), id: doc.id};
+                    await updateDoc(doc(userCollectionRef, data.id), {
+                        lastLoggedIn: serverTimestamp()
+                    })
                 })
 
                 navigate("/home");
@@ -56,9 +61,7 @@ export default function EmailSignUp() {
                     username: username,
                     created: serverTimestamp(),
                     lastLoggedIn: serverTimestamp()
-
                 })
-
                 navigate("/profile");
             }
             

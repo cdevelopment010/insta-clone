@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import {getDownloadURL, ref, listAll} from 'firebase/storage'
 import Firebase from '../Firebase';
-import { collection, getDocs, updateDoc, doc, Firestore } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 import '../Styles/post.css';
 import { useEffect, useState  } from 'react';
@@ -51,13 +51,15 @@ export default function Post({ post }) {
 
     useEffect(() => {
         const getData = async () => {
-            const usersData = await getDocs(userCollectionRef); 
-            const userData = usersData.docs.map((doc) => ({...doc.data(), id: doc.id})).filter(x => x.userid === post.userid);
-            if (userData.length > 0 ) {
-                setUser(userData[0]);
-            }
+            const postUser = query(userCollectionRef, where("userid", "==", post.userid)); 
+            const querySnapshop = await getDocs(postUser); 
+            querySnapshop.forEach((doc) => {
+                const data = {...doc.data(), id: doc.id}
+                setUser(data);
+            })
         }
         getData();
+        console.log("UseEffect in Post: Gets userData (this happens in multiple places and should be re-written). This fires per post which isn't good. ")
     }, [])
 
 

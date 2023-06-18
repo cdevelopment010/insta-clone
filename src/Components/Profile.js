@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Firebase from "../Firebase";
-import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+import { collection, getDocs, updateDoc, doc, where, query } from "firebase/firestore";
 import {getDownloadURL, uploadBytes, ref} from "firebase/storage"
 
 export default function Profile() {
@@ -11,21 +12,38 @@ export default function Profile() {
     const [fullName, setFullName] = useState(""); 
     const [image,setImage] = useState([]);
 
+    useEffect(() => {
+        console.log("UseEffect in Profile: Firebase.auth")
+    }, [Firebase.auth])
     
     useEffect(() => {
-        const getData = async () => {
-            const usersData = await getDocs(userCollectionRef); 
-            const userData = usersData.docs.map((doc) => ({...doc.data(), id: doc.id})).filter(x => x.userid === Firebase.auth?.currentUser?.uid);
-            if (userData.length > 0 ) {
-                setUser(userData[0]);
+
+        const unsubscribe = onAuthStateChanged(Firebase.auth, (user) => {
+            if (user) {
+              getData(); 
+            } else {
+                
             }
+        });
+
+        const getData = async () => {
+            let authUid = Firebase?.auth?.currentUser?.uid || null;
+            const userData = query(userCollectionRef, where("userid", "==", authUid));
+            const querySnapshop = await getDocs(userData);
+            querySnapshop.forEach((doc) => {
+                const data = {...doc.data(), id: doc.id};
+                setUser(data);  
+            })
+        
         }
-        getData();
+      
+        return () => unsubscribe(); 
     },[])
 
     useEffect(() => {
         setFullName(user?.fullName);
         setUsername(user?.username);
+        console.log("UseEffect in Profile: This sets states of username and fullname. Should only fire once after user is set.")
     }, [user])
 
     const updateDetails = async () => {

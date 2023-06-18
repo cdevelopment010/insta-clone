@@ -6,7 +6,6 @@ import {BrowserRouter, Routes, Route } from "react-router-dom"
 import Login from "./Components/Login";
 import Home from "./Components/Home";
 import EmailSignUp from './Components/EmailSignUp';
-import Firebase from './Firebase.js';
 import CreatePost from './Components/CreatePost';
 import Profile from './Components/Profile';
 
@@ -24,10 +23,6 @@ function App() {
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </BrowserRouter>
-      {/* <Login /> */}
-      {/* <Home /> */}
-      {/* <Avatar size="md" bg="bg" src="" className="" /> */}
-      {/* <Post /> */}
     </div>
   );
 }

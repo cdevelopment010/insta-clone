@@ -15,6 +15,7 @@ export default function CreatePost({showCreate}) {
 
     useEffect(() => {
         console.log("Image", image);
+        console.log("UseEffect in CreatePost. Not sure this is actually needed.")
     }, [image])
 
     const addPost = async() => {

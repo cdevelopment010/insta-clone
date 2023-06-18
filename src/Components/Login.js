@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Firebase from '../Firebase';
 import { signInWithPopup, signOut, signInWithEmailAndPassword } from 'firebase/auth';
-import { addDoc, collection, serverTimestamp, updateDoc, doc, getDocs } from "firebase/firestore"
+import { addDoc, collection, serverTimestamp, updateDoc, doc, getDocs, query, where } from "firebase/firestore"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareFacebook,  faGoogle } from '@fortawesome/free-brands-svg-icons';
 import '../Styles/login.css';
@@ -20,7 +20,6 @@ export default function Login() {
         let interval = setInterval(() => {
             setImageNumber((imageNumber % 4) + 1)
         }, 3000); 
-
         return () => clearInterval(interval);
     },[])
 
@@ -52,12 +51,17 @@ export default function Login() {
 
     const newUserCheck = async () => {
         try {
-            let users = await getDocs(userCollectionRef); 
-            const filteredUsers = users.docs.map((doc) => ({...doc.data(), id: doc.id})).filter(x => x.userid === Firebase.auth.currentUser.uid);
-            if (filteredUsers.length > 0 ) {
+            let authUid = Firebase?.auth?.currentUser?.uid || null;
+            const userData = query(userCollectionRef, where("userid", "==", authUid));
+            const querySnapshop = await getDocs(userData);
+
+            if (querySnapshop.size >0 ) {
                 setNewUser(false); 
-                await updateDoc(doc(userCollectionRef, filteredUsers[0].id), {
-                    lastLoggedIn: serverTimestamp()
+                querySnapshop.forEach(async (doc) => {
+                    const data = {...doc.data(), id: doc.id};
+                    await updateDoc(doc(userCollectionRef, data.id), {
+                        lastLoggedIn: serverTimestamp()
+                    })
                 })
 
                 navigate("/home");
@@ -70,9 +74,7 @@ export default function Login() {
                     username: Firebase.auth.currentUser.displayName,
                     created: serverTimestamp(),
                     lastLoggedIn: serverTimestamp()
-
                 })
-
                 navigate("/profile");
             }
             

@@ -44,6 +44,7 @@ export default function Home() {
         const getPosts = async () => {
             try {
                 const posts = await getDocs(postsCollectionRef); 
+                //Think this is OK for showing all the posts on the home page. 
                 const filteredPosts = posts.docs.map((doc) => ({...doc.data(), id: doc.id})).sort((a,b) => a.updated < b.updated ? 1 : -1)
                 setPosts(filteredPosts);
             } catch(error) {
@@ -51,7 +52,6 @@ export default function Home() {
             }
         }
         getPosts();
-        console.log("auth current user:", Firebase?.auth?.currentUser)
     }, [])
 
     function checkMobile() {

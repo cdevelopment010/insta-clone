@@ -3,7 +3,8 @@ import { faHouse as faHouseSolid, faMagnifyingGlass, faBars, faCompass as faComp
 
 import Avatar from './Avatar';
 import Firebase from "../Firebase";
-import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+import { collection, getDocs, query, where} from "firebase/firestore";
 
 
 import '../Styles/menu.css';
@@ -34,18 +35,34 @@ export default function Menu({showCreate}) {
 
     const userCollectionRef = collection(Firebase.db,"users");
 
+    useEffect(() => {
+        
+
+    }, [])
+
     //this didn't have a dependency -- might have been the issue causing a lot of reads!!!
     useEffect(() => {
+        const unsubscribe = onAuthStateChanged(Firebase.auth, (user) => {
+            if (user) {
+              getData(); 
+            } else {
+                
+            }
+        });
+        
         let profileUrl = currentUser();
         setImgUrl(profileUrl?.photoURL); 
         const getData = async () => {
-            const usersData = await getDocs(userCollectionRef); 
-            const userData = usersData.docs.map((doc) => ({...doc.data(), id: doc.id})).filter(x => x.userid == Firebase.auth?.currentUser?.uid);
-            if (userData.length > 0 ) {
-                setUser(userData[0]);
-            }
+            let authUid = Firebase?.auth?.currentUser?.uid || null;
+            const userData = query(userCollectionRef, where("userid", "==", authUid));
+            const querySnapshop = await getDocs(userData);
+            querySnapshop.forEach((doc) => {
+                const data = {...doc.data(), id: doc.id};
+                setUser(data);  
+            })
         }
-        getData();
+  
+        return () => unsubscribe(); 
     },[])
 
     function currentUser() {

@@ -1,12 +1,19 @@
 # Things that are broken (like my brain right now)
 
 - [x] Images for post need reworking. On hover they should turn light gray and this isn't possible with using the svg as an image source. 
-- [ ] Implement storage for photos/images
-  - [ ] This will need a folder for user profile pictures
+- [x] Implement storage for photos/images
+  - [x] This will need a folder for user profile pictures
   - [x] and a folder for post images
-- [ ] On posts, show username not ID (will need to access the user collection)
+- [x] On posts, show username not ID (will need to access the user collection)
 - [x] Sign in should redirect user to home page.
-- [ ] Need to check sign in with email/password - probably need to update code. 
+- [x] Need to check sign in with email/password - probably need to update code. 
+- [ ] Re-write home/profile to work within the menu
+- [ ] Style new user page
+- [ ] Style profile page
+- [ ] multi-image posts. 
+- [ ] refresh on post created
+
+
 
 
 
