@@ -3,6 +3,7 @@ import Firebase from "../Firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { collection, getDocs, updateDoc, doc, where, query } from "firebase/firestore";
 import {getDownloadURL, uploadBytes, ref} from "firebase/storage"
+import Avatar from "./Avatar";
 
 export default function Profile() {
 
@@ -58,10 +59,30 @@ export default function Profile() {
     }
 
     return(
-        <div>
-            Profile Page for...{user?.username}
+        <div className="profile-container">
 
-            <div>
+            <div className="profile-header d-flex align-items-center justify-content-evenly mt-4 mb-4">
+                <Avatar size="xl" src={user?.profileImgUrl[0] ? user.profileImgUrl[0] : ''}/>
+                <div>
+                    <div className="d-flex align-items-center justify-content-evenly mb-4">
+                        <span className="me-5">{user?.username}</span>
+                        <button>Edit profile</button>
+                    </div>
+                    <div className="d-flex align-items-center justify-content-between mb-4">
+                        <span className="me-5"><span className="fw-bold">1</span> post</span>
+                        <span className="me-5"><span className="fw-bold">10</span> followers</span>
+                        <span className="me-5"><span className="fw-bold">30</span> following</span>
+                    </div>
+                    <div>
+                        <span>{user?.fullName}</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <hr />
+
+            <div className="d-flex align-items-center flex-column mt-5">
                 
                 <input type="text" placeholder="fullname.." value={fullName} onChange={(e) => setFullName(e.target.value)} />
                 <input type="text" placeholder="username.." value={username} onChange={(e) => setUsername(e.target.value)} />
