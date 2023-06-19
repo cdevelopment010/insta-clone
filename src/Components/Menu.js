@@ -122,7 +122,7 @@ export default function Menu({showCreate, children}) {
                                 Home
                             </span></Link></li>
                         <li className="d-flex align-items-center menu-item">
-                            <Link to="Search">
+                            <Link to="/Search">
                             <span className={`d-flex align-items-center ${currentMenuItem==="search" ? 'bold' : ''}`} onClick={changeToSolid} id="search">
                                 <svg height="25" width="25" className="svg-icon me-2" >
                                     {currentMenuItem==="search" 
@@ -137,7 +137,7 @@ export default function Menu({showCreate, children}) {
                             </Link>
                         </li>
                         <li className="d-flex align-items-center menu-item">
-                            <Link to="explore">
+                            <Link to="/explore">
                             <span className={`d-flex align-items-center ${currentMenuItem==="explore" ? 'bold' : ''}`} onClick={changeToSolid} id="explore">
                                 <svg height="25" width="25" className="svg-icon compass me-2" >
                                     {currentMenuItem==="explore" 
@@ -152,7 +152,7 @@ export default function Menu({showCreate, children}) {
                             </Link>
                         </li>
                         <li className="d-flex align-items-center menu-item">
-                            <Link to="reels">
+                            <Link to="/reels">
                             <span className={`d-flex align-items-center ${currentMenuItem==="reels" ? 'bold' : ''}`} onClick={changeToSolid} id="reels">
                                 <svg height="25" width="25" className="svg-icon me-2" >
                                     {currentMenuItem==="reels" 
@@ -168,7 +168,7 @@ export default function Menu({showCreate, children}) {
                             </Link>
                         </li>
                         <li className="d-flex align-items-center menu-item">
-                            <Link to="messages">
+                            <Link to="/messages">
                             <span className={`d-flex align-items-center ${currentMenuItem==="share" ? 'bold' : ''}`} onClick={changeToSolid} id="share">
                                 <svg height="25" width="25" className="svg-icon me-2" >
                                     {currentMenuItem==="share" 
@@ -183,7 +183,7 @@ export default function Menu({showCreate, children}) {
                             </Link>
                         </li>
                         <li className="d-flex align-items-center menu-item">
-                            <Link to="notification">
+                            <Link to="/notifications">
                             <span className={`d-flex align-items-center ${currentMenuItem==="notifications" ? 'bold' : ''}`} onClick={changeToSolid} id="notifications">
                                 <svg height="25" width="25" className="svg-icon me-2" >
                                     {currentMenuItem==="notifications" 
