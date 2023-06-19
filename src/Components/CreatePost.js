@@ -52,7 +52,7 @@ export default function CreatePost({showCreate}) {
         <div className="create-post-container">
             <div className="backdrop" onClick={showCreate}></div>
             <div className="create-post-form">
-                <input type="file" multiple className="m-0 file-input" onChange={(e) => {setImage(e.target.files)}}/>
+                <input type="file" accept="image/jpeg, image/png" multiple className="m-0 file-input" onChange={(e) => {setImage(e.target.files)}}/>
                 <textarea value={description} onChange={(e) => setDescription(e.target.value)} className="align-self-stretch description"></textarea>
                 <button onClick={addPost} className="btn">Create post!</button>
             </div>

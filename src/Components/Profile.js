@@ -65,7 +65,7 @@ export default function Profile() {
                 
                 <input type="text" placeholder="fullname.." value={fullName} onChange={(e) => setFullName(e.target.value)} />
                 <input type="text" placeholder="username.." value={username} onChange={(e) => setUsername(e.target.value)} />
-                <input type="file" onChange={(e) => {setImage(e.target.files)}}/>
+                <input type="file" accept="image/jpeg, image/png" onChange={(e) => {setImage(e.target.files)}}/>
                 <button type="button" onClick={updateDetails}>Update details</button>
             </div>
         </div>
