@@ -1,0 +1,12 @@
+.profile-header, .profile-edit {
+    width: 50%; 
+    margin-inline: auto; 
+}
+
+
+
+@media screen and (max-width: 600px) {
+    .profile-header, .profile-edit {
+        width: 100%; 
+    }
+}

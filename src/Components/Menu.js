@@ -42,9 +42,10 @@ export default function Menu({showCreate, children}) {
 
     //this didn't have a dependency -- might have been the issue causing a lot of reads!!!
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(Firebase.auth, (user) => {
-            if (user) {
+        const unsubscribe = onAuthStateChanged(Firebase.auth, (userAuth) => {
+            if (userAuth && userAuth.uid !== user?.userid) {
               getData(); 
+              console.log("get new data");
             } else {
                 
             }
