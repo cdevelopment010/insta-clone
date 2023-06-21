@@ -9,10 +9,14 @@
 - [x] Need to check sign in with email/password - probably need to update code. 
 - [x] Re-write home/profile to work within the menu
 - [ ] Re-write menu to work for mobile, and to take the children as content.
-- [ ] Style new user page
+- [x] Style new user page
 - [ ] Style profile page
-- [ ] multi-image posts. 
+  - [ ] Add post images as a grid
+- [x] multi-image posts. 
 - [ ] refresh on post created
+- [ ] Click on post to enlarge (nice to have)
+- [ ] Comments (sub collection of post)
+- [ ] Likes (sub collection of post)
 
 
 
