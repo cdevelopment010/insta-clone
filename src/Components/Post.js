@@ -116,7 +116,7 @@ export default function Post({ post }) {
                         <img src={images ? images[currentImageIndex] : ""}  alt="post"/>
                     }     
                     {
-                        images.length > 0 &&
+                        images.length > 1 &&
                         <div className="counter-container">
                             {images.map((im, ind) => {
                                     return <div className={`image-counter cursor-pointer ${ind === currentImageIndex ? 'fill' : ''}`} key={`image-counter-${ind}`} onClick={() => setCurrentImageIndex(ind)}></div>
