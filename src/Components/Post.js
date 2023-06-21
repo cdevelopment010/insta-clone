@@ -1,7 +1,7 @@
 import Avatar from './Avatar';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsis, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import {getDownloadURL, ref, listAll} from 'firebase/storage'
 import Firebase from '../Firebase';
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -29,6 +29,7 @@ import {ReactComponent as CommentSolid} from '../Icons/svg/instagram-comment-sol
 import {ReactComponent as CommentSvg} from '../Icons/svg/instagram-comment-regular.svg';
 import {ReactComponent as BookmarkSolid} from '../Icons/svg/bookmark-ribbon-solid.svg';
 import {ReactComponent as BookmarkSvg} from '../Icons/svg/bookmark-ribbon-regular.svg';
+import { counter } from '@fortawesome/fontawesome-svg-core';
 
 
 export default function Post({ post }) {
@@ -37,6 +38,7 @@ export default function Post({ post }) {
     const [userName, setUserName] = useState(post.userid);
     const [postDetail, setPostDetail] = useState(post.description.split('#'));
     const [images, setImages] = useState(post?.imgUrls || [])
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
     // const [description, setDescription] = useState(post.description);
 
 
@@ -77,6 +79,17 @@ export default function Post({ post }) {
         }
     }
 
+    const imageRight = () => {
+        let newIndex = currentImageIndex; 
+        newIndex = (newIndex+1) % images.length;
+        setCurrentImageIndex(newIndex);
+    }
+    const imageLeft = () => {
+        let newIndex = currentImageIndex; 
+        newIndex = (newIndex-1+images.length) % images.length;
+        setCurrentImageIndex(newIndex);
+    }
+
     return (
         <div className="post-container">
             <div className="post-header d-flex align-items-center justify-content-between p-2">
@@ -89,11 +102,29 @@ export default function Post({ post }) {
                 </div>
             </div>
             <div className="post-content">
-                {images.map((image, ind) => {
-                    return <img src={image} key={ind} alt="post"/>
-                })
-
-                }
+                <div className='image-container'>
+                    {
+                        images.length > 1 &&
+                        <div className='icons-container'>
+                            <FontAwesomeIcon icon={faArrowLeft} className='cursor-pointer change-image change-image-left' onClick={imageLeft}/>
+                            <FontAwesomeIcon icon={faArrowRight} className='cursor-pointer change-image change-image-right' onClick={imageRight}/>
+                        </div>
+                        
+                    }
+                    {
+                        images.length > 0 &&
+                        <img src={images ? images[currentImageIndex] : ""}  alt="post"/>
+                    }     
+                    {
+                        images.length > 0 &&
+                        <div className="counter-container">
+                            {images.map((im, ind) => {
+                                    return <div className={`image-counter cursor-pointer ${ind === currentImageIndex ? 'fill' : ''}`} key={`image-counter-${ind}`} onClick={() => setCurrentImageIndex(ind)}></div>
+                                })
+                            }
+                        </div>
+                    }               
+                </div>
             </div>
             <div className="post-comments p-2">
                 {/* Icons */}
