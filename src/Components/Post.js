@@ -3,8 +3,8 @@ import Avatar from './Avatar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import {getDownloadURL, ref, listAll} from 'firebase/storage'
-import Firebase from '../Firebase';
-import { collection, getDocs, query, where } from "firebase/firestore";
+import Firebase, { db } from '../Firebase';
+import { collection, getDocs, query, where, addDoc, deleteDoc, serverTimestamp, getCountFromServer } from "firebase/firestore";
 
 import '../Styles/post.css';
 import { useEffect, useState  } from 'react';
@@ -35,21 +35,27 @@ import { counter } from '@fortawesome/fontawesome-svg-core';
 export default function Post({ post }) {
 
     const [user, setUser] = useState(null);
-    const [userName, setUserName] = useState(post.userid);
     const [postDetail, setPostDetail] = useState(post.description.split('#'));
     const [images, setImages] = useState(post?.imgUrls || [])
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [likeCounter, setLikeCounter] = useState(0);
+    const [userLiked, setUserLiked] = useState(false);
     // const [description, setDescription] = useState(post.description);
 
 
     //these variables will be set using data from the backend.
     // let userName ="craig.m.davison";
-    let likeCounter = 9000;
+
     let commentCounter = 28;
     // let postDetail= "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla in augue sit amet arcu finibus ultrices. Vestibulum porta, est et euismod euismod, urna nulla rutrum nisi, non placerat leo enim nec neque. Sed sit amet tincidunt erat, eget placerat quam. Donec venenatis consectetur ultricies. Cras justo risus, suscipit eu tempus nec, accumsan eu urna. Curabitur sed risus dapibus, tristique quam id, ullamcorper felis. Proin erat metus, commodo a massa eget, feugiat porta neque. Cras bibendum augue in est aliquet convallis. Cras sed ante urna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras dapibus dolor turpis, vitae vehicula tortor placerat sed. Proin vitae sem tellus. Ut consequat lorem a orci suscipit faucibus. Proin condimentum velit id leo posuere facilisis. Aliquam at mauris turpis."
     let [showPostDetail, setShowPostDetail] = useState(postDetail[0].length > 100 ? false : true)
 
     const userCollectionRef = collection(Firebase.db, 'users');
+    const likesRef = collection(Firebase.db, "posts", post.id, "likes"); 
+
+    useEffect(() => {
+        console.log("Check..")
+    },[userLiked])
 
     useEffect(() => {
         const getData = async () => {
@@ -59,6 +65,16 @@ export default function Post({ post }) {
                 const data = {...doc.data(), id: doc.id}
                 setUser(data);
             })
+
+            const likesCount = await getCountFromServer(likesRef); 
+            console.log();
+            setLikeCounter(likesCount.data().count);
+
+            const userLiked = query(likesRef, where("userid", "==", Firebase?.auth?.currentUser?.uid)); 
+            const likesSnapshot = await getDocs(userLiked); 
+            setUserLiked(likesSnapshot.size > 0 ? true : false);
+            
+
         }
         getData();
         console.log("UseEffect in Post: Gets userData (this happens in multiple places and should be re-written). This fires per post which isn't good. ")
@@ -88,6 +104,38 @@ export default function Post({ post }) {
         let newIndex = currentImageIndex; 
         newIndex = (newIndex-1+images.length) % images.length;
         setCurrentImageIndex(newIndex);
+    }
+
+    const updateLikes = async (e) => {
+        console.log("clicked likes", Firebase.auth.currentUser.uid);
+        const userLiked = query(likesRef, where("userid", "==", Firebase?.auth?.currentUser?.uid)); 
+        const querySnapshop = await getDocs(userLiked);
+        console.log(querySnapshop.size)
+        if (querySnapshop.size > 0){
+            //delete doc
+            
+            console.log("remove like");
+            querySnapshop.forEach(async (docLikes) => {
+                // const data = {...doc.data(), id: doc.id};
+                await deleteDoc(docLikes.ref);
+                const likesCount = await getCountFromServer(likesRef); 
+                setLikeCounter(likesCount.data().count);
+                setUserLiked(false)
+            })
+        } else {
+            //add doc
+            // const data = {...doc.data(), id: doc.id};
+            console.log("add like");
+            await addDoc(likesRef, {
+                userid: Firebase.auth.currentUser.uid,
+                likedDate: serverTimestamp()
+            })
+            const likesCount = await getCountFromServer(likesRef); 
+            setLikeCounter(likesCount.data().count);
+            setUserLiked(true);
+        }
+
+
     }
 
     return (
@@ -130,8 +178,15 @@ export default function Post({ post }) {
                 {/* Icons */}
                 <div className='icon-section d-flex align-items-center justify-content-between '>
                     <div className="icons d-flex align-items-center ">
-                        <svg height="25" width="25" className='me-2 cursor-pointer svg-icon'>
-                            <HeartSvg height="25" width="25" />
+                        <svg height="25" width="25" className={`me-2 cursor-pointer svg-icon ${userLiked ? 'liked-post' : ''}`} onClick={updateLikes}>
+                            { userLiked &&
+                                <HeartSolid height="25" width="25" />
+                            }
+                            {
+                                !userLiked &&
+                                <HeartSvg height="25" width="25" />
+
+                            }
                         </svg>
                         <svg height="25" width="25" className='me-2 cursor-pointer svg-icon'>
                             <CommentSvg height="25" width="25" />
