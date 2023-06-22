@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/insta-clone/static/css/main.f5d711b1.css",
-    "main.js": "/insta-clone/static/js/main.1cac4872.js",
+    "main.css": "/insta-clone/static/css/main.ce3265d7.css",
+    "main.js": "/insta-clone/static/js/main.ad62bfac.js",
     "static/js/787.fc1ce4eb.chunk.js": "/insta-clone/static/js/787.fc1ce4eb.chunk.js",
     "static/media/instagram-share-solid.svg": "/insta-clone/static/media/instagram-share-solid.324b3545bc0f0f7f9fd511cd8abe8068.svg",
     "static/media/compass-north-solid.svg": "/insta-clone/static/media/compass-north-solid.092543a88bb5944c39f6fadd13a400f5.svg",
@@ -19,15 +19,15 @@
     "static/media/heart-regular.svg": "/insta-clone/static/media/heart-regular.b87ae6a49c3743882ab84486967bd481.svg",
     "static/media/add-button-solid.svg": "/insta-clone/static/media/add-button-solid.9a7983a0f016286cecf8496f5f3a7760.svg",
     "static/media/instagram-comment-solid.svg": "/insta-clone/static/media/instagram-comment-solid.0139dbf3ba425daa5065c252ac6a8aa4.svg",
-    "static/media/heart-solid.svg": "/insta-clone/static/media/heart-solid.161cfece49eb91440728314f298f958c.svg",
+    "static/media/heart-solid.svg": "/insta-clone/static/media/heart-solid.6bf72ba54514f2c4c454acc5566c8f5b.svg",
     "static/media/bookmark-ribbon-solid.svg": "/insta-clone/static/media/bookmark-ribbon-solid.9b2b768234f2f74cd7de1581d487db2c.svg",
     "index.html": "/insta-clone/index.html",
-    "main.f5d711b1.css.map": "/insta-clone/static/css/main.f5d711b1.css.map",
-    "main.1cac4872.js.map": "/insta-clone/static/js/main.1cac4872.js.map",
+    "main.ce3265d7.css.map": "/insta-clone/static/css/main.ce3265d7.css.map",
+    "main.ad62bfac.js.map": "/insta-clone/static/js/main.ad62bfac.js.map",
     "787.fc1ce4eb.chunk.js.map": "/insta-clone/static/js/787.fc1ce4eb.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f5d711b1.css",
-    "static/js/main.1cac4872.js"
+    "static/css/main.ce3265d7.css",
+    "static/js/main.ad62bfac.js"
   ]
 }
