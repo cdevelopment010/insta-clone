@@ -74,7 +74,7 @@ export default function EmailSignUp() {
             } else {
                 await addDoc(userCollectionRef, {
                     userid: Firebase.auth.currentUser.uid,
-                    profileImgUrl: null,
+                    profileImgUrl: [""],
                     fullName: fullName,
                     username: username,
                     created: serverTimestamp(),

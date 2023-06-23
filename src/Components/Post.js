@@ -144,7 +144,7 @@ export default function Post({ post }) {
         <div className="post-container">
             <div className="post-header d-flex align-items-center justify-content-between p-2">
                 <div className="d-flex align-items-center">
-                    <Avatar size="md" src={user?.profileImgUrl[0]} className='me-1'/>
+                    <Avatar size="md" src={user?.profileImgUrl?.length > 0 ? user?.profileImgUrl[0] :''} className='me-1'/>
                     <span className='fw-bold'>{user?.username}</span>
                 </div>
                 <div className='me-2'>
@@ -224,8 +224,7 @@ export default function Post({ post }) {
                         <div>
                             <span>{postDetail[0].substring(0,100)}...</span>
                             <span>{postDetail.map((detail,ind)=>{
-                                if (ind == 0) {return}
-                                console.log(detail)
+                                if (ind === 0) {return}
                                 return <Link to={`/tags/${detail}`} key={ind}>#{detail}</Link>
                             })}</span>
                             <br></br>
@@ -237,7 +236,7 @@ export default function Post({ post }) {
                         <div>
                             <span>{postDetail[0]}</span>
                             <span>{postDetail.map((detail,ind)=>{
-                                if (ind == 0) {return}
+                                if (ind === 0) {return}
                                 return <Link to={`/tags/${detail}`} key={ind} className='me-1'>#{detail}</Link>
                             })}</span>
                             <br></br>

@@ -170,7 +170,7 @@ export default function Menu({showCreate, children}) {
                         </li>
                         <li className="menu-item">
                             <Link to="/profile">
-                                <Avatar className="me-2" src={user?.profileImgUrl ? user?.profileImgUrl[0] : ""}/>
+                                <Avatar className="me-2" src={user?.profileImgUrl?.length > 0 ? user?.profileImgUrl[0] : ""}/>
                             </Link>
                         </li>
                     </ul>
@@ -295,7 +295,7 @@ export default function Menu({showCreate, children}) {
                             <li className="d-flex align-items-center menu-item">
                                 <Link to="/profile" className={`d-flex align-items-center ${currentMenuItem==="avatar" ? 'bold' : ''}`} id="avatar">
                                     <span className={`d-flex align-items-center ${currentMenuItem==="profile" ? 'bold' : ''}`} onClick={(e) => {changeToSolid(e)}} id="profile">
-                                        <Avatar className="me-2" src={user?.profileImgUrl ? user?.profileImgUrl[0] : ""}/>
+                                        <Avatar className="me-2" src={user?.profileImgUrl?.length > 0 ? user?.profileImgUrl[0] : ""}/>
                                         Profile
                                     </span>
                                 </Link>

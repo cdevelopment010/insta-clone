@@ -69,7 +69,7 @@ export default function Login() {
                 //should only fire if signing in with Google for the first time.
                 await addDoc(userCollectionRef, {
                     userid: Firebase.auth.currentUser.uid,
-                    profileImgUrl: null,
+                    profileImgUrl: [""],
                     fullName: Firebase.auth.currentUser.displayName,
                     username: Firebase.auth.currentUser.displayName,
                     created: serverTimestamp(),

@@ -21,7 +21,7 @@ export default function Profile() {
 
         const unsubscribe = onAuthStateChanged(Firebase.auth, (userAuth) => {
             // console.log(userAuth.uid != user.)
-            if (userAuth && userAuth.uid != user?.userid) {
+            if (userAuth && userAuth.uid !== user?.userid) {
                 console.log("auth state changed")
               getData(); 
             } else {
@@ -61,7 +61,7 @@ export default function Profile() {
         await updateDoc(doc(userCollectionRef,user.id), {
             fullName: fullName || user.fullName, 
             username: username || user.username,
-            profileImgUrl: downloadUrls || user.profileImgUrl[0]
+            profileImgUrl: downloadUrls || user?.profileImgUrl.length > 0 ? user?.profileImgUrl[0] : ''
         })
         setEditProfile(!editProfile);
     }
@@ -136,7 +136,7 @@ export default function Profile() {
         <div className="profile-container">
 
             <div className="profile-header d-flex align-items-center justify-content-evenly mt-4 mb-4">
-                <Avatar size="xl" src={user?.profileImgUrl[0] ? user.profileImgUrl[0] : ''}/>
+                <Avatar size="xl" src={user?.profileImgUrl.length > 0 ? user.profileImgUrl[0] : ''}/>
                 <div>
                     <div className="d-flex align-items-center justify-content-between mb-4">
                         <span className="me-5">{user?.username}</span>
