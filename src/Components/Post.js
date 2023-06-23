@@ -67,9 +67,10 @@ export default function Post({ post }) {
             })
 
             const likesCount = await getCountFromServer(likesRef); 
-            console.log();
             setLikeCounter(likesCount.data().count);
 
+
+            if(Firebase?.auth?.currentUser?.uid === null || Firebase?.auth?.currentUser?.uid === undefined) return;
             const userLiked = query(likesRef, where("userid", "==", Firebase?.auth?.currentUser?.uid)); 
             const likesSnapshot = await getDocs(userLiked); 
             setUserLiked(likesSnapshot.size > 0 ? true : false);
@@ -107,7 +108,8 @@ export default function Post({ post }) {
     }
 
     const updateLikes = async (e) => {
-        console.log("clicked likes", Firebase.auth.currentUser.uid);
+        if(Firebase?.auth?.currentUser?.uid === null || Firebase?.auth?.currentUser?.uid === undefined) return;
+
         const userLiked = query(likesRef, where("userid", "==", Firebase?.auth?.currentUser?.uid)); 
         const querySnapshop = await getDocs(userLiked);
         console.log(querySnapshop.size)

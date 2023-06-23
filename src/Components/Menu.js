@@ -101,7 +101,84 @@ export default function Menu({showCreate, children}) {
     //desktop version
     return (
         <div className="menu container">
-            
+
+        <div className="mobile-container">
+        <div className="mobile-container">
+                <div className="mobile-nav-header"></div>
+                <div className="content">
+                    {children}
+                </div>
+                <div className="mobile-nav-footer">
+                    <ul className="d-flex align-items-center justify-content-evenly h-100">
+                        <li className="menu-item">
+                            <Link to="/home">
+                            <span className={`d-flex align-items-center ${currentMenuItem==="home" ? 'bold' : ''}`} onClick={changeToSolid} id="home">
+                                <svg height="25" width="25" className="svg-icon me-2" >
+                                    {currentMenuItem==="home"
+                                        &&
+                                        <HomeSolid height="25" width="25"/>
+                                    }
+                                    {currentMenuItem !== "home"
+                                        &&
+                                        <HomeSvg height="25" width="25"/>
+                                    }
+                                </svg>
+                            </span>   
+                            </Link> 
+                        </li>
+                        <li className="menu-item">
+                            <Link to="/search">
+                                <span className={`d-flex align-items-center ${currentMenuItem==="search" ? 'bold' : ''}`} onClick={changeToSolid} id="search">
+                                    <svg height="25" width="25" className="svg-icon me-2" >
+                                        {currentMenuItem==="search" 
+                                            && <SearchSolid height="25" width="25"/>
+                                        }
+                                        {currentMenuItem!=="search" 
+                                            && <SearchSvg height="25" width="25"/>
+                                        }
+                                    </svg>
+                                </span>
+                            </Link>
+                        </li>
+                        <li className="menu-item">
+                            <Link to="/reels">
+                                <span className={`d-flex align-items-center ${currentMenuItem==="reels" ? 'bold' : ''}`} onClick={changeToSolid} id="reels">
+                                    <svg height="25" width="25" className="svg-icon me-2" >
+                                        {currentMenuItem==="reels" 
+                                            && <ReelsSolid height="25" width="25"/>
+                                        }
+                                        {currentMenuItem!=="reels" 
+                                            && <ReelsSvg height="25" width="25"/>
+                                        }
+                                    </svg>
+                                </span>
+                            </Link>
+                        </li>
+                        <li className="menu-item">
+                            <Link to="/messages">
+                                <span className={`d-flex align-items-center ${currentMenuItem==="share" ? 'bold' : ''}`} onClick={changeToSolid} id="share">
+                                    <svg height="25" width="25" className="svg-icon me-2" >
+                                        {currentMenuItem==="share" 
+                                            && <ShareSolid height="25" width="25"/>
+                                        }
+                                        {currentMenuItem!=="share" 
+                                            && <ShareSvg height="25" width="25"/>
+                                        }
+                                    </svg>
+                                </span>
+                            </Link>
+                        </li>
+                        <li className="menu-item">
+                            <Link to="/profile">
+                                <Avatar className="me-2" src={user?.profileImgUrl ? user?.profileImgUrl[0] : ""}/>
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div className="menu-desktop-container">
         <div className="menu-container d-flex flex-column justify-content-between align-items-stretch">
             <div>
                 <div className="logo">Logo desktop...</div>
@@ -234,6 +311,7 @@ export default function Menu({showCreate, children}) {
         </div>
 
             {children}
+        </div>
         </div>
     )
 }

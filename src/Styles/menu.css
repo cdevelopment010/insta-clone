@@ -58,9 +58,39 @@
     fill: rgb(var(--input-bg));
 }
 
-.menu.container{
+.menu.container .menu-desktop-container{
         display: grid; 
         height: 100vh; 
         width: 100vw; 
         grid-template-columns: 335px 1fr;
+}
+
+.menu.container .mobile-container {
+    display: none;
+}
+
+
+@media screen and (max-width: 600px) {
+    .menu.container .menu-desktop-container{ 
+        display: none;
+    }
+    .menu.container .mobile-container {
+        display: flex; 
+        height: 100vh; 
+        min-width: 100%;
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .mobile-nav-header, .mobile-nav-footer {
+        height: 5vh;
+        background: white;
+    }
+    
+    .mobile-nav-footer{
+        border-top: rgb(var(--input-bg)) 1px solid;
+    }
+    .mobile-nav-header{
+        border-bottom: rgb(var(--input-bg)) 1px solid;
+    }
 }

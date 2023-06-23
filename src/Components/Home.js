@@ -84,78 +84,6 @@ export default function Home({showAddModal, showCreate}) {
         setCurrentMenuItem(el.id);
     }
 
-    
-    
-
-    if (isMobile){
-        return (
-            <div className="mobile-container">
-                <div className="mobile-nav-header"></div>
-                <div className="content">
-                    {posts.map(p => {
-                        return <Post post={p} key={p.id} />
-                        })
-                    } 
-                </div>
-                <div className="mobile-nav-footer">
-                    <ul className="d-flex align-items-center justify-content-evenly h-100">
-                        <li className="menu-item">
-                        <a href="#" className={`d-flex align-items-center ${currentMenuItem=="home" ? 'bold' : ''}`} onClick={changeToSolid} id="home">
-                                <svg height="25" width="25" className="svg-icon me-2" >
-                                    {currentMenuItem=="home"
-                                        &&
-                                        <HomeSolid height="25" width="25"/>
-                                    }
-                                    {currentMenuItem != "home"
-                                        &&
-                                        <HomeSvg height="25" width="25"/>
-                                    }
-                                </svg>
-                            </a>    
-                        </li>
-                        <li className="menu-item">
-                        <a href="#" className={`d-flex align-items-center ${currentMenuItem=="search" ? 'bold' : ''}`} onClick={changeToSolid} id="search">
-                                <svg height="25" width="25" className="svg-icon me-2" >
-                                    {currentMenuItem=="search" 
-                                        && <SearchSolid height="25" width="25"/>
-                                    }
-                                    {currentMenuItem!="search" 
-                                        && <SearchSvg height="25" width="25"/>
-                                    }
-                                </svg>
-                            </a>
-                        </li>
-                        <li className="menu-item">
-                        <a href="#" className={`d-flex align-items-center ${currentMenuItem=="reels" ? 'bold' : ''}`} onClick={changeToSolid} id="reels">
-                                <svg height="25" width="25" className="svg-icon me-2" >
-                                    {currentMenuItem=="reels" 
-                                        && <ReelsSolid height="25" width="25"/>
-                                    }
-                                    {currentMenuItem!="reels" 
-                                        && <ReelsSvg height="25" width="25"/>
-                                    }
-                                </svg>
-                            </a>
-                        </li>
-                        <li className="menu-item">
-                        <a href="#" className={`d-flex align-items-center ${currentMenuItem=="share" ? 'bold' : ''}`} onClick={changeToSolid} id="share">
-                                <svg height="25" width="25" className="svg-icon me-2" >
-                                    {currentMenuItem=="share" 
-                                        && <ShareSolid height="25" width="25"/>
-                                    }
-                                    {currentMenuItem!="share" 
-                                        && <ShareSvg height="25" width="25"/>
-                                    }
-                                </svg>
-                            </a>
-                        </li>
-                        <li className="menu-item"><Avatar /></li>
-                    </ul>
-                </div>
-            </div>
-        )
-
-    } else {
         return (
             <div className="desktop-container">
                 {/* <Menu showCreate={showCreate}/> */}
@@ -170,5 +98,4 @@ export default function Home({showAddModal, showCreate}) {
                 }
             </div>
         )
-    }
 }
