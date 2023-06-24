@@ -27,6 +27,7 @@ html {
 .h-0{height:0%}
 
 /* Flex */
+.d-none {display: none !important;}
 .d-flex {display: flex;}
 .flex-column {flex-direction: column;}
 .justify-content-center{justify-content: center;}

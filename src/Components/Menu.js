@@ -1,10 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faHouse as faHouseSolid, faMagnifyingGlass, faBars, faCompass as faCompassSolid  } from "@fortawesome/free-solid-svg-icons"
+import { faBars } from "@fortawesome/free-solid-svg-icons"
 
 import Avatar from './Avatar';
 import Firebase from "../Firebase";
-import { onAuthStateChanged } from "firebase/auth";
-import { collection, getDocs, query, where} from "firebase/firestore";
 
 
 import '../Styles/menu.css';
@@ -27,50 +25,15 @@ import {ReactComponent as AddSvg} from '../Icons/svg/add-button-regular.svg';
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function Menu({showCreate, children}) {
+export default function Menu({showCreate, children, currentUser}) {
 
     const [currentMenuItem, setCurrentMenuItem] = useState("home");
-    const [imgUrl, setImgUrl] = useState("");
-    const [user, setUser] = useState(null);
-
-    const userCollectionRef = collection(Firebase.db,"users");
-
-    useEffect(() => {
-        
-
-    }, [])
+    const [user, setUser] = useState(currentUser);
 
     //this didn't have a dependency -- might have been the issue causing a lot of reads!!!
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(Firebase.auth, (userAuth) => {
-            if (userAuth && userAuth.uid !== user?.userid) {
-              getData(); 
-              console.log("get new data");
-            } else {
-                
-            }
-        });
-        
-        let profileUrl = currentUser();
-        setImgUrl(profileUrl?.photoURL); 
-        const getData = async () => {
-            let authUid = Firebase?.auth?.currentUser?.uid || null;
-            const userData = query(userCollectionRef, where("userid", "==", authUid));
-            const querySnapshop = await getDocs(userData);
-            querySnapshop.forEach((doc) => {
-                const data = {...doc.data(), id: doc.id};
-                setUser(data);  
-            })
-        }
-  
-        return () => unsubscribe(); 
-    },[])
 
-    function currentUser() {
-        let user = Firebase?.auth?.currentUser;
-        // console.log(user);
-        return user;
-    }
+    },[])
 
     function findAncestorElement(element, targetTagName) {
         var parentElement = element.parentNode;
@@ -181,7 +144,7 @@ export default function Menu({showCreate, children}) {
         <div className="menu-desktop-container">
         <div className="menu-container d-flex flex-column justify-content-between align-items-stretch">
             <div>
-                <div className="logo">Logo desktop...</div>
+                <div className="logo">Instagram Clone</div>
                 <div className="d-flex align-items-start justify-content-evenly flex-column menu-items-container">
                     <ul className="d-flex align-items-start justify-content-evenly flex-column menu-list">
                         <li className="d-flex align-items-center menu-item">
@@ -245,7 +208,7 @@ export default function Menu({showCreate, children}) {
                             </span>
                             </Link>
                         </li>
-                        <li className="d-flex align-items-center menu-item">
+                        <li className= {`d-flex align-items-center menu-item ${user ? '' : 'd-none'}`}>
                             <Link to="/messages">
                             <span className={`d-flex align-items-center ${currentMenuItem==="share" ? 'bold' : ''}`} onClick={changeToSolid} id="share">
                                 <svg height="25" width="25" className="svg-icon me-2" >
@@ -260,7 +223,7 @@ export default function Menu({showCreate, children}) {
                             </span>
                             </Link>
                         </li>
-                        <li className="d-flex align-items-center menu-item">
+                        <li className={`d-flex align-items-center menu-item ${user ? '' : 'd-none'}`}>
                             <Link to="/notifications">
                             <span className={`d-flex align-items-center ${currentMenuItem==="notifications" ? 'bold' : ''}`} onClick={changeToSolid} id="notifications">
                                 <svg height="25" width="25" className="svg-icon me-2" >
@@ -275,7 +238,7 @@ export default function Menu({showCreate, children}) {
                             </span>
                             </Link>
                         </li>
-                        <li className="d-flex align-items-center menu-item">
+                        <li className={`d-flex align-items-center menu-item ${user ? '' : 'd-none'}`}>
                             <Link to="/home">
                             <span className={`d-flex align-items-center ${currentMenuItem==="add" ? 'bold' : ''}`} onClick={(e) => {changeToSolid(e); showCreate()}} id="add">
                                 <svg height="25" width="25" className="svg-icon me-2" >

@@ -16,8 +16,8 @@
 - [ ] refresh on post created
 - [ ] Click on post to enlarge (nice to have)
 - [ ] Comments (sub collection of post)
-- [ ] Likes (sub collection of post)
-
+- [x] Likes (sub collection of post)
+- [ ] Should only show icons for comments/likes, and also create post, if user is signed in. 
 
 
 

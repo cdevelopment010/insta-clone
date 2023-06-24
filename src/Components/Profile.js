@@ -1,48 +1,22 @@
 import { useEffect, useState } from "react";
 import Firebase from "../Firebase";
-import { onAuthStateChanged } from "firebase/auth";
-import { collection, getDocs, updateDoc, doc, where, query } from "firebase/firestore";
+import { collection,  updateDoc, doc, } from "firebase/firestore";
 import {getDownloadURL, uploadBytes, ref} from "firebase/storage"
 import Avatar from "./Avatar";
 
+
 import '../Styles/profile.css';
 
-export default function Profile() {
+export default function Profile({currentUser}) {
 
-    const [user, setUser] = useState(null); 
+    const [user, setUser] = useState(currentUser); 
     const userCollectionRef = collection(Firebase.db, 'users'); 
-    const [username, setUsername] = useState(""); 
-    const [fullName, setFullName] = useState(""); 
-    const [image,setImage] = useState([]);
-    const [tempImage, setTempImage] = useState("");
+    const [username, setUsername] = useState(currentUser.username); 
+    const [fullName, setFullName] = useState(currentUser.fullName); 
+    const [image,setImage] = useState(currentUser.profileImgUrl);
+    // const [tempImage, setTempImage] = useState("");
     const [editProfile, setEditProfile] = useState(false);
     
-    useEffect(() => {
-
-        const unsubscribe = onAuthStateChanged(Firebase.auth, (userAuth) => {
-            // console.log(userAuth.uid != user.)
-            if (userAuth && userAuth.uid !== user?.userid) {
-                console.log("auth state changed")
-              getData(); 
-            } else {
-                
-            }
-        });
-
-        const getData = async () => {
-            let authUid = Firebase?.auth?.currentUser?.uid || null;
-            const userData = query(userCollectionRef, where("userid", "==", authUid));
-            const querySnapshop = await getDocs(userData);
-            querySnapshop.forEach((doc) => {
-                const data = {...doc.data(), id: doc.id};
-                setUser(data); 
-            })
-        
-        }
-      
-        return () => unsubscribe(); 
-    },[userCollectionRef])
-
     useEffect(() => {
         setFullName(user?.fullName);
         setUsername(user?.username);

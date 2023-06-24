@@ -1,43 +1,16 @@
 
 import { useState, useEffect } from "react"
-import Avatar from "./Avatar"
-import Menu from "./Menu";
 import Post from "./Post";
 import { db } from "../Firebase";
-import Firebase from "../Firebase";
 import { getDocs, collection } from "firebase/firestore";
 
 import '../Styles/home.css';
-
-/* SVG ICONS */
-import {ReactComponent as HomeSolid} from '../Icons/svg/home-solid.svg';
-import {ReactComponent as HomeSvg} from '../Icons/svg/home-regular.svg';
-import {ReactComponent as HeartSolid} from '../Icons/svg/heart-solid.svg';
-import {ReactComponent as HeartSvg} from '../Icons/svg/heart-regular.svg';
-import {ReactComponent as SearchSolid} from '../Icons/svg/search-solid.svg';
-import {ReactComponent as SearchSvg} from '../Icons/svg/search-regular.svg';
-import {ReactComponent as CompassSolid} from '../Icons/svg/compass-north-solid.svg';
-import {ReactComponent as CompassSvg} from '../Icons/svg/compass-north-regular.svg';
-import {ReactComponent as ReelsSolid} from '../Icons/svg/instagram-reels-solid.svg';
-import {ReactComponent as ReelsSvg} from '../Icons/svg/instagram-reels-regular.svg';
-import {ReactComponent as ShareSolid} from '../Icons/svg/instagram-share-solid.svg';
-import {ReactComponent as ShareSvg} from '../Icons/svg/instagram-share-regular.svg';
-import {ReactComponent as AddSolid} from '../Icons/svg/add-button-solid.svg';
-import {ReactComponent as AddSvg} from '../Icons/svg/add-button-regular.svg';
 import CreatePost from "./CreatePost";
 
-export default function Home({showAddModal, showCreate}) {
+export default function Home({showAddModal, showCreate, currentUser}) {
 
     const [posts, setPosts] = useState([]);
     const postsCollectionRef = collection(db, 'posts');
-    const [isMobile, setIsMobile] = useState(false);
-    const [currentMenuItem, setCurrentMenuItem] = useState("home");
-
-    useEffect(() => {
-        setIsMobile(window.innerWidth > 768 ? false : true);
-        window.addEventListener("resize",checkMobile); 
-        return () => window.removeEventListener("resize", checkMobile);
-    },[])
 
     useEffect(() => {
         const getPosts = async () => {
@@ -53,49 +26,18 @@ export default function Home({showAddModal, showCreate}) {
         getPosts();
     }, [])
 
-    function checkMobile() {
-        setIsMobile(window.innerWidth > 768 ? false : true); 
-    }
-
-    
-    function findAncestorElement(element, targetTagName) {
-        var parentElement = element.parentNode;
-      
-        if (!parentElement) {
-          return null; // Reached the top of the DOM hierarchy, target not found
-        }
-      
-        if (parentElement.tagName.toLowerCase() === targetTagName.toLowerCase()) {
-          return parentElement; // Found the target element
-        }
-      
-        return findAncestorElement(parentElement, targetTagName); // Recursively move up the DOM
-      }
-
-    function changeToSolid(e) {
-        e.stopPropagation();
-        e.preventDefault();
-        let el;
-        if (e.target.tagName.toLowerCase() !== "span") {
-            el = findAncestorElement(e.target,"span");
-        } else {
-            el = e.target;
-        }
-        setCurrentMenuItem(el.id);
-    }
-
-        return (
-            <div className="desktop-container">
-                {/* <Menu showCreate={showCreate}/> */}
-                <div className="content">
-                    {posts.map(p => {
-                        return <Post post={p} key={p.id} />
-                        })
-                    }
-                </div>
-                {showAddModal &&
-                    <CreatePost showCreate={showCreate}/>
+    return (
+        <div className="desktop-container">
+            {/* <Menu showCreate={showCreate}/> */}
+            <div className="content">
+                {posts.map(p => {
+                    return <Post post={p} key={p.id} currentUser={currentUser}/>
+                    })
                 }
             </div>
-        )
+            {showAddModal && 
+                <CreatePost showCreate={showCreate} />
+            }
+        </div>
+    )
 }
