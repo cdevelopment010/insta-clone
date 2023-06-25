@@ -26,13 +26,18 @@ export default function Post({ post, currentUser }) {
     const [images, setImages] = useState(post?.imgUrls || [])
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [likeCounter, setLikeCounter] = useState(0);
+    const [commentCounter, setCommentCounter] = useState(0);
     const [userLiked, setUserLiked] = useState(false);
+    const [comment, setComment] = useState("");
+    const [showComments, setShowComments] = useState(false);
+    const [previousComments, setPreviousComments] = useState(null);
 
-    let commentCounter = 28;
+    // let commentCounter = 28;
     let [showPostDetail, setShowPostDetail] = useState(postDetail[0].length > 100 ? false : true)
 
     const userCollectionRef = collection(Firebase.db, 'users');
     const likesRef = collection(Firebase.db, "posts", post.id, "likes"); 
+    const commentsRef = collection(Firebase.db, "posts", post.id, "comments"); 
 
     useEffect(() => {
         const getData = async () => {
@@ -45,6 +50,13 @@ export default function Post({ post, currentUser }) {
 
             const likesCount = await getCountFromServer(likesRef); 
             setLikeCounter(likesCount.data().count);
+            
+            const commentsCount = await getCountFromServer(commentsRef); 
+            setCommentCounter(commentsCount.data().count);
+
+            const commentData = await getDocs(commentsRef); 
+            const filteredComments = commentData.docs.map((doc) => ({...doc.data(), id: doc.id})).sort((a,b) => a.commentDate < b.commentDate ? -1 : 1)
+            setPreviousComments(filteredComments);
 
 
             if(Firebase?.auth?.currentUser?.uid === null || Firebase?.auth?.currentUser?.uid === undefined) return;
@@ -55,7 +67,6 @@ export default function Post({ post, currentUser }) {
 
         }
         getData();
-        console.log("UseEffect in Post: Gets userData (this happens in multiple places and should be re-written). This fires per post which isn't good. ")
     }, [])
 
 
@@ -64,12 +75,13 @@ export default function Post({ post, currentUser }) {
     }
 
     function checkComment(e) {
+        const postBtn = e.target.nextElementSibling;
         if (e.target.value.length) {
-            document.getElementById('post-btn').classList.add('opacity-100','cursor-pointer');
-            document.getElementById('post-btn').classList.remove('opacity-50');
+            postBtn.classList.add('opacity-100','cursor-pointer');
+            postBtn.classList.remove('opacity-50');
         } else {
-            document.getElementById('post-btn').classList.remove('opacity-100','cursor-pointer');
-            document.getElementById('post-btn').classList.add('opacity-50');
+            postBtn.classList.remove('opacity-100','cursor-pointer');
+            postBtn.classList.add('opacity-50');
         }
     }
 
@@ -92,19 +104,13 @@ export default function Post({ post, currentUser }) {
         console.log(querySnapshop.size)
         if (querySnapshop.size > 0){
             //delete doc
-            
-            console.log("remove like");
             querySnapshop.forEach(async (docLikes) => {
-                // const data = {...doc.data(), id: doc.id};
                 await deleteDoc(docLikes.ref);
                 const likesCount = await getCountFromServer(likesRef); 
                 setLikeCounter(likesCount.data().count);
                 setUserLiked(false)
             })
         } else {
-            //add doc
-            // const data = {...doc.data(), id: doc.id};
-            console.log("add like");
             await addDoc(likesRef, {
                 userid: Firebase.auth.currentUser.uid,
                 likedDate: serverTimestamp()
@@ -113,8 +119,32 @@ export default function Post({ post, currentUser }) {
             setLikeCounter(likesCount.data().count);
             setUserLiked(true);
         }
+    }
 
+    const toggleComments = () => {
+        setShowComments(!showComments);
+    }
 
+    const addComment = async (e) => {
+        if(Firebase?.auth?.currentUser?.uid === null || Firebase?.auth?.currentUser?.uid === undefined) return;
+        try {
+            await addDoc(commentsRef, {
+                userid: currentUser.userid,
+                username: currentUser.username,
+                commentDate: serverTimestamp(),
+                comment: comment,
+            })
+            const commentsCount = await getCountFromServer(commentsRef); 
+            setCommentCounter(commentsCount.data().count);
+
+            const commentData = await getDocs(commentsRef); 
+            const filteredComments = commentData.docs.map((doc) => ({...doc.data(), id: doc.id})).sort((a,b) => a.commentDate < b.commentDate ? -1 : 1)
+            setPreviousComments(filteredComments);
+
+            setComment("");
+        } catch(error) {
+            console.error(error);
+        }
     }
 
     return (
@@ -223,14 +253,42 @@ export default function Post({ post, currentUser }) {
                 </div>
                 {/* Comment section */}
                 <div className="comments-container fs-sm pt-2">
-                    <span className='text-secondary cursor-pointer'>View all {commentCounter} comments</span>
-                    <div className="comments pb-2">
-                        {/* Loop through comments */}
-                    </div>
+                    <span className='text-secondary cursor-pointer' onClick={toggleComments}>{ showComments ? 'Hide comments' : `View all ${commentCounter} comments`} </span>
+                    { showComments &&
+                        <div className="comments pb-2">
+                            {
+                                previousComments.map((c, ind) =>{
+                                    let vDate = new Date(c.commentDate.seconds * 1000 + c.commentDate.nanoseconds / 1000000);
+                                    let now = new Date(); 
+                                    let minutes = Math.floor((now - vDate)/ (1000*60)); 
+                                    let hours = Math.floor((now - vDate)/ (1000*60*60)); 
+                                    let days = Math.floor((now - vDate)/ (1000*60*60*24)); 
+                                    let timeString = ""; 
+                                    if (days > 0) {
+                                        timeString += days + ' days ago';
+                                    } else if (hours >0) {
+                                        timeString += hours + ' hours ago';
+                                    } else {
+                                        timeString += minutes + ' minutes ago';
+                                    }
+                                    console.log(now, vDate, minutes);
+                                    return (<div key={`comment-${c.id}`} className='p-2'>
+                                        <div className='d-flex justify-content-start align-items-center'>
+                                            <span className='fw-bold me-3'>{c?.username ?  c?.username : '' }</span>
+                                            <span>{c.comment}</span>
+                                        </div>
+                                        <div className='mb-2 text-uppercase text-secondary fs-xs'>{timeString}</div>
+                                        {/* <div className='hr' /> */}
+                                    </div>)
+                                })
+                            }
+                        </div>
+
+                    }
                     <div className={`hr ${currentUser ? '' : 'd-none'}`}></div>
                     <div className={`d-flex align-items-center justify-content-between pt-2 ${currentUser ? '' : 'd-none'}`}>
-                        <input className='text-secondary comment-input flex-1 me-1 border-0' placeholder='Add a comment...' onChange={checkComment}></input>
-                        <span className='text-callout opacity-50 fw-bold' id="post-btn">Post</span>
+                        <input className='text-secondary comment-input flex-1 me-1 border-0' placeholder='Add a comment...' onChange={(e) => {checkComment(e);setComment(e.target.value)}} value={comment}></input>
+                        <span className='text-callout opacity-50 fw-bold' id="post-btn" onClick={addComment}>Post</span>
                     </div>
                 </div>
             </div>

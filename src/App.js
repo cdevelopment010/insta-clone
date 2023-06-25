@@ -21,15 +21,6 @@ function App() {
     const userCollectionRef = collection(Firebase.db, "users");
     
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(Firebase.auth, (userAuth) => {
-            // console.log(userAuth.uid != user.)
-            if (userAuth && userAuth.uid !== currentUser?.userid) {
-                getCurrentUser(); 
-            } else {
-                
-            }
-        });
-
         const getCurrentUser = async () => {
             let authUid = Firebase?.auth?.currentUser?.uid || null;
             const userData = query(userCollectionRef, where("userid", "==", authUid));
@@ -39,13 +30,17 @@ function App() {
                 setCurrentUser(data); 
             })
         }
-
-        console.log("app currentUser: ", currentUser);
+        const unsubscribe = onAuthStateChanged(Firebase.auth, (userAuth) => {
+            if (userAuth && userAuth.uid !== currentUser?.userid) {
+                getCurrentUser(); 
+            } else {
+                
+            }
+        });
         return () => unsubscribe()
 
     }, [])
-
-  const [showAddModal, setShowAddModal] = useState(false);
+    const [showAddModal, setShowAddModal] = useState(false);
 
   const showCreate = () => {
       setShowAddModal(!showAddModal);

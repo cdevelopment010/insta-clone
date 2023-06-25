@@ -29,11 +29,10 @@ export default function Menu({showCreate, children, currentUser}) {
 
     const [currentMenuItem, setCurrentMenuItem] = useState("home");
     const [user, setUser] = useState(currentUser);
-
-    //this didn't have a dependency -- might have been the issue causing a lot of reads!!!
+  
     useEffect(() => {
-
-    },[])
+        setUser(currentUser);
+    },[currentUser])
 
     function findAncestorElement(element, targetTagName) {
         var parentElement = element.parentNode;
