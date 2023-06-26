@@ -9,6 +9,8 @@ import '../Styles/post.css';
 import { useEffect, useState  } from 'react';
 import { Link } from 'react-router-dom';
 
+import Comment from './Comment';
+
 /* SVG ICONS */
 import {ReactComponent as HeartSolid} from '../Icons/svg/heart-solid.svg';
 import {ReactComponent as HeartSvg} from '../Icons/svg/heart-regular.svg';
@@ -134,17 +136,21 @@ export default function Post({ post, currentUser }) {
                 commentDate: serverTimestamp(),
                 comment: comment,
             })
-            const commentsCount = await getCountFromServer(commentsRef); 
-            setCommentCounter(commentsCount.data().count);
-
-            const commentData = await getDocs(commentsRef); 
-            const filteredComments = commentData.docs.map((doc) => ({...doc.data(), id: doc.id})).sort((a,b) => a.commentDate < b.commentDate ? -1 : 1)
-            setPreviousComments(filteredComments);
+            await refreshComments();
 
             setComment("");
         } catch(error) {
             console.error(error);
         }
+    }
+
+    const refreshComments = async (e) => {
+        const commentsCount = await getCountFromServer(commentsRef); 
+        setCommentCounter(commentsCount.data().count);
+
+        const commentData = await getDocs(commentsRef); 
+        const filteredComments = commentData.docs.map((doc) => ({...doc.data(), id: doc.id})).sort((a,b) => a.commentDate < b.commentDate ? -1 : 1)
+        setPreviousComments(filteredComments);
     }
 
     return (
@@ -258,26 +264,9 @@ export default function Post({ post, currentUser }) {
                         <div className="comments pb-2">
                             {
                                 previousComments.map((c, ind) =>{
-                                    let vDate = new Date(c.commentDate.seconds * 1000 + c.commentDate.nanoseconds / 1000000);
-                                    let now = new Date(); 
-                                    let minutes = Math.floor((now - vDate)/ (1000*60)); 
-                                    let hours = Math.floor((now - vDate)/ (1000*60*60)); 
-                                    let days = Math.floor((now - vDate)/ (1000*60*60*24)); 
-                                    let timeString = ""; 
-                                    if (days > 0) {
-                                        timeString += days + ' days ago';
-                                    } else if (hours >0) {
-                                        timeString += hours + ' hours ago';
-                                    } else {
-                                        timeString += minutes + ' minutes ago';
-                                    }
-                                    console.log(now, vDate, minutes);
+                                    
                                     return (<div key={`comment-${c.id}`} className='p-2'>
-                                        <div className='d-flex justify-content-start align-items-center'>
-                                            <span className='fw-bold me-3'>{c?.username ?  c?.username : '' }</span>
-                                            <span>{c.comment}</span>
-                                        </div>
-                                        <div className='mb-2 text-uppercase text-secondary fs-xs'>{timeString}</div>
+                                        <Comment comment={c} currentUser={currentUser} postuserid={post.userid} postid={post.id} refreshComments={refreshComments}/>
                                         {/* <div className='hr' /> */}
                                     </div>)
                                 })

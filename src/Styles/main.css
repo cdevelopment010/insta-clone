@@ -34,10 +34,13 @@ html {
 .justify-content-between{justify-content: space-between;}
 .justify-content-evenly{justify-content: space-evenly;}
 .justify-content-around{justify-content: space-around;}
+.justify-content-end{justify-content: flex-end;}
 .align-items-center{align-items: center;}
 .align-items-start{align-items: start;}
 .align-items-stretch{align-items: stretch;}
 .align-self-stretch{align-self: stretch;}
+.align-self-top{align-self: flex-start;}
+.align-self-bottom{align-self: flex-end;}
 .flex-grow{flex-grow: 1;}
 
 
@@ -126,6 +129,7 @@ html {
 .fs-xs{font-size:0.6rem}
 .text-secondary {color: rgb(var(--secondary-text))}
 .text-callout {color: rgb(var(--primary-btn))}
+.text-danger {color: red}
 .text-center {text-align: center;}
 .text-uppercase{text-transform: uppercase;}
 

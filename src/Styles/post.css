@@ -130,6 +130,25 @@
 }
 
 
+.post-container .comments-container .comment-options {
+    position: relative;
+}
+.post-container .comments-container .comment-options .comment-options-list {
+    position: absolute; 
+    left: 120%; 
+    top: -100%; 
+    background: white; 
+    border-radius: 2px; 
+    border: 1px solid black;
+    padding: 8px; 
+    width: fit-content
+}
+.post-container .comments-container .comment-options .comment-options-list ul {
+    min-width: 100px; 
+}
+
+
+
 @media screen and (max-width: 600px) {
     .post-container {
         border-radius: 0;

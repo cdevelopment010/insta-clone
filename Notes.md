@@ -21,6 +21,10 @@
     - [ ] delete comment also if you are post creator 
 - [x] Likes (sub collection of post)
 - [x] Should only show icons for comments/likes, and also create post, if user is signed in. 
+- [ ] Search functionality 
+  - [ ] Also with tags
+- [ ] Tidy up code
+- [ ] Style textarea for create post (generally just style create post)
 
 
 
