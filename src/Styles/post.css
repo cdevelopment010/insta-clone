@@ -146,6 +146,21 @@
 .post-container .comments-container .comment-options .comment-options-list ul {
     min-width: 100px; 
 }
+.post-container .comments-container .comment {
+    white-space: pre-line;
+}
+.post-container .comments-container .edit-comment {
+    display: flex; 
+    align-items: center;
+    justify-content: space-between;
+}
+.post-container .comments-container .edit-comment textarea {
+    border-radius: 3px; 
+    margin: 0 6px 0 0 ; 
+    padding: 5px; 
+    flex-grow: 1;
+    height: 100%; 
+}
 
 
 

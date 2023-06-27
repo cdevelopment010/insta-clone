@@ -6,7 +6,7 @@ import Firebase from '../Firebase';
 import { collection, getDocs, query, where, addDoc, deleteDoc, serverTimestamp, getCountFromServer } from "firebase/firestore";
 
 import '../Styles/post.css';
-import { useEffect, useState  } from 'react';
+import { useEffect, useRef, useState  } from 'react';
 import { Link } from 'react-router-dom';
 
 import Comment from './Comment';
@@ -36,7 +36,7 @@ export default function Post({ post, currentUser }) {
 
     // let commentCounter = 28;
     let [showPostDetail, setShowPostDetail] = useState(postDetail[0].length > 100 ? false : true)
-
+    const inputRef = useRef(null);
     const userCollectionRef = collection(Firebase.db, 'users');
     const likesRef = collection(Firebase.db, "posts", post.id, "likes"); 
     const commentsRef = collection(Firebase.db, "posts", post.id, "comments"); 
@@ -153,6 +153,10 @@ export default function Post({ post, currentUser }) {
         setPreviousComments(filteredComments);
     }
 
+    const focusOnComment = () => {
+        inputRef.current.focus();
+    }
+
     return (
         <div className="post-container">
             <div className="post-header d-flex align-items-center justify-content-between p-2">
@@ -203,18 +207,18 @@ export default function Post({ post, currentUser }) {
 
                             }
                         </svg>
-                        <svg height="25" width="25" className='me-2 cursor-pointer svg-icon'>
+                        <svg height="25" width="25" className='me-2 cursor-pointer svg-icon' onClick={focusOnComment}>
                             <CommentSvg height="25" width="25" />
                         </svg>
-                        <svg height="25" width="25" className='me-2 cursor-pointer svg-icon'>
+                        {/* <svg height="25" width="25" className='me-2 cursor-pointer svg-icon'>
                             <ShareSvg height="25" width="25" />
-                        </svg>
+                        </svg> */}
                     </div>
-                    <div className="bookmark d-flex align-items-center">
+                    {/* <div className="bookmark d-flex align-items-center">
                         <svg height="25" width="25" className="me-2 cursor-pointer svg-icon">
                             <BookmarkSvg height="25" width="25" />
                         </svg>
-                    </div>
+                    </div> */}
                 </div>
                 {/* Likes */}
                 <div className="likes mt-3 mb-3">
@@ -276,7 +280,7 @@ export default function Post({ post, currentUser }) {
                     }
                     <div className={`hr ${currentUser ? '' : 'd-none'}`}></div>
                     <div className={`d-flex align-items-center justify-content-between pt-2 ${currentUser ? '' : 'd-none'}`}>
-                        <input className='text-secondary comment-input flex-1 me-1 border-0' placeholder='Add a comment...' onChange={(e) => {checkComment(e);setComment(e.target.value)}} value={comment}></input>
+                        <input className='text-secondary comment-input flex-1 me-1 border-0' ref={inputRef} placeholder='Add a comment...' onChange={(e) => {checkComment(e);setComment(e.target.value)}} value={comment}></input>
                         <span className='text-callout opacity-50 fw-bold' id="post-btn" onClick={addComment}>Post</span>
                     </div>
                 </div>

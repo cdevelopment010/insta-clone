@@ -4,10 +4,12 @@ import { faEllipsis, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-s
 import { useState } from 'react';
 
 import Firebase from '../Firebase';
-import { getDocs, deleteDoc, collection, doc } from 'firebase/firestore';
+import { getDocs, deleteDoc, collection, doc, updateDoc, serverTimestamp } from 'firebase/firestore';
 
 export default function Comment({comment, currentUser, postuserid, postid, refreshComments}) {
     const [showCommentOptions, setShowCommentOptions] = useState(false);
+    const [editComment, setEditComment] = useState(false);
+    const [commentEditing, setCommentEditing] = useState(comment.comment);
     const commentsRef = collection(Firebase.db, "posts", postid, "comments"); 
 
     let vDate = new Date(comment.commentDate.seconds * 1000 + comment.commentDate.nanoseconds / 1000000);
@@ -37,24 +39,66 @@ export default function Comment({comment, currentUser, postuserid, postid, refre
         }
     } 
 
+    const startEdit = (e)=> {
+        e.preventDefault();
+        setEditComment(true); 
+        setShowCommentOptions(false);
+
+    }
+
+    const cancelEdit = (e) => {
+        setCommentEditing(comment.comment);
+        setEditComment(false);
+    }
+
+    const saveCommentEdit = async (e) => {
+        try {
+            await updateDoc(doc(commentsRef, comment.id),{
+                commentDate: serverTimestamp(),
+                comment: commentEditing
+            }); 
+            setEditComment(false);
+            await refreshComments();
+
+        } catch(error) {
+            console.error(error);
+        }
+    }
     
 
     return(
         <div className="comment-container">
-            
-            <div className='d-flex justify-content-start align-items-center'>
-                <span className='fw-bold me-3'>{comment?.username ?  comment?.username : '' }</span>
-                <span>{comment.comment}</span>
-            </div>
+            {
+                !editComment &&
+                <div className='d-flex justify-content-start align-items-center'>
+                    <span className='comment'>
+                        <span className='fw-bold me-3'>{comment?.username ?  comment?.username : '' }</span>
+                        {comment.comment}
+                    </span>
+                </div>
+            }
+            {
+                editComment &&
+                <div className='edit-comment'>
+                    <textarea type="text" value={commentEditing} onChange={(e) => setCommentEditing(e.target.value)}></textarea>
+                    <div className="btn-group">
+                        <button onClick={saveCommentEdit} className='me-1'>Save</button>
+                        <button onClick={cancelEdit}>Cancel</button>
+                    </div>
+                </div>
+            }
             <div className='d-flex justify-content-between align-items-center'>
                 <div className='text-uppercase text-secondary fs-xs align-self-bottom'>{timeString}</div>
                 {(comment.userid == currentUser?.userid || postuserid == currentUser?.userid)
                     &&
                     <div className='align-self-top comment-options'>
-                        <FontAwesomeIcon icon={faEllipsis} className='cursor-pointer ' onClick={(e) => setShowCommentOptions(!showCommentOptions)}/>
+                        <FontAwesomeIcon icon={faEllipsis} className='cursor-pointer ' 
+                                        tabIndex={0}
+                                        onBlur={(e) => {setTimeout(()=>setShowCommentOptions(false),200)}} 
+                                        onClick={(e) => {setShowCommentOptions(!showCommentOptions);e.target.focus()}}/>
                         <div className={`${showCommentOptions ? '' : 'd-none'} comment-options-list`}>
                             <ul>
-                                <li>Edit comment</li>
+                                <li onClick={startEdit}>Edit comment</li>
                                 <li className='text-danger' onClick={deleteComment}>Delete comment</li>
                             </ul>
                         </div>
