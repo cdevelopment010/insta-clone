@@ -1,14 +1,10 @@
 {
   "files": {
-    "main.css": "/insta-clone/static/css/main.55c58ef8.css",
-    "main.js": "/insta-clone/static/js/main.f782d2d6.js",
+    "main.css": "/insta-clone/static/css/main.f079128c.css",
+    "main.js": "/insta-clone/static/js/main.ccaa715e.js",
     "static/js/787.fc1ce4eb.chunk.js": "/insta-clone/static/js/787.fc1ce4eb.chunk.js",
     "static/media/instagram-share-solid.svg": "/insta-clone/static/media/instagram-share-solid.324b3545bc0f0f7f9fd511cd8abe8068.svg",
-    "static/media/compass-north-solid.svg": "/insta-clone/static/media/compass-north-solid.092543a88bb5944c39f6fadd13a400f5.svg",
-    "static/media/instagram-reels-regular.svg": "/insta-clone/static/media/instagram-reels-regular.e1ad81b7a491a8af2be7e4bd0d0a693c.svg",
-    "static/media/instagram-reels-solid.svg": "/insta-clone/static/media/instagram-reels-solid.0828766ef48e990f01ba55e34e1affef.svg",
     "static/media/home-solid.svg": "/insta-clone/static/media/home-solid.e40deb8ddf33b96ca8806a172b73afe4.svg",
-    "static/media/compass-north-regular.svg": "/insta-clone/static/media/compass-north-regular.b361034f399d63a4d337e18e94c76434.svg",
     "static/media/add-button-regular.svg": "/insta-clone/static/media/add-button-regular.87bb311d80dba26da03a284db7ba1f58.svg",
     "static/media/instagram-share-regular.svg": "/insta-clone/static/media/instagram-share-regular.7b62babdde2914744aabe2fb03952a88.svg",
     "static/media/home-regular.svg": "/insta-clone/static/media/home-regular.e0393fd85a8a4dfebdf0a060192ba3c9.svg",
@@ -22,12 +18,12 @@
     "static/media/heart-solid.svg": "/insta-clone/static/media/heart-solid.6bf72ba54514f2c4c454acc5566c8f5b.svg",
     "static/media/bookmark-ribbon-solid.svg": "/insta-clone/static/media/bookmark-ribbon-solid.9b2b768234f2f74cd7de1581d487db2c.svg",
     "index.html": "/insta-clone/index.html",
-    "main.55c58ef8.css.map": "/insta-clone/static/css/main.55c58ef8.css.map",
-    "main.f782d2d6.js.map": "/insta-clone/static/js/main.f782d2d6.js.map",
+    "main.f079128c.css.map": "/insta-clone/static/css/main.f079128c.css.map",
+    "main.ccaa715e.js.map": "/insta-clone/static/js/main.ccaa715e.js.map",
     "787.fc1ce4eb.chunk.js.map": "/insta-clone/static/js/787.fc1ce4eb.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.55c58ef8.css",
-    "static/js/main.f782d2d6.js"
+    "static/css/main.f079128c.css",
+    "static/js/main.ccaa715e.js"
   ]
 }
