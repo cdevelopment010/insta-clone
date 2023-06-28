@@ -1,7 +1,22 @@
-.profile-header, .profile-edit {
-    width: 50%; 
-    margin-inline: auto; 
+.profile-container {
+overflow-y: scroll; 
 }
+
+.profile-header {
+    position: sticky; 
+    top: 0; 
+    z-index: 500; 
+    border-bottom: 1px solid black;
+    padding: 20px; 
+}
+
+.profile-header, .profile-edit {
+    margin-inline: auto; 
+    background: white; 
+}
+.profile-edit {width: 50%;}
+
+
 
 
 

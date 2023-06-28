@@ -10,21 +10,27 @@
 - [x] Re-write home/profile to work within the menu
 - [x] Re-write menu to work for mobile, and to take the children as content.
 - [x] Style new user page
-- [ ] Style profile page
-  - [ ] Add post images as a grid
+- [x] Style profile page
+  - [x] Add post images as a grid
+  - [x] Mobile version tidy up
+  - [ ] Nice to have: show comment and like count.
 - [x] multi-image posts. 
 - [ ] refresh on post created
 - [ ] Click on post to enlarge (nice to have)
-- [ ] Comments (sub collection of post)
-  - [ ] Edit comment
-  - [ ] delete comment
+- [x] Comments (sub collection of post)
+  - [x] Edit comment
+  - [x] delete comment
     - [ ] delete comment also if you are post creator 
 - [x] Likes (sub collection of post)
 - [x] Should only show icons for comments/likes, and also create post, if user is signed in. 
 - [ ] Search functionality 
   - [ ] Also with tags
 - [ ] Tidy up code
+- [ ] Custom toast component
 - [ ] Style textarea for create post (generally just style create post)
+- [ ] Show image on file input (before upload)
+- [ ] optimise images
+- [ ] nice to have: notifications
 
 
 
