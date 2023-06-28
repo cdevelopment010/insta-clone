@@ -14,12 +14,12 @@ import {ReactComponent as HeartSolid} from '../Icons/svg/heart-solid.svg';
 import {ReactComponent as HeartSvg} from '../Icons/svg/heart-regular.svg';
 import {ReactComponent as SearchSolid} from '../Icons/svg/search-solid.svg';
 import {ReactComponent as SearchSvg} from '../Icons/svg/search-regular.svg';
-import {ReactComponent as CompassSolid} from '../Icons/svg/compass-north-solid.svg';
-import {ReactComponent as CompassSvg} from '../Icons/svg/compass-north-regular.svg';
-import {ReactComponent as ReelsSolid} from '../Icons/svg/instagram-reels-solid.svg';
-import {ReactComponent as ReelsSvg} from '../Icons/svg/instagram-reels-regular.svg';
-import {ReactComponent as ShareSolid} from '../Icons/svg/instagram-share-solid.svg';
-import {ReactComponent as ShareSvg} from '../Icons/svg/instagram-share-regular.svg';
+// import {ReactComponent as CompassSolid} from '../Icons/svg/compass-north-solid.svg';
+// import {ReactComponent as CompassSvg} from '../Icons/svg/compass-north-regular.svg';
+// import {ReactComponent as ReelsSolid} from '../Icons/svg/instagram-reels-solid.svg';
+// import {ReactComponent as ReelsSvg} from '../Icons/svg/instagram-reels-regular.svg';
+// import {ReactComponent as ShareSolid} from '../Icons/svg/instagram-share-solid.svg';
+// import {ReactComponent as ShareSvg} from '../Icons/svg/instagram-share-regular.svg';
 import {ReactComponent as AddSolid} from '../Icons/svg/add-button-solid.svg';
 import {ReactComponent as AddSvg} from '../Icons/svg/add-button-regular.svg';
 import { useEffect, useState } from "react";
@@ -103,34 +103,6 @@ export default function Menu({showCreate, children, currentUser}) {
                             </Link>
                         </li>
                         <li className="menu-item">
-                            <Link to="/reels">
-                                <span className={`d-flex align-items-center ${currentMenuItem==="reels" ? 'bold' : ''}`} onClick={changeToSolid} id="reels">
-                                    <svg height="25" width="25" className="svg-icon me-2" >
-                                        {currentMenuItem==="reels" 
-                                            && <ReelsSolid height="25" width="25"/>
-                                        }
-                                        {currentMenuItem!=="reels" 
-                                            && <ReelsSvg height="25" width="25"/>
-                                        }
-                                    </svg>
-                                </span>
-                            </Link>
-                        </li>
-                        <li className="menu-item">
-                            <Link to="/messages">
-                                <span className={`d-flex align-items-center ${currentMenuItem==="share" ? 'bold' : ''}`} onClick={changeToSolid} id="share">
-                                    <svg height="25" width="25" className="svg-icon me-2" >
-                                        {currentMenuItem==="share" 
-                                            && <ShareSolid height="25" width="25"/>
-                                        }
-                                        {currentMenuItem!=="share" 
-                                            && <ShareSvg height="25" width="25"/>
-                                        }
-                                    </svg>
-                                </span>
-                            </Link>
-                        </li>
-                        <li className="menu-item">
                             <Link to="/profile">
                                 <Avatar className="me-2" src={user?.profileImgUrl?.length > 0 ? user?.profileImgUrl[0] : ""}/>
                             </Link>
@@ -173,52 +145,6 @@ export default function Menu({showCreate, children, currentUser}) {
                                     }
                                 </svg>
                                 Search
-                            </span>
-                            </Link>
-                        </li>
-                        <li className="d-flex align-items-center menu-item">
-                            <Link to="/explore">
-                            <span className={`d-flex align-items-center ${currentMenuItem==="explore" ? 'bold' : ''}`} onClick={changeToSolid} id="explore">
-                                <svg height="25" width="25" className="svg-icon compass me-2" >
-                                    {currentMenuItem==="explore" 
-                                        && <CompassSolid height="25" width="25"/>
-                                    }
-                                    {currentMenuItem!=="explore" 
-                                        && <CompassSvg height="25" width="25"/>
-                                    }
-                                </svg>
-                                Explore
-                            </span>
-                            </Link>
-                        </li>
-                        <li className="d-flex align-items-center menu-item">
-                            <Link to="/reels">
-                            <span className={`d-flex align-items-center ${currentMenuItem==="reels" ? 'bold' : ''}`} onClick={changeToSolid} id="reels">
-                                <svg height="25" width="25" className="svg-icon me-2" >
-                                    {currentMenuItem==="reels" 
-                                        && <ReelsSolid height="25" width="25"/>
-                                    }
-                                    {currentMenuItem!=="reels" 
-                                        && <ReelsSvg height="25" width="25"/>
-                                    }
-                                </svg>
-                                
-                                Reels
-                            </span>
-                            </Link>
-                        </li>
-                        <li className= {`d-flex align-items-center menu-item ${user ? '' : 'd-none'}`}>
-                            <Link to="/messages">
-                            <span className={`d-flex align-items-center ${currentMenuItem==="share" ? 'bold' : ''}`} onClick={changeToSolid} id="share">
-                                <svg height="25" width="25" className="svg-icon me-2" >
-                                    {currentMenuItem==="share" 
-                                        && <ShareSolid height="25" width="25"/>
-                                    }
-                                    {currentMenuItem!=="share" 
-                                        && <ShareSvg height="25" width="25"/>
-                                    }
-                                </svg>
-                                Messages
                             </span>
                             </Link>
                         </li>
