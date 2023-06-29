@@ -6,7 +6,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 import '../Styles/createPost.css'
 
-export default function CreatePost({showCreate}) {
+export default function CreatePost({showCreate, currentUser}) {
 
     const [description, setDescription] = useState("");
     const [image, setImage] = useState(null);
@@ -28,6 +28,8 @@ export default function CreatePost({showCreate}) {
                 created: serverTimestamp(),
                 updated: serverTimestamp(), 
                 userid: Firebase.auth.currentUser.uid,
+                username: currentUser.username,
+                searchString: (description + " "+ currentUser.username).toLowerCase().split(/\s|#/),
                 imgUrls: []
             })
 

@@ -1,0 +1,12 @@
+.search-container {
+    overflow-y: scroll; 
+}
+
+.search-header {
+    position: sticky; 
+    top: 0; 
+    z-index: 500; 
+    border-bottom: 1px solid black;
+    background: white;
+    padding: 20px; 
+}

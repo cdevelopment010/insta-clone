@@ -89,7 +89,7 @@ export default function Menu({showCreate, children, currentUser}) {
                             </Link> 
                         </li>
                         <li className="menu-item">
-                            <Link to="/search">
+                            <Link to="/search/">
                                 <span className={`d-flex align-items-center ${currentMenuItem==="search" ? 'bold' : ''}`} onClick={changeToSolid} id="search">
                                     <svg height="25" width="25" className="svg-icon me-2" >
                                         {currentMenuItem==="search" 
@@ -134,7 +134,7 @@ export default function Menu({showCreate, children, currentUser}) {
                                 Home
                             </span></Link></li>
                         <li className="d-flex align-items-center menu-item">
-                            <Link to="/Search">
+                            <Link to="/Search/">
                             <span className={`d-flex align-items-center ${currentMenuItem==="search" ? 'bold' : ''}`} onClick={changeToSolid} id="search">
                                 <svg height="25" width="25" className="svg-icon me-2" >
                                     {currentMenuItem==="search" 

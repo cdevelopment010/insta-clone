@@ -10,10 +10,11 @@ import EmailSignUp from './Components/EmailSignUp';
 import CreatePost from './Components/CreatePost';
 import Profile from './Components/Profile';
 import Layout from './Components/Layout';
+import Search from './Components/Search';
 
 import Firebase from './Firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { query, where, getDocs, collection } from 'firebase/firestore';
+import { query, where, getDocs, collection, updateDoc, doc } from 'firebase/firestore';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
                 const data = {...doc.data(), id: doc.id};
                 setCurrentUser(data); 
             })
+            // await updatePostsWithSearchString(); 
         }
         const unsubscribe = onAuthStateChanged(Firebase.auth, (userAuth) => {
             if (userAuth && userAuth.uid !== currentUser?.userid) {
@@ -45,6 +47,23 @@ function App() {
   const showCreate = () => {
       setShowAddModal(!showAddModal);
   }
+
+  //run this once for all current posts
+  // const updatePostsWithSearchString = async () => {
+  //   console.log("updateposts...");
+  //   let postsCollectionRef = collection(Firebase.db, "posts"); 
+  //   const querySnapshot = await getDocs(postsCollectionRef);
+  //   querySnapshot.forEach((d) => {
+  //     const data = d.data(); 
+  //     const description = data.description + " " + (data?.username ? data.username : ""); 
+  //     const searchString = description.toLowerCase().split(/\s|#/);
+
+  //     const docRef = doc(postsCollectionRef, d.id);
+  //     updateDoc(docRef, { searchString });
+  //   })
+
+  // }
+
   return (
     <div className="container"  >
       <BrowserRouter basename={`${process.env.PUBLIC_URL}`}>{/*For live*/} 
@@ -60,7 +79,8 @@ function App() {
           <Route path="/messages" element={<Layout showCreate={showCreate}  currentUser={currentUser}></Layout>} />
           <Route path="/reels" element={<Layout showCreate={showCreate}  currentUser={currentUser}></Layout>} />
           <Route path="/explore" element={<Layout showCreate={showCreate}  currentUser={currentUser}></Layout>} />
-          <Route path="/search" element={<Layout showCreate={showCreate}  currentUser={currentUser}></Layout>} />
+          <Route path="/search/:searchstring" element={<Layout showCreate={showCreate}  currentUser={currentUser}><Search /></Layout>} />
+          <Route path="/search/" element={<Layout showCreate={showCreate}  currentUser={currentUser}><Search /></Layout>} />
           <Route path="/tags" element={<Layout showCreate={showCreate}  currentUser={currentUser}></Layout>} />
         </Routes>
       </BrowserRouter>
