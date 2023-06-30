@@ -56,7 +56,7 @@ export default function Search() {
     return (
         <div className={styles['search-container']}>
             <div className={`${styles['search-header']} d-flex flex-column`}>
-                <input value={searchString} onChange={updateSearch}/>
+                <input value={searchString} onChange={updateSearch} placeholder="Search..."/>
             </div>
             <PostsGrid posts={posts} />
         </div>

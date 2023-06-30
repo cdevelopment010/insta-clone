@@ -29,7 +29,6 @@ export default function Profile({currentUser}) {
         async function getData() {
             await getUserData(); 
         }
-        console.log("userid:", userid);
         if (userid) {
             //get user based off of userid
             getData(); 
@@ -39,7 +38,6 @@ export default function Profile({currentUser}) {
     },[currentUser, userid])
     
     useEffect(() => {
-        console.log(user);
         if (user ===null) {
             return;
         }
