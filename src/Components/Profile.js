@@ -5,11 +5,14 @@ import {getDownloadURL, uploadBytes, ref} from "firebase/storage"
 import Avatar from "./Avatar";
 import PostsGrid from "./PostsGrid";
 
+import { useParams } from "react-router-dom";
+
 
 import '../Styles/profile.css';
 
 export default function Profile({currentUser}) {
 
+    const { userid } = useParams();
     const [user, setUser] = useState(currentUser); 
     const userCollectionRef = collection(Firebase.db, 'users'); 
     const [username, setUsername] = useState(currentUser?.username); 
@@ -20,14 +23,23 @@ export default function Profile({currentUser}) {
     const [postCount, setPostCount] = useState(0);
     const [posts, setPosts] = useState([]);
 
-
     const postsRef = collection(Firebase.db, "posts");
 
     useEffect(() => {
-        setUser(currentUser);
-    },[currentUser])
+        async function getData() {
+            await getUserData(); 
+        }
+        console.log("userid:", userid);
+        if (userid) {
+            //get user based off of userid
+            getData(); 
+        } else {
+            setUser(currentUser);
+        }
+    },[currentUser, userid])
     
     useEffect(() => {
+        console.log(user);
         if (user ===null) {
             return;
         }
@@ -39,6 +51,17 @@ export default function Profile({currentUser}) {
         } 
         getData();
     }, [user])
+
+    const getUserData = async () => {
+        try {
+            let userQuery = query(userCollectionRef, where("userid", "==", userid)); 
+            let userSnapshot = await getDocs(userQuery); 
+            let userData = userSnapshot.docs.map(x=> ({...x.data(), id: x.id}))[0];
+            setUser(userData);
+        } catch(error) {
+            console.error(error)
+        }
+    }
 
     const updateDetails = async () => {
         
@@ -67,7 +90,7 @@ export default function Profile({currentUser}) {
             return;
         }
         try {
-            const postCountQuery = query(postsRef, where("userid", "==", currentUser?.userid));
+            const postCountQuery = query(postsRef, where("userid", "==", user?.userid));
             const postCounts = await getCountFromServer(postCountQuery); 
             setPostCount(postCounts.data().count);
         } catch(error) {
@@ -78,7 +101,7 @@ export default function Profile({currentUser}) {
     const getPosts = async(e) => {
         if (user == null) return;
         try {
-            const postsQuery = query(postsRef, where("userid", "==", currentUser?.userid));
+            const postsQuery = query(postsRef, where("userid", "==", user?.userid));
             const postsData = await getDocs(postsQuery); 
             const postsDataFilter = postsData.docs.map((d) => ({...d.data(), id: d.id})).sort((a,b) => a.updated < b.updated ? 1 : -1)
             setPosts(postsDataFilter);
@@ -153,11 +176,14 @@ export default function Profile({currentUser}) {
         <div className="profile-container">
 
             <div className="profile-header d-flex align-items-center justify-content-center mt-4">
-                <Avatar size="xl" src={user?.profileImgUrl.length > 0 ? user.profileImgUrl[0] : ''} className="me-5"/>
+                <Avatar size="xl" src={user?.profileImgUrl?.length > 0 ? user.profileImgUrl[0] : ''} className="me-5" userid=""/>
                 <div className="ms-5">
                     <div className="d-flex align-items-center justify-content-between mb-4">
                         <span className="me-5">{user?.username}</span>
-                        <button onClick={toggleEditProfile} className="cursor-pointer">Edit profile</button>
+                        {
+                            currentUser?.userid == user?.userid &&
+                            <button onClick={toggleEditProfile} className="cursor-pointer">Edit profile</button>
+                        }
                     </div>
                     <div className="d-flex align-items-center justify-content-between mb-4">
                         <span className="me-5"><span className="fw-bold">{postCount}</span> post</span>

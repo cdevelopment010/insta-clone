@@ -74,6 +74,7 @@ function App() {
           <Route path="/emailsignup" element={<EmailSignUp />} />
           <Route path="/home" element={<Layout showCreate={showCreate}  currentUser={currentUser}><Home showCreate={showCreate} showAddModal={showAddModal} currentUser={currentUser}/></Layout>} />
           <Route path="/profile" element={<Layout showCreate={showCreate}  currentUser={currentUser}><Profile currentUser={currentUser} /></Layout>} />
+          <Route path="/profile/:userid" element={<Layout showCreate={showCreate}  currentUser={currentUser}><Profile currentUser={currentUser} /></Layout>} />
           <Route path="/createpost" element={<Layout showCreate={showCreate}  currentUser={currentUser}><CreatePost currentUser={currentUser} /></Layout>} />
           <Route path="/notifications" element={<Layout showCreate={showCreate}  currentUser={currentUser}><div></div></Layout>} />
           <Route path="/messages" element={<Layout showCreate={showCreate}  currentUser={currentUser}></Layout>} />

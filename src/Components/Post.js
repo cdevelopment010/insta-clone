@@ -161,7 +161,7 @@ export default function Post({ post, currentUser }) {
         <div className="post-container">
             <div className="post-header d-flex align-items-center justify-content-between p-2">
                 <div className="d-flex align-items-center">
-                    <Avatar size="md" src={user?.profileImgUrl?.length > 0 ? user?.profileImgUrl[0] :''} className='me-1'/>
+                    <Avatar size="md" src={user?.profileImgUrl?.length > 0 ? user?.profileImgUrl[0] :''} className='me-1' userid={post?.userid}/>
                     <span className='fw-bold'>{user?.username}</span>
                 </div>
                 <div className='me-2'>
