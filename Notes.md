@@ -16,7 +16,8 @@
   - [ ] Nice to have: show comment and like count.
 - [x] multi-image posts. 
 - [ ] refresh on post created
-- [ ] Click on post to enlarge (nice to have)
+- [x] Click on post to enlarge (nice to have)
+  - [x] Maybe new post page rather than enlarge on click
 - [x] Comments (sub collection of post)
   - [x] Edit comment
   - [x] delete comment
@@ -25,12 +26,14 @@
 - [x] Should only show icons for comments/likes, and also create post, if user is signed in. 
 - [x] Search functionality 
   - [x] Also with tags
+  - [ ] Search when clicking on a tag
 - [ ] Tidy up code
 - [ ] Custom toast component
 - [ ] Style textarea for create post (generally just style create post)
 - [ ] Show image on file input (before upload)
 - [ ] optimise images
 - [ ] nice to have: notifications
+- [ ] delete post
 
 
 

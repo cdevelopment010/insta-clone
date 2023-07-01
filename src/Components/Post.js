@@ -20,6 +20,7 @@ import {ReactComponent as CommentSolid} from '../Icons/svg/instagram-comment-sol
 import {ReactComponent as CommentSvg} from '../Icons/svg/instagram-comment-regular.svg';
 import {ReactComponent as BookmarkSolid} from '../Icons/svg/bookmark-ribbon-solid.svg';
 import {ReactComponent as BookmarkSvg} from '../Icons/svg/bookmark-ribbon-regular.svg';
+import EnlargedPost from './EnglargedPost';
 
 export default function Post({ post, currentUser }) {
 
@@ -33,6 +34,7 @@ export default function Post({ post, currentUser }) {
     const [comment, setComment] = useState("");
     const [showComments, setShowComments] = useState(false);
     const [previousComments, setPreviousComments] = useState(null);
+    const [showPostMenu, setShowPostMenu] = useState(false);
 
     // let commentCounter = 28;
     let [showPostDetail, setShowPostDetail] = useState(postDetail[0].length > 100 ? false : true)
@@ -87,12 +89,12 @@ export default function Post({ post, currentUser }) {
         }
     }
 
-    const imageRight = () => {
+    const imageRight = (e) => {
         let newIndex = currentImageIndex; 
         newIndex = (newIndex+1) % images.length;
         setCurrentImageIndex(newIndex);
     }
-    const imageLeft = () => {
+    const imageLeft = (e) => {
         let newIndex = currentImageIndex; 
         newIndex = (newIndex-1+images.length) % images.length;
         setCurrentImageIndex(newIndex);
@@ -157,6 +159,7 @@ export default function Post({ post, currentUser }) {
         inputRef.current.focus();
     }
 
+
     return (
         <div className="post-container">
             <div className="post-header d-flex align-items-center justify-content-between p-2">
@@ -165,7 +168,18 @@ export default function Post({ post, currentUser }) {
                     <span className='fw-bold'>{user?.username}</span>
                 </div>
                 <div className='me-2'>
-                    <FontAwesomeIcon icon={faEllipsis} className='cursor-pointer'/>
+                    <FontAwesomeIcon icon={faEllipsis} className='cursor-pointer' 
+                        tabIndex={0}
+                        onBlur={(e) => {setTimeout(()=>setShowPostMenu(false),200)}}
+                        onClick={() => setShowPostMenu(true)}/>
+                    {
+                        showPostMenu && 
+                        <div className="post-menu">
+                            <ul className='post-menu-options'>
+                                <li><Link to={`/post/${post.id}`}>Go To Post</Link></li>
+                            </ul>
+                        </div>
+                    }
                 </div>
             </div>
             <div className="post-content">
@@ -186,7 +200,7 @@ export default function Post({ post, currentUser }) {
                         images.length > 1 &&
                         <div className="counter-container">
                             {images.map((im, ind) => {
-                                    return <div className={`image-counter cursor-pointer ${ind === currentImageIndex ? 'fill' : ''}`} key={`image-counter-${ind}`} onClick={() => setCurrentImageIndex(ind)}></div>
+                                    return <div className={`image-counter cursor-pointer ${ind === currentImageIndex ? 'fill' : ''}`} key={`image-counter-${ind}`} onClick={(e) => {setCurrentImageIndex(ind); }} ></div>
                                 })
                             }
                         </div>

@@ -135,6 +135,9 @@ html {
 .text-uppercase{text-transform: uppercase;}
 
 
+.border-bottom {border-bottom: 1px solid rgb(var(--input-bg))}
+
+
 .svg-icon path, .svg-icon rect {
     fill: black;
 }
@@ -143,6 +146,9 @@ html {
     width: 25px;
 }
 
+.liked-post path{
+    fill: red; 
+}
 
 @media screen and (max-width: 600px) {
     .flex-column-sm {

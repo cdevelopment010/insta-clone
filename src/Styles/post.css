@@ -130,10 +130,12 @@
 }
 
 
-.post-container .comments-container .comment-options {
+.post-container .comments-container .comment-options, .post-container .post-header .post-menu {
     position: relative;
 }
-.post-container .comments-container .comment-options .comment-options-list {
+.post-container .comments-container .comment-options .comment-options-list,
+.post-container .post-header .post-menu-options
+{
     position: absolute; 
     left: 120%; 
     top: -100%; 
@@ -143,8 +145,15 @@
     padding: 8px; 
     width: fit-content
 }
-.post-container .comments-container .comment-options .comment-options-list ul {
+.post-container .comments-container .comment-options .comment-options-list ul,
+.post-container .post-header .post-menu-options
+{
+    z-index: 10; 
     min-width: 100px; 
+}
+.post-container .post-header .post-menu-options li a {
+    text-decoration: none;
+    color: inherit;
 }
 .post-container .comments-container .comment {
     white-space: pre-line;

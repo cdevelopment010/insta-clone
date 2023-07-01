@@ -15,6 +15,7 @@ import Search from './Components/Search';
 import Firebase from './Firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { query, where, getDocs, collection, updateDoc, doc } from 'firebase/firestore';
+import EnlargedPost from './Components/EnglargedPost';
 
 function App() {
 
@@ -82,6 +83,7 @@ function App() {
           <Route path="/explore" element={<Layout showCreate={showCreate}  currentUser={currentUser}></Layout>} />
           <Route path="/search/:searchstring" element={<Layout showCreate={showCreate}  currentUser={currentUser}><Search /></Layout>} />
           <Route path="/search/" element={<Layout showCreate={showCreate}  currentUser={currentUser}><Search /></Layout>} />
+          <Route path="/post/:postid" element={<Layout showCreate={showCreate}  currentUser={currentUser}><EnlargedPost  currentUser={currentUser}/></Layout>} />
           <Route path="/tags" element={<Layout showCreate={showCreate}  currentUser={currentUser}></Layout>} />
         </Routes>
       </BrowserRouter>
