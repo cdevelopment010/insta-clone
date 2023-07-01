@@ -256,7 +256,7 @@ export default function Post({ post, currentUser }) {
                             <span>{postDetail[0].substring(0,100)}...</span>
                             <span>{postDetail.map((detail,ind)=>{
                                 if (ind === 0) {return}
-                                return <Link to={`/tags/${detail}`} key={ind}>#{detail}</Link>
+                                return <Link to={`/search/${detail}`} key={ind}>#{detail}</Link>
                             })}</span>
                             <br></br>
                             <span className='cursor-pointer text-secondary' onClick={togglePostDetail}>more</span>
@@ -268,7 +268,7 @@ export default function Post({ post, currentUser }) {
                             <span>{postDetail[0]}</span>
                             <span>{postDetail.map((detail,ind)=>{
                                 if (ind === 0) {return}
-                                return <Link to={`/tags/${detail}`} key={ind} className='me-1'>#{detail}</Link>
+                                return <Link to={`/search/${detail}`} key={ind} className='me-1'>#{detail}</Link>
                             })}</span>
                             <br></br>
                             {/* <span className='cursor-pointer text-secondary' onClick={togglePostDetail}>hide</span> */}

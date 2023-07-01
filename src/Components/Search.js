@@ -19,8 +19,8 @@ export default function Search() {
 
     useEffect(() => {
         console.log("Searching...", searchstring);
-        setSearchString(searchstring);
         async function getData() {
+            setSearchString(searchstring);
             await getPosts();
         }
         getData(); 
@@ -32,8 +32,10 @@ export default function Search() {
 
     const getPosts = async () => {
         try {
-            const posts = await getDocs(query(postsCollectionRef, where("searchString", "array-contains", (searchString?.toLowerCase() ? searchString?.toLowerCase() : "" ))) );
+            let str = searchString == "" ? searchstring : searchString;
+            const posts = await getDocs(query(postsCollectionRef, where("searchString", "array-contains", (str?.toLowerCase() ? str?.toLowerCase() : "" ))) );
             const postResults = posts.docs.map((d) => ({...d.data(), id: d.id}));
+            console.log(postResults);
             setPosts(postResults);
         } catch(error) {
             console.error(error);

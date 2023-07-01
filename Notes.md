@@ -26,7 +26,7 @@
 - [x] Should only show icons for comments/likes, and also create post, if user is signed in. 
 - [x] Search functionality 
   - [x] Also with tags
-  - [ ] Search when clicking on a tag
+  - [x] Search when clicking on a tag
 - [ ] Tidy up code
 - [ ] Custom toast component
 - [ ] Style textarea for create post (generally just style create post)
