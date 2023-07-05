@@ -43,6 +43,7 @@ export default function Profile({currentUser}) {
         }
         setFullName(user?.fullName);
         setUsername(user?.username);
+        setImage(user?.profileImgUrl)
         async function getData() {
             await getPostCount();
             await getPosts(); 
@@ -64,16 +65,20 @@ export default function Profile({currentUser}) {
     const updateDetails = async () => {
         
         const downloadUrls = [];
-        const fileRef = ref(Firebase.storage, `users/${Firebase.auth.currentUser.uid}_${image[0]?.name}`); 
-        console.log(fileRef);
-        await uploadBytes(fileRef, image[0]); 
-        const downloadUrl = await getDownloadURL(fileRef); 
-        downloadUrls.push(downloadUrl); 
+
+        if (image[0]?.lastModified){
+            let imageBlob = await optimizeImage(image[0]); 
+            imageBlob.name = image[0]?.name;
+            const fileRef = ref(Firebase.storage, `users/${Firebase.auth.currentUser.uid}_${imageBlob.name}`); 
+            await uploadBytes(fileRef, imageBlob); 
+            const downloadUrl = await getDownloadURL(fileRef); 
+            downloadUrls.push(downloadUrl); 
+        }
 
         await updateDoc(doc(userCollectionRef,user.id), {
             fullName: fullName || user.fullName, 
             username: username || user.username,
-            profileImgUrl: downloadUrls || user?.profileImgUrl.length > 0 ? user?.profileImgUrl[0] : ''
+            profileImgUrl: downloadUrls.length > 0 ?  downloadUrls : user?.profileImgUrl ? user?.profileImgUrl : ['']
         })
         setEditProfile(!editProfile);
     }
@@ -108,67 +113,48 @@ export default function Profile({currentUser}) {
         }
     }
 
-    // const compressImage = (file) => {
-    //     return new Promise((resolve, reject) => {
-    //         const reader = new FileReader();
-    //         reader.onload = function (event) {
-    //           const img = new Image();
-    //           img.onload = function () {
-    //             const canvas = document.createElement("canvas");
-    //             const ctx = canvas.getContext("2d");
-        
-    //             const maxWidth = 800; // Maximum width for compressed image
-    //             const maxHeight = 800; // Maximum height for compressed image
-        
-    //             let width = img.width;
-    //             let height = img.height;
-        
-    //             // Calculate new dimensions to maintain aspect ratio
-    //             if (width > height) {
-    //               if (width > maxWidth) {
-    //                 height *= maxWidth / width;
-    //                 width = maxWidth;
-    //               }
-    //             } else {
-    //               if (height > maxHeight) {
-    //                 width *= maxHeight / height;
-    //                 height = maxHeight;
-    //               }
-    //             }
-        
-    //             // Set canvas dimensions
-    //             canvas.width = width;
-    //             canvas.height = height;
-        
-    //             // Draw image on canvas
-    //             ctx.drawImage(img, 0, 0, width, height);
-        
-    //             // Convert canvas to a compressed data URL
-    //             const compressedDataUrl = canvas.toDataURL("image/jpeg", 0.7); // Adjust quality as desired
-        
-    //             // Resolve with the compressed data URL
-    //             resolve(compressedDataUrl);
-    //           };
-    //           img.src = event.target.result;
-    //         };
-    //         reader.readAsDataURL(file);
-    //       });
-    // }
-
-    // const fileChangeUpload = (event) => {
-    //     const file = event.target.files[0];
-
-    //     if (file) {
-    //         compressImage(file)
-    //         .then((compressedDataUrl) => {
-    //             // Use the compressedDataUrl for further processing or uploading
-    //             console.log(compressedDataUrl);
-    //         })
-    //         .catch((error) => {
-    //             console.error("Error compressing image:", error);
-    //         });
-    //     }
-    // }
+    function optimizeImage(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            const img = new Image();
+            img.onload = () => {
+              const canvas = document.createElement('canvas');
+              const ctx = canvas.getContext('2d');
+              // Calculate the desired width and height for the optimized image
+              const maxWidth = 800;
+              const maxHeight = 600;
+              let width = img.width;
+              let height = img.height;
+              if (width > maxWidth) {
+                height *= maxWidth / width;
+                width = maxWidth;
+              }
+              if (height > maxHeight) {
+                width *= maxHeight / height;
+                height = maxHeight;
+              }
+              // Set the canvas dimensions to the desired size
+              canvas.width = width;
+              canvas.height = height;
+              // Draw the image on the canvas
+              ctx.drawImage(img, 0, 0, width, height);
+              // Convert the canvas content back to a Blob
+              canvas.toBlob((blob) => {
+                resolve(blob);
+              }, 'image/jpeg', 0.8); // Adjust the compression quality as needed
+            };
+            img.onerror = () => {
+              reject(new Error('Failed to load the image.'));
+            };
+            img.src = event.target.result;
+          };   
+          reader.onerror = () => {
+            reject(new Error('Failed to read the file.'));
+          };
+          reader.readAsDataURL(file);
+        });
+      } 
 
     return(
         <div className="profile-container">
