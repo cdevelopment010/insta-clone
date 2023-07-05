@@ -22,7 +22,7 @@ import {ReactComponent as BookmarkSolid} from '../Icons/svg/bookmark-ribbon-soli
 import {ReactComponent as BookmarkSvg} from '../Icons/svg/bookmark-ribbon-regular.svg';
 import EnlargedPost from './EnglargedPost';
 
-export default function Post({ post, currentUser }) {
+export default function Post({ post, currentUser, removePost }) {
 
     const [user, setUser] = useState(null);
     const [postDetail, setPostDetail] = useState(post.description.split('#'));
@@ -159,6 +159,15 @@ export default function Post({ post, currentUser }) {
         inputRef.current.focus();
     }
 
+    const deletePost = async () => {
+        removePost(post);
+        try {
+            await deleteDoc(post.ref);
+        } catch(error) {
+            console.error(error)
+        }
+    }
+
 
     return (
         <div className="post-container">
@@ -177,6 +186,7 @@ export default function Post({ post, currentUser }) {
                         <div className="post-menu">
                             <ul className='post-menu-options'>
                                 <li><Link to={`/post/${post.id}`}>Go To Post</Link></li>
+                                <li className={`text-danger mt-1 ${currentUser.userid === post.userid ? '' : 'd-none' }`} onClick={deletePost}>Delete post</li>
                             </ul>
                         </div>
                     }
@@ -255,7 +265,7 @@ export default function Post({ post, currentUser }) {
                         <div>
                             <span>{postDetail[0].substring(0,100)}...</span>
                             <span>{postDetail.map((detail,ind)=>{
-                                if (ind === 0) {return}
+                                if (ind === 0) {return null}
                                 return <Link to={`/search/${detail}`} key={ind}>#{detail}</Link>
                             })}</span>
                             <br></br>
@@ -267,7 +277,7 @@ export default function Post({ post, currentUser }) {
                         <div>
                             <span>{postDetail[0]}</span>
                             <span>{postDetail.map((detail,ind)=>{
-                                if (ind === 0) {return}
+                                if (ind === 0) {return null}
                                 return <Link to={`/search/${detail}`} key={ind} className='me-1'>#{detail}</Link>
                             })}</span>
                             <br></br>

@@ -31,9 +31,14 @@
 - [ ] Custom toast component
 - [ ] Style textarea for create post (generally just style create post)
 - [ ] Show image on file input (before upload)
-- [ ] optimise images
+- [x] optimise images
+  - [ ] Profile picture
 - [ ] nice to have: notifications
-- [ ] delete post
+- [x] delete post
+  - [x] refresh homepage
+  - [ ] delete subcollections
+  - [ ] delete storage (post images)
+  
 
 
 
