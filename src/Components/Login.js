@@ -95,7 +95,7 @@ export default function Login() {
                 {/* Form section */}
                     <div className='d-flex flex-column  align-items-center justify-content-evenly flex-grow' style={{maxWidth: '350px'}}>
                         <div className="form-1 d-flex flex-column p-5 align-items-center justify-content-center border-1 w-100">
-                            <h1 className='m-5'>Instagram</h1>
+                            <h1 className='m-5 logo'>Instagram</h1>
                             <div className='mt-5 mb-5 ms-5 me-5 w-100'>
                                 <form className='d-flex flex-column justify-content-evenly'>
                                     <input type="text" placeholder='Phone number, username or email address' className='w-100' value={email} onChange={(e) => setEmail(e.target.value)} />

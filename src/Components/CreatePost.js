@@ -3,6 +3,8 @@ import { useEffect, useState } from "react"
 import Firebase from "../Firebase"
 import { addDoc, collection, serverTimestamp, updateDoc, doc } from "firebase/firestore"
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsis, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 import '../Styles/createPost.css'
 
@@ -13,6 +15,7 @@ export default function CreatePost({showCreate, currentUser}) {
     const [imageOpt, setImageOpt] = useState([]);
     const [imageUrls, setImageUrls] = useState([]);
     const postsCollectionRef = collection(Firebase.db, 'posts');
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     useEffect(() => {
     },[currentUser])
@@ -102,11 +105,32 @@ export default function CreatePost({showCreate, currentUser}) {
         });
       } 
 
+
+    const imageRight = (e) => {
+        let newIndex = currentImageIndex; 
+        newIndex = (newIndex+1) % image.length;
+        setCurrentImageIndex(newIndex);
+    }
+    const imageLeft = (e) => {
+        let newIndex = currentImageIndex; 
+        newIndex = (newIndex-1+image?.length) % image?.length;
+        setCurrentImageIndex(newIndex);
+    }
+
     return(
         <div className="create-post-container">
             <div className="backdrop" onClick={showCreate}></div>
             <div className="create-post-form">
                 <input type="file" accept="image/jpeg, image/png" multiple className="m-0 file-input" onChange={(e) => {setImage(e.target.files)}}/>
+                {image?.length > 0 &&
+                <div className="img-container">
+                  <div className='icons-container'>
+                      <FontAwesomeIcon icon={faArrowLeft} className='cursor-pointer change-image change-image-left' onClick={imageLeft}/>
+                      <FontAwesomeIcon icon={faArrowRight} className='cursor-pointer change-image change-image-right' onClick={imageRight}/>
+                  </div>
+                  <img src={URL.createObjectURL(image[currentImageIndex])} alt="uploaded image" />
+                  </div>
+                }
                 <textarea value={description} onChange={(e) => setDescription(e.target.value)} className="align-self-stretch description"></textarea>
                 <button onClick={addPost} className="btn">Create post!</button>
             </div>

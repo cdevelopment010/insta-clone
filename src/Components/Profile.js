@@ -197,7 +197,11 @@ export default function Profile({currentUser}) {
                             <label className="d-flex flex-column me-2 fs-sm flex-grow">
                                 <span className="fw-bold">Profile Picture:</span>
                                 <input type="file" accept="image/jpeg, image/png" onChange={(e) => {setImage(e.target.files)}}/>
-                                {/* <Avatar  src={tempImage ? tempImage : ""} /> */}
+                                {
+                                    image && typeof(image[0]) != 'string' &&
+                                    <Avatar src={URL.createObjectURL(image[0])} size="xl"/>
+                                    // <img src={URL.createObjectURL(image[0])} alt="new profile" />
+                                } 
                             </label>
                         </div>
                         <div className="d-flex mx-auto-sm">

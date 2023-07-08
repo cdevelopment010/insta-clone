@@ -31,10 +31,11 @@
     border-radius: 5px;
     border: 1px solid rgb(var(--input-bg));
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 0.9fr 0.1fr;
+    grid-template-rows: 0.1fr 0.8fr 0.1fr;
     grid-template-areas: 
         "upload description"
-        "upload btn";
+        "upload-img description"
+        "upload-img btn";
 }
 
 .create-post-form .file-input {
@@ -46,9 +47,32 @@
     grid-area: description; 
     border: 1px solid rgb(var(--input-bg));
     resize: none;
+    font-family: var(--font-family);
 
 }
-
+.create-post-form .img-container {
+    position: relative;
+    grid-area: upload-img
+}
+.create-post-form .img-container .change-image {
+    background: rgba(0,0,0,0.5);
+    color: white; 
+    position: absolute; 
+    transform: translate(0%, -50%);
+    top: 50%; 
+    padding: 10px; 
+}
+.create-post-form .img-container .change-image.change-image-left {
+    left: 5%;
+}
+.create-post-form .img-container .change-image.change-image-right {
+    right: 5%;
+}
+.create-post-form .img-container img {
+    height: 100%; 
+    width: 100%; 
+    object-fit: cover;
+}
 .create-post-form .btn {
     grid-area: btn;
 }
