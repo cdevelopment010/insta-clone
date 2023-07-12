@@ -6,7 +6,7 @@ import { useState } from 'react';
 import Firebase from '../Firebase';
 import { getDocs, deleteDoc, collection, doc, updateDoc, serverTimestamp } from 'firebase/firestore';
 
-export default function Comment({comment, currentUser, postuserid, postid, refreshComments}) {
+export default function Comment({comment, currentUser, postuserid, postid, refreshComments, toast}) {
     const [showCommentOptions, setShowCommentOptions] = useState(false);
     const [editComment, setEditComment] = useState(false);
     const [commentEditing, setCommentEditing] = useState(comment.comment);
@@ -33,6 +33,10 @@ export default function Comment({comment, currentUser, postuserid, postid, refre
         try {
             await deleteDoc(docRef);
             await refreshComments();
+            toast.updateMessage("Comment has been deleted.");
+            toast.updateType("danger");
+            toast.updateTimeout(2000);
+            toast.updateVisible();
 
         } catch(error){
             console.error(error);
@@ -59,6 +63,10 @@ export default function Comment({comment, currentUser, postuserid, postid, refre
             }); 
             setEditComment(false);
             await refreshComments();
+            toast.updateMessage("Comment has been updated.")
+            toast.updateType("success");
+            toast.updateTimeout(2000);
+            toast.updateVisible();
 
         } catch(error) {
             console.error(error);

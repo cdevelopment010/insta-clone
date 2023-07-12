@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-
+import Toast from "./Toast"
 import Firebase from "../Firebase"
 import { addDoc, collection, serverTimestamp, updateDoc, doc } from "firebase/firestore"
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
@@ -8,7 +8,7 @@ import { faEllipsis, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-s
 
 import '../Styles/createPost.css'
 
-export default function CreatePost({showCreate, currentUser}) {
+export default function CreatePost({showCreate, currentUser, toast}) {
     
     const [description, setDescription] = useState("");
     const [image, setImage] = useState(null);
@@ -21,7 +21,6 @@ export default function CreatePost({showCreate, currentUser}) {
     },[currentUser])
 
     useEffect(() => {
-        console.log(image);
     }, [image])
 
 
@@ -53,12 +52,19 @@ export default function CreatePost({showCreate, currentUser}) {
                 downloadUrls.push(downloadUrl); 
             }
             await updateDoc(doc(postsCollectionRef, newPost.id), {imgUrls: downloadUrls})
-            alert("Post created.")
             setDescription("");
             setImage(null);
+            toast.updateMessage("Success! Post has been created");
+            toast.updateType("success");
+            toast.updateTimeout(2000);
+            toast.updateVisible();
             showCreate(); 
         } catch(error) {
-            console.error(error)
+            console.error(error);
+            toast.updateMessage("Oh no! Something went wrong! Post wasn't created. Please try again.");
+            toast.updateType("danger");
+            toast.updateTimeout(2000);
+            toast.updateVisible();
         }
     }
 

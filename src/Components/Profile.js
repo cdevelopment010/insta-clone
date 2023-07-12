@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 
 import '../Styles/profile.css';
 
-export default function Profile({currentUser}) {
+export default function Profile({currentUser, toast}) {
 
     const { userid } = useParams();
     const [user, setUser] = useState(currentUser); 
@@ -24,6 +24,10 @@ export default function Profile({currentUser}) {
     const [posts, setPosts] = useState([]);
 
     const postsRef = collection(Firebase.db, "posts");
+
+    useEffect(() => {
+        console.log(toast)
+    },[])
 
     useEffect(() => {
         async function getData() {
@@ -64,23 +68,34 @@ export default function Profile({currentUser}) {
 
     const updateDetails = async () => {
         
-        const downloadUrls = [];
+        try {
+            const downloadUrls = [];
+            if (image[0]?.lastModified){
+                let imageBlob = await optimizeImage(image[0]); 
+                imageBlob.name = image[0]?.name;
+                const fileRef = ref(Firebase.storage, `users/${Firebase.auth.currentUser.uid}_${imageBlob.name}`); 
+                await uploadBytes(fileRef, imageBlob); 
+                const downloadUrl = await getDownloadURL(fileRef); 
+                downloadUrls.push(downloadUrl); 
+            }
 
-        if (image[0]?.lastModified){
-            let imageBlob = await optimizeImage(image[0]); 
-            imageBlob.name = image[0]?.name;
-            const fileRef = ref(Firebase.storage, `users/${Firebase.auth.currentUser.uid}_${imageBlob.name}`); 
-            await uploadBytes(fileRef, imageBlob); 
-            const downloadUrl = await getDownloadURL(fileRef); 
-            downloadUrls.push(downloadUrl); 
+            await updateDoc(doc(userCollectionRef,user.id), {
+                fullName: fullName || user.fullName, 
+                username: username || user.username,
+                profileImgUrl: downloadUrls.length > 0 ?  downloadUrls : user?.profileImgUrl ? user?.profileImgUrl : ['']
+            })
+            setEditProfile(!editProfile);
+            toast.updateMessage("Success! Profile has been updated.");
+            toast.updateType("success");
+            toast.updateTimeout(2000);
+            toast.updateVisible();
+        } catch(error){
+            console.error(error);
+            toast.updateMessage("Oh no! Something went wrong! Profile hasn't been updated. Please try again.");
+            toast.updateType("danger");
+            toast.updateTimeout(2000);
+            toast.updateVisible();
         }
-
-        await updateDoc(doc(userCollectionRef,user.id), {
-            fullName: fullName || user.fullName, 
-            username: username || user.username,
-            profileImgUrl: downloadUrls.length > 0 ?  downloadUrls : user?.profileImgUrl ? user?.profileImgUrl : ['']
-        })
-        setEditProfile(!editProfile);
     }
 
     const toggleEditProfile = () => {
@@ -165,7 +180,7 @@ export default function Profile({currentUser}) {
                     <div className="d-flex align-items-center justify-content-between mb-4">
                         <span className="me-5">{user?.username}</span>
                         {
-                            currentUser?.userid == user?.userid &&
+                            currentUser?.userid === user?.userid &&
                             <button onClick={toggleEditProfile} className="cursor-pointer">Edit profile</button>
                         }
                     </div>
@@ -200,7 +215,6 @@ export default function Profile({currentUser}) {
                                 {
                                     image && typeof(image[0]) != 'string' &&
                                     <Avatar src={URL.createObjectURL(image[0])} size="xl"/>
-                                    // <img src={URL.createObjectURL(image[0])} alt="new profile" />
                                 } 
                             </label>
                         </div>

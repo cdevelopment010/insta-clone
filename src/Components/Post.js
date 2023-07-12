@@ -22,7 +22,7 @@ import {ReactComponent as BookmarkSolid} from '../Icons/svg/bookmark-ribbon-soli
 import {ReactComponent as BookmarkSvg} from '../Icons/svg/bookmark-ribbon-regular.svg';
 import EnlargedPost from './EnglargedPost';
 
-export default function Post({ post, currentUser, removePost }) {
+export default function Post({ post, currentUser, removePost, toast }) {
 
     const [user, setUser] = useState(null);
     const [postDetail, setPostDetail] = useState(post.description.split('#'));
@@ -141,8 +141,16 @@ export default function Post({ post, currentUser, removePost }) {
             await refreshComments();
 
             setComment("");
+            toast.updateMessage("Success! Comment has been added");
+            toast.updateType("success");
+            toast.updateTimeout(2000);
+            toast.updateVisible();
         } catch(error) {
             console.error(error);
+            toast.updateMessage("Oh No! Something went wrong. Please try again.");
+            toast.updateType("danger");
+            toast.updateTimeout(2000);
+            toast.updateVisible();
         }
     }
 
@@ -163,6 +171,10 @@ export default function Post({ post, currentUser, removePost }) {
         removePost(post);
         try {
             await deleteDoc(post.ref);
+            toast.updateMessage("Post has been deleted.");
+            toast.updateType("danger");
+            toast.updateTimeout(2000);
+            toast.updateVisible();
         } catch(error) {
             console.error(error)
         }
@@ -294,7 +306,7 @@ export default function Post({ post, currentUser, removePost }) {
                                 previousComments.map((c, ind) =>{
                                     
                                     return (<div key={`comment-${c.id}`} className='p-2'>
-                                        <Comment comment={c} currentUser={currentUser} postuserid={post.userid} postid={post.id} refreshComments={refreshComments}/>
+                                        <Comment comment={c} currentUser={currentUser} postuserid={post.userid} postid={post.id} refreshComments={refreshComments} toast={toast}/>
                                         {/* <div className='hr' /> */}
                                     </div>)
                                 })

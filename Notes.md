@@ -28,7 +28,7 @@
   - [x] Also with tags
   - [x] Search when clicking on a tag
 - [ ] Tidy up code
-- [ ] Custom toast component
+- [x] Custom toast component
 - [x] Style textarea for create post (generally just style create post)
 - [x] Show image on file input (before upload)
 - [x] optimise images

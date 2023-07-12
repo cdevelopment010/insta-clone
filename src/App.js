@@ -21,7 +21,13 @@ function App() {
 
     const [currentUser, setCurrentUser] = useState(null); 
     const userCollectionRef = collection(Firebase.db, "users");
-    
+    const [showAddModal, setShowAddModal] = useState(false);
+    const [toastType, setToastType] = useState("warning");
+    const [toastTimeout, setToastTimeout] = useState(1000);
+    const [toastMessage, setToastMessage] = useState("");
+    const [toastVisible, setToastVisible] = useState(false);
+    const [toast, setToast] = useState({});
+
     useEffect(() => {
         const getCurrentUser = async () => {
             let authUid = Firebase?.auth?.currentUser?.uid || null;
@@ -43,10 +49,40 @@ function App() {
         return () => unsubscribe()
 
     }, [])
-    const [showAddModal, setShowAddModal] = useState(false);
+
+    useEffect(()=> {
+
+    },[toast])
+    
+  useEffect(() => {
+    setToast({type: toastType
+              , timeout: toastTimeout
+              , message: toastMessage
+              , visible: toastVisible
+              , updateType: updateToastType
+              , updateTimeout: updateToastTimeout
+              , updateMessage: updateToastMessage
+              , updateVisible: updateToastVisible
+            })
+  },[toastMessage, toastTimeout, toastType, toastVisible])
+   
+
 
   const showCreate = () => {
       setShowAddModal(!showAddModal);
+  }
+
+  const updateToastType = (type) => {
+    setToastType(type);
+  }
+  const updateToastTimeout = (timeout) => {
+    setToastTimeout(timeout);
+  }
+  const updateToastMessage = (message) => {
+    setToastMessage(message);
+  }
+  const updateToastVisible = () => {
+    setToastVisible(!toastVisible);
   }
 
   //run this once for all current posts
@@ -73,18 +109,18 @@ function App() {
         <Routes >
           <Route path="/" element={<Login />} />
           <Route path="/emailsignup" element={<EmailSignUp />} />
-          <Route path="/home" element={<Layout showCreate={showCreate}  currentUser={currentUser}><Home showCreate={showCreate} showAddModal={showAddModal} currentUser={currentUser}/></Layout>} />
-          <Route path="/profile" element={<Layout showCreate={showCreate}  currentUser={currentUser}><Profile currentUser={currentUser} /></Layout>} />
-          <Route path="/profile/:userid" element={<Layout showCreate={showCreate}  currentUser={currentUser}><Profile currentUser={currentUser} /></Layout>} />
-          <Route path="/createpost" element={<Layout showCreate={showCreate}  currentUser={currentUser}><CreatePost currentUser={currentUser} /></Layout>} />
-          <Route path="/notifications" element={<Layout showCreate={showCreate}  currentUser={currentUser}><div></div></Layout>} />
-          <Route path="/messages" element={<Layout showCreate={showCreate}  currentUser={currentUser}></Layout>} />
-          <Route path="/reels" element={<Layout showCreate={showCreate}  currentUser={currentUser}></Layout>} />
-          <Route path="/explore" element={<Layout showCreate={showCreate}  currentUser={currentUser}></Layout>} />
-          <Route path="/search/:searchstring" element={<Layout showCreate={showCreate}  currentUser={currentUser}><Search /></Layout>} />
-          <Route path="/search/" element={<Layout showCreate={showCreate}  currentUser={currentUser}><Search /></Layout>} />
-          <Route path="/post/:postid" element={<Layout showCreate={showCreate}  currentUser={currentUser}><EnlargedPost  currentUser={currentUser}/></Layout>} />
-          <Route path="/tags" element={<Layout showCreate={showCreate}  currentUser={currentUser}></Layout>} />
+          <Route path="/home" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}><Home showCreate={showCreate} showAddModal={showAddModal} currentUser={currentUser} toast={toast}/></Layout>} />
+          <Route path="/profile" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}><Profile currentUser={currentUser} toast={toast}/></Layout>} />
+          <Route path="/profile/:userid" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}><Profile currentUser={currentUser} toast={toast}/></Layout>} />
+          <Route path="/createpost" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}><CreatePost currentUser={currentUser} toast={toast}/></Layout>} />
+          <Route path="/notifications" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}><div></div></Layout>} />
+          <Route path="/messages" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}></Layout>} />
+          <Route path="/reels" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}></Layout>} />
+          <Route path="/explore" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}></Layout>} />
+          <Route path="/search/:searchstring" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}><Search /></Layout>} />
+          <Route path="/search/" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}><Search /></Layout>} />
+          <Route path="/post/:postid" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}><EnlargedPost  currentUser={currentUser}/></Layout>} />
+          <Route path="/tags" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}></Layout>} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -7,7 +7,7 @@ import { getDocs, collection, getCountFromServer } from "firebase/firestore";
 import '../Styles/home.css';
 import CreatePost from "./CreatePost";
 
-export default function Home({showAddModal, showCreate, currentUser}) {
+export default function Home({showAddModal, showCreate, currentUser, toast}) {
 
     const [user, setUser] = useState(currentUser);
     const [posts, setPosts] = useState([]);
@@ -70,12 +70,12 @@ export default function Home({showAddModal, showCreate, currentUser}) {
             {/* <Menu showCreate={showCreate}/> */}
             <div className="content">
                 {posts.map(p => {
-                    return <Post post={p} key={p.id} currentUser={currentUser} removePost={removePost}/>
+                    return <Post post={p} key={p.id} currentUser={currentUser} removePost={removePost} toast={toast}/>
                     })
                 }
             </div>
             {showAddModal && 
-                <CreatePost showCreate={showCreate} currentUser={currentUser}/>
+                <CreatePost showCreate={showCreate} currentUser={currentUser} toast={toast}/>
             }
         </div>
     )
