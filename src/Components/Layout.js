@@ -5,7 +5,6 @@ import Toast from './Toast';
 export default function Layout({children, showCreate, currentUser, toast}) {
 
     useEffect(()=> {
-        console.log("layout toast:", toast)
     }, [toast])
 
     return (

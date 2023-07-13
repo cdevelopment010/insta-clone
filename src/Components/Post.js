@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Firebase from '../Firebase';
 import { collection, getDocs, query, where, addDoc, deleteDoc, serverTimestamp, getCountFromServer } from "firebase/firestore";
-
+import { ref,deleteObject } from 'firebase/storage';
 import '../Styles/post.css';
 import { useEffect, useRef, useState  } from 'react';
 import { Link } from 'react-router-dom';
@@ -14,13 +14,12 @@ import Comment from './Comment';
 /* SVG ICONS */
 import {ReactComponent as HeartSolid} from '../Icons/svg/heart-solid.svg';
 import {ReactComponent as HeartSvg} from '../Icons/svg/heart-regular.svg';
-import {ReactComponent as ShareSolid} from '../Icons/svg/instagram-share-solid.svg';
-import {ReactComponent as ShareSvg} from '../Icons/svg/instagram-share-regular.svg';
-import {ReactComponent as CommentSolid} from '../Icons/svg/instagram-comment-solid.svg';
+// import {ReactComponent as ShareSolid} from '../Icons/svg/instagram-share-solid.svg';
+// import {ReactComponent as ShareSvg} from '../Icons/svg/instagram-share-regular.svg';
+// import {ReactComponent as CommentSolid} from '../Icons/svg/instagram-comment-solid.svg';
 import {ReactComponent as CommentSvg} from '../Icons/svg/instagram-comment-regular.svg';
-import {ReactComponent as BookmarkSolid} from '../Icons/svg/bookmark-ribbon-solid.svg';
-import {ReactComponent as BookmarkSvg} from '../Icons/svg/bookmark-ribbon-regular.svg';
-import EnlargedPost from './EnglargedPost';
+// import {ReactComponent as BookmarkSolid} from '../Icons/svg/bookmark-ribbon-solid.svg';
+// import {ReactComponent as BookmarkSvg} from '../Icons/svg/bookmark-ribbon-regular.svg';
 
 export default function Post({ post, currentUser, removePost, toast }) {
 
@@ -170,6 +169,9 @@ export default function Post({ post, currentUser, removePost, toast }) {
     const deletePost = async () => {
         removePost(post);
         try {
+            await deleteComments();
+            await deleteLikes();
+            await deleteImages(); 
             await deleteDoc(post.ref);
             toast.updateMessage("Post has been deleted.");
             toast.updateType("danger");
@@ -177,6 +179,42 @@ export default function Post({ post, currentUser, removePost, toast }) {
             toast.updateVisible();
         } catch(error) {
             console.error(error)
+        }
+    }
+
+    const deleteComments = async () => {
+        try {
+           const commentData = await getDocs(commentsRef); 
+            const filteredComments = commentData.docs.map((doc) => ({...doc.data(), id: doc.id, ref: doc.ref})).sort((a,b) => a.commentDate < b.commentDate ? -1 : 1);
+            filteredComments.forEach(async (c) => {
+                await deleteDoc(c.ref);
+            })
+        } catch(error) {
+            console.error(error);
+        }
+    }
+    const deleteLikes = async () => {
+        try {
+           const likesData = await getDocs(likesRef); 
+            const filteredLikes = likesData.docs.map((doc) => ({...doc.data(), id: doc.id, ref: doc.ref})).sort((a,b) => a.commentDate < b.commentDate ? -1 : 1);
+            filteredLikes.forEach(async (l)=> {
+                await deleteDoc(l.ref);
+            })
+        } catch(error) {
+            console.error(error);
+        }
+    }
+
+    const deleteImages = async () => {
+        try {
+            if( images.length > 0){
+                images.forEach(async (im) => {
+                    const storageRef = ref(Firebase.storage, im);
+                    await deleteObject(storageRef);
+                })
+            }
+        } catch(error) {
+            console.error(error);
         }
     }
 

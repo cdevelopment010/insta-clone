@@ -21,7 +21,7 @@
 - [x] Comments (sub collection of post)
   - [x] Edit comment
   - [x] delete comment
-    - [ ] delete comment also if you are post creator 
+    - [x] ~~delete comment also if you are post creator~~ (can delete docs in collection when deleting post, so this _should_ be fine)
 - [x] Likes (sub collection of post)
 - [x] Should only show icons for comments/likes, and also create post, if user is signed in. 
 - [x] Search functionality 
@@ -36,8 +36,8 @@
 - [ ] nice to have: notifications
 - [x] delete post
   - [x] refresh homepage
-  - [ ] delete subcollections
-  - [ ] delete storage (post images)
+  - [x] delete subcollections (it's actually deleting each doc in the sub collection - makes a lot of reads)
+  - [x] delete storage (post images)
   
 
 
