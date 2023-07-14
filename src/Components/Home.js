@@ -14,6 +14,7 @@ export default function Home({showAddModal, showCreate, currentUser, toast}) {
     const [postCount, setPostCount] = useState(0);
     const [timeoutPosts, setTimeoutPosts ] = useState(); 
     const postsCollectionRef = collection(db, 'posts');
+    const [showNewPostBtn, setShowNewPostBtn] = useState(false);
 
     useEffect(() => {
         
@@ -26,16 +27,41 @@ export default function Home({showAddModal, showCreate, currentUser, toast}) {
         getPosts();
     }, [])
 
-
     useEffect(() => {
     },[currentUser])
 
     useEffect(() => {
-        const getData = async () => {
-            //possible use for interval and getting the data again. 
-        }
-        getData();
-    }, [postCount])
+        let intervalTime = 5000;
+        let interval;
+            interval = setInterval(async () => {
+                const count = await getCountFromServer(postsCollectionRef); 
+                let newCount = count.data().count;
+                let currentCount = posts.length;
+                
+                if (newCount <= currentCount) {
+                    clearInterval(interval)
+                    interval = setInterval(async () => {
+                        intervalTime *= 2;
+                        console.log("interval with ", intervalTime);
+                        const count = await getCountFromServer(postsCollectionRef); 
+                        newCount = count.data().count;
+                        currentCount = posts.length;
+
+                        if (newCount > currentCount) {
+                            setShowNewPostBtn(true);
+                            intervalTime = 5000;
+                        } 
+
+                    }, intervalTime)
+                }
+
+                if (newCount > currentCount) {
+                    setShowNewPostBtn(true);
+                    intervalTime = 5000;
+                } 
+            },intervalTime)
+        return () => clearInterval(interval)
+    }, [posts, postsCollectionRef])
 
     const getPostData = async () => {
         try {
@@ -64,10 +90,20 @@ export default function Home({showAddModal, showCreate, currentUser, toast}) {
         setPosts(newPostList);
     }
 
+    const getUpdatedPosts = async() => {
+        await getPostData();
+        await checkPostCount();
+        setShowNewPostBtn(false);
+
+    }
+
 
     return (
         <div className="desktop-container">
-            {/* <Menu showCreate={showCreate}/> */}
+            {
+                showNewPostBtn &&
+                <button onClick={getUpdatedPosts} className="btn">Show new posts!</button>
+            }
             <div className="content">
                 {posts.map(p => {
                     return <Post post={p} key={p.id} currentUser={currentUser} removePost={removePost} toast={toast}/>
