@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/insta-clone/static/css/main.4ef94e9e.css",
-    "main.js": "/insta-clone/static/js/main.5110c64d.js",
+    "main.css": "/insta-clone/static/css/main.cdbc6695.css",
+    "main.js": "/insta-clone/static/js/main.9729e790.js",
     "static/js/787.fc1ce4eb.chunk.js": "/insta-clone/static/js/787.fc1ce4eb.chunk.js",
     "static/media/home-solid.svg": "/insta-clone/static/media/home-solid.e40deb8ddf33b96ca8806a172b73afe4.svg",
     "static/media/add-button-regular.svg": "/insta-clone/static/media/add-button-regular.87bb311d80dba26da03a284db7ba1f58.svg",
@@ -13,12 +13,12 @@
     "static/media/add-button-solid.svg": "/insta-clone/static/media/add-button-solid.9a7983a0f016286cecf8496f5f3a7760.svg",
     "static/media/heart-solid.svg": "/insta-clone/static/media/heart-solid.6bf72ba54514f2c4c454acc5566c8f5b.svg",
     "index.html": "/insta-clone/index.html",
-    "main.4ef94e9e.css.map": "/insta-clone/static/css/main.4ef94e9e.css.map",
-    "main.5110c64d.js.map": "/insta-clone/static/js/main.5110c64d.js.map",
+    "main.cdbc6695.css.map": "/insta-clone/static/css/main.cdbc6695.css.map",
+    "main.9729e790.js.map": "/insta-clone/static/js/main.9729e790.js.map",
     "787.fc1ce4eb.chunk.js.map": "/insta-clone/static/js/787.fc1ce4eb.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4ef94e9e.css",
-    "static/js/main.5110c64d.js"
+    "static/css/main.cdbc6695.css",
+    "static/js/main.9729e790.js"
   ]
 }
