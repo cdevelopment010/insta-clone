@@ -66,7 +66,23 @@ export default function Menu({showCreate, children, currentUser}) {
 
         <div className="mobile-container">
         <div className="mobile-container">
-                <div className="mobile-nav-header"></div>
+                <div className="mobile-nav-header d-flex align-items-center justify-content-between">
+                    <h2 className="logo">Instagram</h2>
+
+
+                    <Link to="/home">
+                        <span className={`d-flex align-items-center ${currentMenuItem==="add" ? 'bold' : ''}`} onClick={(e) => {changeToSolid(e); showCreate()}} id="add">
+                            <svg height="25" width="25" className="svg-icon me-2" >
+                                {currentMenuItem==="add" 
+                                    && <AddSolid height="25" width="25"/>
+                                }
+                                {currentMenuItem!=="add" 
+                                    && <AddSvg height="25" width="25"/>
+                                }
+                            </svg>
+                        </span>
+                    </Link>
+                </div>
                 <div className="content">
                     {children}
                 </div>

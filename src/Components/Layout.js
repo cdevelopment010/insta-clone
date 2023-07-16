@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import Menu from './Menu';
 import Toast from './Toast';
+import styles from '../Styles/layout.module.css'
 
 export default function Layout({children, showCreate, currentUser, toast}) {
 
@@ -8,7 +9,7 @@ export default function Layout({children, showCreate, currentUser, toast}) {
     }, [toast])
 
     return (
-        <div>
+        <div className={styles["layout-container"]}>
             <Menu showCreate={showCreate} currentUser={currentUser}> 
                 {children}
             </Menu>

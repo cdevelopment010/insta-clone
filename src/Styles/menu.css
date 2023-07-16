@@ -93,4 +93,8 @@
     .mobile-nav-header{
         border-bottom: rgb(var(--input-bg)) 1px solid;
     }
+    .logo {
+        padding: 10px 12px 10px 12px;
+        margin-bottom: 20px;         
+    }
 }

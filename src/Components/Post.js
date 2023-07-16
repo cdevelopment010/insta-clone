@@ -296,13 +296,6 @@ export default function Post({ post, currentUser, removePost, toast }) {
                 </div>
                 {/* Likes */}
                 <div className="likes mt-3 mb-3">
-                    {/* Icons should only show if you follow a person who has liked the post */}
-                    {/* <div className="avatars d-flex">
-                        <Avatar size="xs" src="" className='' />
-                        <Avatar size="xs" src="" className='' />
-                        <Avatar size="xs" src="" className='' />
-                    </div> */}
-
                     <div className='like-counter fw-bold'>
                         {likeCounter} likes
                     </div>

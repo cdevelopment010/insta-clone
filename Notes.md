@@ -15,7 +15,7 @@
   - [x] Mobile version tidy up
   - [ ] Nice to have: show comment and like count.
 - [x] multi-image posts. 
-- [ ] refresh on post created
+- [x] refresh on post created
 - [x] Click on post to enlarge (nice to have)
   - [x] Maybe new post page rather than enlarge on click
 - [x] Comments (sub collection of post)

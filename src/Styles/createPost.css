@@ -76,3 +76,17 @@
 .create-post-form .btn {
     grid-area: btn;
 }
+
+@media screen and (max-width: 600px) {
+    .create-post-form  {
+        height: 90%;
+        width: 90%; 
+        grid-template-columns: 1fr;
+        grid-template-rows: 0.2fr 0.8fr 0.8fr 0.2fr;
+        grid-template-areas: 
+            "upload"
+            "upload-img"
+            "description"
+            "btn";
+    }
+}

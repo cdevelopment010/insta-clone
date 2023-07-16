@@ -179,4 +179,9 @@
         width:100%;
         max-width: 100%; 
     }
+    .post-container .comments-container .comment-options .comment-options-list,
+    .post-container .post-header .post-menu-options
+    {
+        left: -500%;
+    }
 }
