@@ -4,7 +4,7 @@ import styles from '../Styles/enlargedPost.module.css';
 
 import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowRight, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { useParams } from 'react-router-dom';
 import { collection, query, where, getDocs, getDoc, doc, addDoc, serverTimestamp, getCountFromServer, deleteDoc } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
@@ -44,11 +44,9 @@ export default function EnlargedPost({currentUser}) {
     useEffect(() => {
         async function getData() {
             await getPostData();
-            await getPostUser(); 
-            
+            await getPostUser();    
         }
         getData(); 
-        
     }, [postid])
 
     useEffect(() => {
@@ -66,7 +64,6 @@ export default function EnlargedPost({currentUser}) {
             console.log(filteredComments);
             setPreviousComments(filteredComments);
 
-
             if(Firebase?.auth?.currentUser?.uid === null || Firebase?.auth?.currentUser?.uid === undefined) return;
             const userLiked = query(likesRef, where("userid", "==", Firebase?.auth?.currentUser?.uid)); 
             const likesSnapshot = await getDocs(userLiked); 
@@ -74,10 +71,7 @@ export default function EnlargedPost({currentUser}) {
         }
         getData(); 
 
-    }, [post])
-
-
-    
+    }, [post]) 
 
     useEffect(() => {
         setImages(post?.imgUrls || []);

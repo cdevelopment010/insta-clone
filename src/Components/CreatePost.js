@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react"
-import Toast from "./Toast"
 import Firebase from "../Firebase"
 import { addDoc, collection, serverTimestamp, updateDoc, doc } from "firebase/firestore"
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsis, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 import '../Styles/createPost.css'
 
@@ -26,7 +25,7 @@ export default function CreatePost({showCreate, currentUser, toast}) {
 
     const addPost = async() => {
         //must have an image
-        if (image.length == 0) return;
+        if (image.length === 0) return;
         const imageFiles = [...image].sort((a,b) => a.lastModifiedDate < b.lastModifiedDate ? 1 : -1); 
         try {
             const newPost = await addDoc(postsCollectionRef, {
@@ -76,7 +75,6 @@ export default function CreatePost({showCreate, currentUser, toast}) {
             img.onload = () => {
               const canvas = document.createElement('canvas');
               const ctx = canvas.getContext('2d');
-              // Calculate the desired width and height for the optimized image
               const maxWidth = 800;
               const maxHeight = 600;
               let width = img.width;
@@ -89,15 +87,12 @@ export default function CreatePost({showCreate, currentUser, toast}) {
                 width *= maxHeight / height;
                 height = maxHeight;
               }
-              // Set the canvas dimensions to the desired size
               canvas.width = width;
               canvas.height = height;
-              // Draw the image on the canvas
               ctx.drawImage(img, 0, 0, width, height);
-              // Convert the canvas content back to a Blob
               canvas.toBlob((blob) => {
                 resolve(blob);
-              }, 'image/jpeg', 0.8); // Adjust the compression quality as needed
+              }, 'image/jpeg', 0.8); 
             };
             img.onerror = () => {
               reject(new Error('Failed to load the image.'));

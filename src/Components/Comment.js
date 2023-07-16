@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsis, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 
 import { useState } from 'react';
 
 import Firebase from '../Firebase';
-import { getDocs, deleteDoc, collection, doc, updateDoc, serverTimestamp } from 'firebase/firestore';
+import { deleteDoc, collection, doc, updateDoc, serverTimestamp } from 'firebase/firestore';
 
 export default function Comment({comment, currentUser, postuserid, postid, refreshComments, toast}) {
     const [showCommentOptions, setShowCommentOptions] = useState(false);
@@ -97,7 +97,7 @@ export default function Comment({comment, currentUser, postuserid, postid, refre
             }
             <div className='d-flex justify-content-between align-items-center'>
                 <div className='text-uppercase text-secondary fs-xs align-self-bottom'>{timeString}</div>
-                {(comment.userid == currentUser?.userid || postuserid == currentUser?.userid)
+                {(comment.userid === currentUser?.userid || postuserid === currentUser?.userid)
                     &&
                     <div className='align-self-top comment-options'>
                         <FontAwesomeIcon icon={faEllipsis} className='cursor-pointer ' 

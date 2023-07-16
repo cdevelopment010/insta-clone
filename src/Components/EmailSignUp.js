@@ -30,27 +30,16 @@ export default function EmailSignUp() {
         
         let error = false;
         e.preventDefault(); 
-        if(fullName.trim().length == 0){error=true; alert("Please provide a name")}
-        if(username.trim().length == 0){error=true; alert("Please provide a username")}
-        if(password.trim().length == 0){error=true; alert("Please provide a password")}
-        if(email.trim().length == 0){error=true; alert("Please provide a email")}
+        if(fullName.trim().length === 0){error=true; alert("Please provide a name")}
+        if(username.trim().length === 0){error=true; alert("Please provide a username")}
+        if(password.trim().length === 0){error=true; alert("Please provide a password")}
+        if(email.trim().length === 0){error=true; alert("Please provide a email")}
 
         if(error) {return}
-
 
         try {
             await createUserWithEmailAndPassword(Firebase.auth, email, password);
             await newUserCheck(); 
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    const logout = async () => {
-        
-        try {
-            await signOut(Firebase.auth);
-            console.log("Signed out");
         } catch (error) {
             console.error(error);
         }
@@ -91,14 +80,11 @@ export default function EmailSignUp() {
 
     return (
         <div className="sign-up-container d-flex flex-column align-items-center justify-content-evenly">
-            
             <main className='d-flex align-items-center justify-content-center flex-grow mt-5'>
-                {/* images */}
                 <div className='phone-main' >
                     <img src={process.env.PUBLIC_URL + '/images/home-phones.png'} alt="" />
                     <img src={process.env.PUBLIC_URL + '/images/phone-image-' + imageNumber + '.png'} alt="" className='phone-image'/>
                 </div>
-                {/* Form */}
                 <div className='d-flex flex-column  align-items-center justify-content-evenly flex-grow' style={{maxWidth: '350px'}}>
                     <div className="form-1 d-flex flex-column p-5 align-items-center justify-content-center border-1 w-100">
                         <div className='mb-5'>
@@ -118,13 +104,8 @@ export default function EmailSignUp() {
                         </div> 
                     </div>
                 </div>
-            </main>
-            {/* <div>
-                <button onClick={logout}>Log out</button>
-            </div> */}
-            
-            <footer style={{height: '90px'}}>
-            </footer>
+            </main>            
+            <footer style={{height: '90px'}}></footer>
         </div>
     )
 }

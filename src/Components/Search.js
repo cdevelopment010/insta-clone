@@ -3,9 +3,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom"
 import Firebase from "../Firebase";
-
 import PostsGrid from "./PostsGrid";
-
 import styles from '../Styles/search.module.css';
 
 export default function Search() {

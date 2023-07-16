@@ -3,7 +3,7 @@ import { faBars } from "@fortawesome/free-solid-svg-icons"
 
 import Avatar from './Avatar';
 import Firebase from "../Firebase";
-
+import { signOut } from "firebase/auth";
 
 import '../Styles/menu.css';
 
@@ -14,12 +14,6 @@ import {ReactComponent as HeartSolid} from '../Icons/svg/heart-solid.svg';
 import {ReactComponent as HeartSvg} from '../Icons/svg/heart-regular.svg';
 import {ReactComponent as SearchSolid} from '../Icons/svg/search-solid.svg';
 import {ReactComponent as SearchSvg} from '../Icons/svg/search-regular.svg';
-// import {ReactComponent as CompassSolid} from '../Icons/svg/compass-north-solid.svg';
-// import {ReactComponent as CompassSvg} from '../Icons/svg/compass-north-regular.svg';
-// import {ReactComponent as ReelsSolid} from '../Icons/svg/instagram-reels-solid.svg';
-// import {ReactComponent as ReelsSvg} from '../Icons/svg/instagram-reels-regular.svg';
-// import {ReactComponent as ShareSolid} from '../Icons/svg/instagram-share-solid.svg';
-// import {ReactComponent as ShareSvg} from '../Icons/svg/instagram-share-regular.svg';
 import {ReactComponent as AddSolid} from '../Icons/svg/add-button-solid.svg';
 import {ReactComponent as AddSvg} from '../Icons/svg/add-button-regular.svg';
 import { useEffect, useState } from "react";
@@ -49,8 +43,6 @@ export default function Menu({showCreate, children, currentUser}) {
       }
 
     function changeToSolid(e) {
-        // e.stopPropagation();
-        // e.preventDefault();
         let el;
         if (e.target.tagName.toLowerCase() !== "span") {
             el = findAncestorElement(e.target,"span");
@@ -60,7 +52,14 @@ export default function Menu({showCreate, children, currentUser}) {
         setCurrentMenuItem(el.id);
     }
 
-    //desktop version
+    const logout = async () => {
+        try {
+            await signOut(Firebase.auth);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
         <div className="menu container">
 
@@ -209,7 +208,8 @@ export default function Menu({showCreate, children, currentUser}) {
                 </div>
             </div>
             <div className="menu-footer">
-                <FontAwesomeIcon icon= {faBars}  className="menu-item"/>
+                {/* <FontAwesomeIcon icon= {faBars}  className="menu-item"/> */}
+                <Link to="/"><span onClick={logout} className="text-secondary">Logo out</span></Link>
             </div>
 
         </div>

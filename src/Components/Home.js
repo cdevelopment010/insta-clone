@@ -17,7 +17,6 @@ export default function Home({showAddModal, showCreate, currentUser, toast}) {
     const [showNewPostBtn, setShowNewPostBtn] = useState(false);
 
     useEffect(() => {
-        
         const getPosts = async () => {
             await getPostData();
             if (posts.length > 0){
@@ -66,7 +65,6 @@ export default function Home({showAddModal, showCreate, currentUser, toast}) {
     const getPostData = async () => {
         try {
             const posts = await getDocs(postsCollectionRef); 
-            //Think this is OK for showing all the posts on the home page. 
             const filteredPosts = posts.docs.map((doc) => ({...doc.data(), id: doc.id, ref:doc.ref})).sort((a,b) => a.updated < b.updated ? 1 : -1)
             setPosts(filteredPosts);
         } catch(error) {
@@ -96,7 +94,6 @@ export default function Home({showAddModal, showCreate, currentUser, toast}) {
         setShowNewPostBtn(false);
 
     }
-
 
     return (
         <div className="desktop-container">

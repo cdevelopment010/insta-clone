@@ -37,7 +37,6 @@ function App() {
                 const data = {...doc.data(), id: doc.id};
                 setCurrentUser(data); 
             })
-            // await updatePostsWithSearchString(); 
         }
         const unsubscribe = onAuthStateChanged(Firebase.auth, (userAuth) => {
             if (userAuth && userAuth.uid !== currentUser?.userid) {
@@ -65,8 +64,6 @@ function App() {
               , updateVisible: updateToastVisible
             })
   },[toastMessage, toastTimeout, toastType, toastVisible])
-   
-
 
   const showCreate = () => {
       setShowAddModal(!showAddModal);
@@ -85,27 +82,9 @@ function App() {
     setToastVisible(!toastVisible);
   }
 
-  //run this once for all current posts
-  // const updatePostsWithSearchString = async () => {
-  //   console.log("updateposts...");
-  //   let postsCollectionRef = collection(Firebase.db, "posts"); 
-  //   const querySnapshot = await getDocs(postsCollectionRef);
-  //   querySnapshot.forEach((d) => {
-  //     const data = d.data(); 
-  //     const description = data.description + " " + (data?.username ? data.username : ""); 
-  //     const searchString = description.toLowerCase().split(/\s|#/);
-
-  //     const docRef = doc(postsCollectionRef, d.id);
-  //     updateDoc(docRef, { searchString });
-  //   })
-
-  // }
-
   return (
     <div className="container"  >
-      <BrowserRouter basename={`${process.env.PUBLIC_URL}`}>{/*For live*/} 
-      {/* <BrowserRouter> */}{/*For development*/} 
-
+      <BrowserRouter basename={`${process.env.PUBLIC_URL}`}>
         <Routes >
           <Route path="/" element={<Login />} />
           <Route path="/emailsignup" element={<EmailSignUp />} />

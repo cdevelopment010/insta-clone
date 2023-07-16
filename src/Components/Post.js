@@ -14,12 +14,7 @@ import Comment from './Comment';
 /* SVG ICONS */
 import {ReactComponent as HeartSolid} from '../Icons/svg/heart-solid.svg';
 import {ReactComponent as HeartSvg} from '../Icons/svg/heart-regular.svg';
-// import {ReactComponent as ShareSolid} from '../Icons/svg/instagram-share-solid.svg';
-// import {ReactComponent as ShareSvg} from '../Icons/svg/instagram-share-regular.svg';
-// import {ReactComponent as CommentSolid} from '../Icons/svg/instagram-comment-solid.svg';
 import {ReactComponent as CommentSvg} from '../Icons/svg/instagram-comment-regular.svg';
-// import {ReactComponent as BookmarkSolid} from '../Icons/svg/bookmark-ribbon-solid.svg';
-// import {ReactComponent as BookmarkSvg} from '../Icons/svg/bookmark-ribbon-regular.svg';
 
 export default function Post({ post, currentUser, removePost, toast }) {
 
@@ -34,8 +29,6 @@ export default function Post({ post, currentUser, removePost, toast }) {
     const [showComments, setShowComments] = useState(false);
     const [previousComments, setPreviousComments] = useState(null);
     const [showPostMenu, setShowPostMenu] = useState(false);
-
-    // let commentCounter = 28;
     let [showPostDetail, setShowPostDetail] = useState(postDetail[0].length > 100 ? false : true)
     const inputRef = useRef(null);
     const userCollectionRef = collection(Firebase.db, 'users');
@@ -61,12 +54,10 @@ export default function Post({ post, currentUser, removePost, toast }) {
             const filteredComments = commentData.docs.map((doc) => ({...doc.data(), id: doc.id})).sort((a,b) => a.commentDate < b.commentDate ? -1 : 1)
             setPreviousComments(filteredComments);
 
-
             if(Firebase?.auth?.currentUser?.uid === null || Firebase?.auth?.currentUser?.uid === undefined) return;
             const userLiked = query(likesRef, where("userid", "==", Firebase?.auth?.currentUser?.uid)); 
             const likesSnapshot = await getDocs(userLiked); 
-            setUserLiked(likesSnapshot.size > 0 ? true : false);
-            
+            setUserLiked(likesSnapshot.size > 0 ? true : false);         
 
         }
         getData();
@@ -284,23 +275,13 @@ export default function Post({ post, currentUser, removePost, toast }) {
                         <svg height="25" width="25" className='me-2 cursor-pointer svg-icon' onClick={focusOnComment}>
                             <CommentSvg height="25" width="25" />
                         </svg>
-                        {/* <svg height="25" width="25" className='me-2 cursor-pointer svg-icon'>
-                            <ShareSvg height="25" width="25" />
-                        </svg> */}
                     </div>
-                    {/* <div className="bookmark d-flex align-items-center">
-                        <svg height="25" width="25" className="me-2 cursor-pointer svg-icon">
-                            <BookmarkSvg height="25" width="25" />
-                        </svg>
-                    </div> */}
                 </div>
-                {/* Likes */}
                 <div className="likes mt-3 mb-3">
                     <div className='like-counter fw-bold'>
                         {likeCounter} likes
                     </div>
                 </div>
-                {/* Post detail */}
                 <div className="post-detail fs-sm">
                     <span className="fw-bold">{user?.username}</span>
                     {postDetail[0].length > 100 && !showPostDetail
@@ -324,11 +305,9 @@ export default function Post({ post, currentUser, removePost, toast }) {
                                 return <Link to={`/search/${detail}`} key={ind} className='me-1'>#{detail}</Link>
                             })}</span>
                             <br></br>
-                            {/* <span className='cursor-pointer text-secondary' onClick={togglePostDetail}>hide</span> */}
                         </div>
                     }
                 </div>
-                {/* Comment section */}
                 <div className="comments-container fs-sm pt-2">
                     <span className='text-secondary cursor-pointer' onClick={toggleComments}>{ showComments ? 'Hide comments' : `View all ${commentCounter} comments`} </span>
                     { showComments &&
@@ -338,7 +317,6 @@ export default function Post({ post, currentUser, removePost, toast }) {
                                     
                                     return (<div key={`comment-${c.id}`} className='p-2'>
                                         <Comment comment={c} currentUser={currentUser} postuserid={post.userid} postid={post.id} refreshComments={refreshComments} toast={toast}/>
-                                        {/* <div className='hr' /> */}
                                     </div>)
                                 })
                             }

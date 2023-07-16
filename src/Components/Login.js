@@ -66,7 +66,6 @@ export default function Login() {
 
                 navigate("/home");
             } else {
-                //should only fire if signing in with Google for the first time.
                 await addDoc(userCollectionRef, {
                     userid: Firebase.auth.currentUser.uid,
                     profileImgUrl: [""],
@@ -86,13 +85,10 @@ export default function Login() {
     return (
         <div className="login-container">
             <main className='d-flex align-items-center justify-content-center flex-grow mt-5'>
-                {/* images */}
                 <div className='phone-main' >
                     <img src={process.env.PUBLIC_URL + '/images/home-phones.png'} alt="" />
                     <img src={process.env.PUBLIC_URL + '/images/phone-image-' + imageNumber + '.png'} alt="" className='phone-image'/>
                 </div>
-                
-                {/* Form section */}
                     <div className='d-flex flex-column  align-items-center justify-content-evenly flex-grow' style={{maxWidth: '350px'}}>
                         <div className="form-1 d-flex flex-column p-5 align-items-center justify-content-center border-1 w-100">
                             <h1 className='m-5 logo'>Instagram</h1>
@@ -128,7 +124,6 @@ export default function Login() {
                             <div className='d-flex'>
                                 <img src={process.env.PUBLIC_URL + '/images/google-play.png'} alt="" style={{height: '40px'}} className='me-3'/>
                                 <img src={process.env.PUBLIC_URL + '/images/microsoft.png'} alt="" style={{height: '40px'}}/>
-                                {/* image Microsoft */}
                             </div>
                         </div>
                     </div>
