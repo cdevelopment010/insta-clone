@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import Firebase from "../Firebase";
-import { collection,  updateDoc, doc, query, where, getCountFromServer,getDocs } from "firebase/firestore";
-import {getDownloadURL, uploadBytes, ref} from "firebase/storage"
+import { getAuth, deleteUser } from "firebase/auth";
+import { collection,  updateDoc, doc, query, where, getCountFromServer,getDocs, deleteDoc } from "firebase/firestore";
+import {getDownloadURL, uploadBytes, ref, deleteObject} from "firebase/storage"
 import Avatar from "./Avatar";
 import PostsGrid from "./PostsGrid";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import '../Styles/profile.css';
 
-export default function Profile({currentUser, toast}) {
+export default function Profile({currentUser, toast, confirmObj}) {
 
     const { userid } = useParams();
     const [user, setUser] = useState(currentUser); 
@@ -22,8 +23,11 @@ export default function Profile({currentUser, toast}) {
 
     const postsRef = collection(Firebase.db, "posts");
 
+    const navigate = useNavigate(); 
+
     useEffect(() => {
-        console.log(toast)
+        // console.log(toast)
+        // console.log(confirmObj)
     },[])
 
     useEffect(() => {
@@ -164,6 +168,55 @@ export default function Profile({currentUser, toast}) {
         });
       } 
 
+
+    
+    const deleteAccount = () => {
+        confirmObj.updateConfirmObj({
+            message: 'Are you sure you want to delete your account? It will delete all your posts.',
+            pCallback: async () => {
+                try {   
+                    const deleteUserAccount = getAuth().currentUser;
+                    console.log(deleteUserAccount);
+                    const postsQuery = query(postsRef, where("userid", "==", deleteUserAccount.uid));
+                    const postsData = await getDocs(postsQuery); 
+
+                    postsData.forEach(async p => {
+                        const likesRef = collection(Firebase.db, "posts", p.id, "likes"); 
+                        const commentsRef = collection(Firebase.db, "posts", p.id, "comments"); 
+                        
+                        const likesData = await getDocs(likesRef); 
+                        const commentsData = await getDocs(commentsRef); 
+
+                        likesData.forEach(async l => await deleteDoc(l.ref))
+                        commentsData.forEach(async c => await deleteDoc(c.ref))
+
+                        if(p.data().imgUrls.length > 0){
+                            p.data().imgUrls.forEach(async (im) => {
+                                const storageRef = ref(Firebase.storage, im);
+                                await deleteObject(storageRef);
+                            })
+                        }
+
+                        await deleteDoc(p.ref);
+                        
+                    })
+
+                    let userQuery = query(userCollectionRef, where("userid", "==", deleteUserAccount.uid)); 
+                    let userSnapshot = await getDocs(userQuery); 
+                    userSnapshot.forEach(async u => deleteDoc(u.ref))
+
+                    await deleteUser(deleteUserAccount); 
+                    console.log("account deleted");
+                    navigate("/");
+
+                } catch(error) {
+                    console.error(error);
+                }
+            }
+        })
+        confirmObj.updateVisible(true);
+    }
+
     return(
         <div className="profile-container">
 
@@ -212,6 +265,9 @@ export default function Profile({currentUser, toast}) {
                         <div className="d-flex mx-auto-sm">
                             <button type="button" onClick={updateDetails} className="me-3 cursor-pointer">Update details</button>
                             <button type="button" onClick={toggleEditProfile} className="bg-danger cursor-pointer">Cancel</button>
+                        </div>
+                        <div className="d-flex mx-auto-sm mt-3">
+                            <button type="button" onClick={deleteAccount} className="bg-danger cursor-pointer">Delete Account</button>
                         </div>
                     </div>
                 }

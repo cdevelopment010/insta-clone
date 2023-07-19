@@ -25,6 +25,7 @@
 .image-section{
     grid-area: img; 
     position: relative;
+    background: rgba(0,0,0,1);    
 }
 
 .image-section img {

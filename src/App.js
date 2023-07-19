@@ -27,7 +27,13 @@ function App() {
     const [toastMessage, setToastMessage] = useState("");
     const [toastVisible, setToastVisible] = useState(false);
     const [toast, setToast] = useState({});
-
+    const [confirmVisible, setConfirmVisible] = useState(false);
+    const [confirmObj, setConfirmObj] = useState({
+      message: 'Danger danger, high voltage!'
+      , visible: confirmVisible
+      , pCallback: () => {console.log('confirm dialogue')}
+    });
+    
     useEffect(() => {
         const getCurrentUser = async () => {
             let authUid = Firebase?.auth?.currentUser?.uid || null;
@@ -65,6 +71,16 @@ function App() {
             })
   },[toastMessage, toastTimeout, toastType, toastVisible])
 
+  useEffect(() => {
+    setConfirmObj({
+              message: confirmObj.message 
+              , visible: confirmVisible
+              , pCallback: confirmObj.pCallback
+              , updateVisible: updateConfirmVisible
+              , updateConfirmObj: updateConfirmObj
+            })
+  },[confirmVisible])
+
   const showCreate = () => {
       setShowAddModal(!showAddModal);
   }
@@ -81,6 +97,18 @@ function App() {
   const updateToastVisible = () => {
     setToastVisible(!toastVisible);
   }
+  const updateConfirmVisible = () => {
+    setConfirmVisible(!confirmVisible);
+  }
+  const updateConfirmObj = (obj)=> {
+    setConfirmObj({
+      message: obj.message ? obj.message : confirmObj.message,
+      visible: obj.visible ? obj.visible : confirmObj.visible,
+      pCallback: obj.pCallback ? obj.pCallback : confirmObj.pCallback,
+      updateVisible: updateConfirmVisible, 
+      updateConfirmObj: updateConfirmObj
+    })
+  }
 
   return (
     <div className="container"  >
@@ -88,18 +116,18 @@ function App() {
         <Routes >
           <Route path="/" element={<Login />} />
           <Route path="/emailsignup" element={<EmailSignUp />} />
-          <Route path="/home" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}><Home showCreate={showCreate} showAddModal={showAddModal} currentUser={currentUser} toast={toast}/></Layout>} />
-          <Route path="/profile" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}><Profile currentUser={currentUser} toast={toast}/></Layout>} />
-          <Route path="/profile/:userid" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}><Profile currentUser={currentUser} toast={toast}/></Layout>} />
-          <Route path="/createpost" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}><CreatePost currentUser={currentUser} toast={toast}/></Layout>} />
-          <Route path="/notifications" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}><div></div></Layout>} />
-          <Route path="/messages" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}></Layout>} />
-          <Route path="/reels" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}></Layout>} />
-          <Route path="/explore" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}></Layout>} />
-          <Route path="/search/:searchstring" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}><Search /></Layout>} />
-          <Route path="/search/" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}><Search /></Layout>} />
-          <Route path="/post/:postid" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}><EnlargedPost  currentUser={currentUser}/></Layout>} />
-          <Route path="/tags" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast}></Layout>} />
+          <Route path="/home" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast} confirmObj={confirmObj}><Home showCreate={showCreate} showAddModal={showAddModal} currentUser={currentUser} toast={toast}/></Layout>} />
+          <Route path="/profile" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast} confirmObj={confirmObj}><Profile currentUser={currentUser} toast={toast} confirmObj={confirmObj}/></Layout>} />
+          <Route path="/profile/:userid" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast} confirmObj={confirmObj}><Profile currentUser={currentUser} toast={toast}/></Layout>} />
+          <Route path="/createpost" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast} confirmObj={confirmObj}><CreatePost currentUser={currentUser} toast={toast}/></Layout>} />
+          <Route path="/notifications" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast} confirmObj={confirmObj}><div></div></Layout>} />
+          <Route path="/messages" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast} confirmObj={confirmObj}></Layout>} />
+          <Route path="/reels" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast} confirmObj={confirmObj}></Layout>} />
+          <Route path="/explore" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast} confirmObj={confirmObj}></Layout>} />
+          <Route path="/search/:searchstring" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast} confirmObj={confirmObj}><Search /></Layout>} />
+          <Route path="/search/" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast} confirmObj={confirmObj}><Search /></Layout>} />
+          <Route path="/post/:postid" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast} confirmObj={confirmObj}><EnlargedPost  currentUser={currentUser}/></Layout>} />
+          <Route path="/tags" element={<Layout showCreate={showCreate}  currentUser={currentUser} toast={toast} confirmObj={confirmObj}></Layout>} />
         </Routes>
       </BrowserRouter>
     </div>

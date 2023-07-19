@@ -69,6 +69,13 @@
     display: none;
 }
 
+.logo-out {
+    text-decoration: none;
+    color: rgb(var(--secondary-text));
+}
+.logo-out:hover {
+    color: rgb(var(--secondary-primary));
+}
 
 @media screen and (max-width: 600px) {
     .menu.container .menu-desktop-container{ 

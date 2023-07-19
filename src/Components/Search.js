@@ -16,7 +16,6 @@ export default function Search() {
     const postsCollectionRef = collection(Firebase.db, "posts");
 
     useEffect(() => {
-        console.log("Searching...", searchstring);
         async function getData() {
             setSearchString(searchstring);
             await getPosts();
@@ -33,7 +32,6 @@ export default function Search() {
             let str = searchString == "" ? searchstring : searchString;
             const posts = await getDocs(query(postsCollectionRef, where("searchString", "array-contains", (str?.toLowerCase() ? str?.toLowerCase() : "" ))) );
             const postResults = posts.docs.map((d) => ({...d.data(), id: d.id}));
-            console.log(postResults);
             setPosts(postResults);
         } catch(error) {
             console.error(error);

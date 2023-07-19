@@ -41,7 +41,6 @@ export default function Home({showAddModal, showCreate, currentUser, toast}) {
                     clearInterval(interval)
                     interval = setInterval(async () => {
                         intervalTime *= 2;
-                        console.log("interval with ", intervalTime);
                         const count = await getCountFromServer(postsCollectionRef); 
                         newCount = count.data().count;
                         currentCount = posts.length;

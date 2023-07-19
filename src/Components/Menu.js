@@ -1,6 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBars } from "@fortawesome/free-solid-svg-icons"
-
 import Avatar from './Avatar';
 import Firebase from "../Firebase";
 import { signOut } from "firebase/auth";
@@ -10,8 +7,6 @@ import '../Styles/menu.css';
 /* SVG ICONS */
 import {ReactComponent as HomeSolid} from '../Icons/svg/home-solid.svg';
 import {ReactComponent as HomeSvg} from '../Icons/svg/home-regular.svg';
-import {ReactComponent as HeartSolid} from '../Icons/svg/heart-solid.svg';
-import {ReactComponent as HeartSvg} from '../Icons/svg/heart-regular.svg';
 import {ReactComponent as SearchSolid} from '../Icons/svg/search-solid.svg';
 import {ReactComponent as SearchSvg} from '../Icons/svg/search-regular.svg';
 import {ReactComponent as AddSolid} from '../Icons/svg/add-button-solid.svg';
@@ -164,21 +159,6 @@ export default function Menu({showCreate, children, currentUser}) {
                             </Link>
                         </li>
                         <li className={`d-flex align-items-center menu-item ${user ? '' : 'd-none'}`}>
-                            <Link to="/notifications">
-                            <span className={`d-flex align-items-center ${currentMenuItem==="notifications" ? 'bold' : ''}`} onClick={changeToSolid} id="notifications">
-                                <svg height="25" width="25" className="svg-icon me-2" >
-                                    {currentMenuItem==="notifications" 
-                                        && <HeartSolid height="25" width="25"/>
-                                    }
-                                    {currentMenuItem!=="notifications" 
-                                        && <HeartSvg height="25" width="25"/>
-                                    }
-                                </svg>
-                                Notifications
-                            </span>
-                            </Link>
-                        </li>
-                        <li className={`d-flex align-items-center menu-item ${user ? '' : 'd-none'}`}>
                             <Link to="/home">
                             <span className={`d-flex align-items-center ${currentMenuItem==="add" ? 'bold' : ''}`} onClick={(e) => {changeToSolid(e); showCreate()}} id="add">
                                 <svg height="25" width="25" className="svg-icon me-2" >
@@ -208,12 +188,10 @@ export default function Menu({showCreate, children, currentUser}) {
                 </div>
             </div>
             <div className="menu-footer">
-                {/* <FontAwesomeIcon icon= {faBars}  className="menu-item"/> */}
-                <Link to="/"><span onClick={logout} className="text-secondary">Logo out</span></Link>
+                <Link to="/" className="logo-out"><span onClick={logout} className="">Logo out</span></Link>
             </div>
 
         </div>
-
             {children}
         </div>
         </div>
