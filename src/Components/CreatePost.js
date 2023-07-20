@@ -4,6 +4,7 @@ import { addDoc, collection, serverTimestamp, updateDoc, doc } from "firebase/fi
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from "react-router-dom";
 
 import '../Styles/createPost.css'
 
@@ -15,6 +16,8 @@ export default function CreatePost({showCreate, currentUser, toast}) {
     const [imageUrls, setImageUrls] = useState([]);
     const postsCollectionRef = collection(Firebase.db, 'posts');
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
     },[currentUser])
@@ -58,6 +61,9 @@ export default function CreatePost({showCreate, currentUser, toast}) {
             toast.updateTimeout(2000);
             toast.updateVisible();
             showCreate(); 
+            setTimeout(() => {
+              navigate(0)
+            }, 2000);
         } catch(error) {
             console.error(error);
             toast.updateMessage("Oh no! Something went wrong! Post wasn't created. Please try again.");

@@ -26,6 +26,7 @@ export default function Login() {
     async function LoginGoogle(e) {
         e.preventDefault();
         try {
+            await logOut();
             await signInWithPopup(Firebase.auth, Firebase.provider);
             if (Firebase.auth.currentUser) {
                 await newUserCheck();

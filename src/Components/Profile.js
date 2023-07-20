@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Firebase from "../Firebase";
-import { getAuth, deleteUser } from "firebase/auth";
+import { getAuth, deleteUser, GoogleAuthProvider, reauthenticateWithCredential, signInWithPopup } from "firebase/auth";
 import { collection,  updateDoc, doc, query, where, getCountFromServer,getDocs, deleteDoc } from "firebase/firestore";
 import {getDownloadURL, uploadBytes, ref, deleteObject} from "firebase/storage"
 import Avatar from "./Avatar";
@@ -28,7 +28,9 @@ export default function Profile({currentUser, toast, confirmObj}) {
     useEffect(() => {
         // console.log(toast)
         // console.log(confirmObj)
-    },[])
+        setUser(currentUser);
+        console.log(user, currentUser);
+    },[currentUser])
 
     useEffect(() => {
         async function getData() {
@@ -79,6 +81,7 @@ export default function Profile({currentUser, toast, confirmObj}) {
                 const downloadUrl = await getDownloadURL(fileRef); 
                 downloadUrls.push(downloadUrl); 
             }
+            console.log(user.id)
 
             await updateDoc(doc(userCollectionRef,user.id), {
                 fullName: fullName || user.fullName, 
@@ -90,6 +93,9 @@ export default function Profile({currentUser, toast, confirmObj}) {
             toast.updateType("success");
             toast.updateTimeout(2000);
             toast.updateVisible();
+            setTimeout(() => {
+                navigate(0);
+            },2000)
         } catch(error){
             console.error(error);
             toast.updateMessage("Oh no! Something went wrong! Profile hasn't been updated. Please try again.");
@@ -204,6 +210,15 @@ export default function Profile({currentUser, toast, confirmObj}) {
                     let userQuery = query(userCollectionRef, where("userid", "==", deleteUserAccount.uid)); 
                     let userSnapshot = await getDocs(userQuery); 
                     userSnapshot.forEach(async u => deleteDoc(u.ref))
+
+                    if (deleteUserAccount.providerData.some((provider) => provider.providerId === 'google.com')){
+                        const googleAuthProvider = new GoogleAuthProvider();
+                        await signInWithPopup(Firebase.auth, Firebase.provider)
+
+                        // await reauthenticateWithCredential(currentUser, googleAuthProvider)
+                        // console.log(googleAuthProvider);
+
+                    }
 
                     await deleteUser(deleteUserAccount); 
                     console.log("account deleted");
