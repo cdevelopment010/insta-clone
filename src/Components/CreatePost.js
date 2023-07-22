@@ -61,9 +61,9 @@ export default function CreatePost({showCreate, currentUser, toast}) {
             toast.updateTimeout(2000);
             toast.updateVisible();
             showCreate(); 
-            setTimeout(() => {
-              navigate(0)
-            }, 2000);
+            // setTimeout(() => {
+            //   navigate(0)
+            // }, 2000);
         } catch(error) {
             console.error(error);
             toast.updateMessage("Oh no! Something went wrong! Post wasn't created. Please try again.");
